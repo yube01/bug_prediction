@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Traffic Simulation — ML Powered</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <h1>Smart Traffic Junction Simulation</h1>
+    <p class="subtitle">Q-Learning Reinforcement Learning vs Rule-Based traffic control</p>
+
+    <div class="main-layout">
+      <div class="canvas-col">
+        <canvas id="simulation" width="700" height="700"></canvas>
+        <div class="chart-section">
+          <h4>ML Reward Over Time</h4>
+          <canvas id="rewardChart" width="700" height="120"></canvas>
+        </div>
+      </div>
+
+      <div class="controls">
+        <!-- ML Toggle -->
+        <div class="panel ml-panel">
+          <h3>ML Agent Control</h3>
+          <label class="toggle-label">
+            <input type="checkbox" id="mlToggle" onchange="sim.toggleML()">
+            <span>Enable Q-Learning Agent</span>
+          </label>
+          <div class="speed-control">
+            <label>Training Speed:</label>
+            <input type="range" min="1" max="5" value="1" oninput="sim.setTrainingSpeed(this.value)">
+            <span id="speedLabel">1x</span>
+          </div>
+          <div class="btn-row">
+            <button class="ml-btn" onclick="sim.fastTrain()">Fast Train (500 ep)</button>
+            <button class="ml-btn" onclick="sim.resetML()">Reset Agent</button>
+          </div>
+          <div class="btn-row">
+            <button class="ml-btn" onclick="sim.exportModel()">Export Model</button>
+            <button class="ml-btn" onclick="sim.importModel()">Import Model</button>
+          </div>
+        </div>
+
+        <!-- ML Stats -->
+        <div class="panel ml-panel">
+          <h3>ML Stats</h3>
+          <div id="mlStats" class="ml-stats"></div>
+        </div>
+
+        <!-- Add Traffic -->
+        <div class="panel">
+          <h3>Add Vehicles</h3>
+          <div class="btn-row">
+            <button onclick="sim.addVehicle('north')">North</button>
+            <button onclick="sim.addVehicle('south')">South</button>
+            <button onclick="sim.addVehicle('east')">East</button>
+            <button onclick="sim.addVehicle('west')">West</button>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h3>Add Pedestrians</h3>
+          <div class="btn-row">
+            <button onclick="sim.addPedestrian('north')">North</button>
+            <button onclick="sim.addPedestrian('south')">South</button>
+            <button onclick="sim.addPedestrian('east')">East</button>
+            <button onclick="sim.addPedestrian('west')">West</button>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h3>Auto Spawn</h3>
+          <label><input type="checkbox" id="autoSpawn" onchange="sim.toggleAutoSpawn()"> Enable random spawning</label>
+        </div>
+
+        <div class="panel stats">
+          <h3>Live Stats</h3>
+          <div id="statsContent"></div>
+        </div>
+
+        <div class="panel">
+          <h3>Current Phase</h3>
+          <div id="phaseInfo" class="phase-info"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="ml-agent.js"></script>
+  <script src="simulation.js"></script>
+</body>
+</html>
