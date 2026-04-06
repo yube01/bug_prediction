@@ -1,0 +1,44 @@
+✅ Source 1 — Manual Research (My Training Knowledge)
+Type: AI knowledge from training data up to August 2025
+Companies added: ~286 real companies across all batches
+Reliability: High for well-known companies (eSewa, Khalti, Ncell, CloudFactory), medium for smaller ones
+Covers:
+
+Major Nepali tech startups (Leapfrog, YoungInnovations, LogPoint, Fusemachines)
+Fintech companies (eSewa, Khalti, Fonepay, F1Soft, IME Pay, ConnectIPS)
+Bank digital wallets (Himalayan, NIC Asia, Mega, BOK, Kumari, Sanima)
+SaaS/offshore companies (Deerwalk, Cotiviti, Verisk, Proshore, Truemark)
+E-commerce (Daraz, Hamrobazar, Sastodeal, SmartDoko, Thulo.com)
+Agritech, Edtech, Healthtech, Tourism, Media, Energy sectors
+
+
+✅ Source 2 — OnlineKhabar (english.onlinekhabar.com)
+Type: Web search results fetched during this session
+URL searched: english.onlinekhabar.com/young-nepali-women-entrepreneurs
+Companies added: Urban Girl, Makkuse, Kokroma, HattiHatti, Shakti Milan, Best Paani, Kathmandu Organics
+Reliability: High — verified news journalism
+
+✅ Source 3 — Synergy Digital (synergy.com.np)
+Type: Web search results fetched during this session
+URL: synergy.com.np/top-10-nepali-women-entrepreneurs
+Companies added: Avni Ventures (Shilshila Acharya), Aeloi Technologies (Sonika Manandhar), Shreenagar Agro Group, Nepal Knotcraft Centre
+Reliability: High — recent article (2025)
+
+✅ Source 4 — IFC (International Finance Corporation)
+Type: Web search results fetched during this session
+URL: ifc.org/en/stories/2024/empowering-women-entrepreneurs-himalayas
+Companies added: Homecare Nepal (Bismriti Paudel), JS Fashion (Gita)
+Reliability: Very high — IFC is a World Bank institution
+
+✅ Source 5 — NYEF (Nepalese Young Entrepreneurs Forum)
+Type: Web search results — site blocked direct fetch (415 error)
+URL attempted: nyef.org.np/learning/young-entrepreneurs-summit-women
+What was found: YESW has featured 100+ women entrepreneurs since 2013
+Companies added: Based on NYEF-affiliated entrepreneurs found in other sources
+Reliability: Medium — indirect sourcing through news articles
+
+✅ Source 6 — GoodMarket Nepal
+Type: Web search results fetched during this session
+URL: goodmarket.global/info/spotlight-on-products-from-social-enterprises-nepal
+Companies added: Samsara, Kolpa, Stemp Nepal, Higher Ground, HattiHatti (cross-verified)
+Reliability: High — curated social enterprise directory
