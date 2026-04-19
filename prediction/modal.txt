@@ -1,0 +1,8 @@
+The v2 notebook uses 4 models:
+#ModelType
+1 Logistic RegressionSimple linear classifier
+2 Random Forest150 decision trees voting together
+3 Gradient BoostingTrees built sequentially
+4 XGBoostOptimized gradient boosting
+
+All 4 are tuned with GridSearchCV and compared by ROC-AUC score. The best one is automatically selected for final prediction.
