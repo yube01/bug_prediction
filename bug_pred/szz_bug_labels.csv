@@ -1,0 +1,401 @@
+repo,commit_sha,commit_message,commit_type,language,author,committed_at,commit_hour,day_of_week,is_weekend,is_night_commit,lines_added,lines_deleted,files_changed,test_files_changed,num_methods_changed,avg_complexity,is_buggy,churn_ratio,test_ratio,complexity_per_file,prior_bugs_author
+pallets/flask,33850c0ebd,Initial checkin of stuff that exists so far.,other,Python,Armin Ronacher,2010-04-06 13:12:57+02:00,13,1,0,0,984,0,15,0,48,2.02,1,984.0,0.0,0.13,0
+pallets/flask,b15ad39427,Added setup.py and README,feature,Python,Armin Ronacher,2010-04-06 13:23:18+02:00,13,1,0,0,36,0,2,0,0,0.0,1,36.0,0.0,0.0,1
+pallets/flask,4ec7d2a0d8,Started working on documentation.  So far just the stable parts :),docs,Python,Armin Ronacher,2010-04-06 16:02:14+02:00,16,1,0,0,641,9,9,0,7,1.71,1,64.1,0.0,0.17,2
+pallets/flask,44b42e0fbd,Added a README file for MiniTwit.,feature,Unknown,Armin Ronacher,2010-04-06 16:16:34+02:00,16,1,0,0,21,0,1,0,0,0.0,0,21.0,0.0,0.0,3
+pallets/flask,3b36bef2e6,"Improved documentation, added a contextmanager for request binding",feature,Python,Armin Ronacher,2010-04-08 19:03:15+02:00,19,3,0,0,198,28,4,0,8,1.38,1,6.83,0.0,0.28,3
+pallets/flask,4aa76212d1,Updated documentation.  Starting to look pretty good,docs,Python,Armin Ronacher,2010-04-09 01:32:39+02:00,1,4,0,1,359,4,6,0,2,1.5,1,71.8,0.0,0.21,4
+pallets/flask,625eba4bb4,Heavily improved quickstart section.,other,Unknown,Armin Ronacher,2010-04-09 12:49:01+02:00,12,4,0,0,224,0,1,0,0,0.0,0,224.0,0.0,0.0,5
+pallets/flask,4edec48b74,Added installation docs,feature,Unknown,Armin Ronacher,2010-04-09 13:13:39+02:00,13,4,0,0,98,1,1,0,0,0.0,0,49.0,0.0,0.0,5
+pallets/flask,727c701686,And finished documentation for most parts.,docs,Python,Armin Ronacher,2010-04-09 13:40:05+02:00,13,4,0,0,199,4,5,0,1,2.0,1,39.8,0.0,0.33,5
+pallets/flask,a9d4ea81da,Flashing -> patterns documentation,docs,Unknown,Armin Ronacher,2010-04-09 13:46:12+02:00,13,4,0,0,86,68,2,0,0,0.0,0,1.25,0.0,0.0,6
+pallets/flask,7d6b8e9ab3,Documented non-decorator uses of registation.,docs,Python,Armin Ronacher,2010-04-09 13:56:47+02:00,13,4,0,0,31,5,1,0,4,1.0,1,5.17,0.0,0.5,6
+pallets/flask,3d719f35f5,"Added docs, fixed some bugs I introduced last commit",bugfix,Python,Armin Ronacher,2010-04-10 15:49:15+02:00,15,5,1,0,808,10,13,0,4,1.0,1,73.45,0.0,0.07,7
+pallets/flask,9dfab582d0,Updated README,docs,Unknown,Armin Ronacher,2010-04-10 16:00:13+02:00,16,5,1,0,14,1,1,0,0,0.0,0,7.0,0.0,0.0,8
+pallets/flask,8e9bd5f009,Fixed a typo,bugfix,Unknown,Armin Ronacher,2010-04-10 16:01:14+02:00,16,5,1,0,1,1,1,0,0,0.0,0,0.5,0.0,0.0,8
+pallets/flask,4e1b3e1134,set secret key :),other,Unknown,Armin Ronacher,2010-04-10 17:26:49+02:00,17,5,1,0,3,0,1,0,0,0.0,0,3.0,0.0,0.0,8
+pallets/flask,05f36c7f7e,Heavily improved documentation,docs,Python,Armin Ronacher,2010-04-11 02:20:10+02:00,2,6,1,1,486,44,10,0,16,1.69,1,10.8,0.0,0.15,8
+pallets/flask,1fff3e5981,Fixed a doc display bug and setup.py workaround for dev version.,bugfix,Python,Armin Ronacher,2010-04-11 02:42:13+02:00,2,6,1,1,10,8,3,0,0,0.0,1,1.11,0.0,0.0,9
+pallets/flask,574e81f9c8,Fixed a bug in setup.py,bugfix,Python,Armin Ronacher,2010-04-11 02:46:44+02:00,2,6,1,1,5,2,2,0,0,0.0,1,1.67,0.0,0.0,10
+pallets/flask,df929c6c77,further improved documentation,docs,Unknown,Armin Ronacher,2010-04-11 02:58:13+02:00,2,6,1,1,24,0,1,0,0,0.0,0,24.0,0.0,0.0,11
+pallets/flask,8171da88a4,Described HTTP methods,other,Unknown,Armin Ronacher,2010-04-11 03:16:42+02:00,3,6,1,1,57,0,1,0,0,0.0,0,57.0,0.0,0.0,11
+pallets/flask,85ca089dde,might -> must,other,Unknown,Armin Ronacher,2010-04-11 03:18:36+02:00,3,6,1,1,3,2,1,0,0,0.0,0,1.0,0.0,0.0,11
+pallets/flask,4e7aa9e7f7,Linked HTTP,other,Unknown,Armin Ronacher,2010-04-11 03:22:26+02:00,3,6,1,1,11,8,1,0,0,0.0,0,1.22,0.0,0.0,11
+pallets/flask,4671429a50,Added a security section to the foreword and a footnote to the g variable,feature,Unknown,Armin Ronacher,2010-04-11 03:41:01+02:00,3,6,1,1,48,3,4,0,0,0.0,0,12.0,0.0,0.0,11
+pallets/flask,d78b04a3fc,Footnotes are 100% in width,other,Unknown,Armin Ronacher,2010-04-11 03:43:15+02:00,3,6,1,1,1,0,1,0,0,0.0,0,1.0,0.0,0.0,11
+pallets/flask,6a3a046f55,Another doc improvement,docs,Unknown,Armin Ronacher,2010-04-11 03:53:38+02:00,3,6,1,1,5,1,1,0,0,0.0,0,2.5,0.0,0.0,11
+pallets/flask,0b8e01b445,Linked escape,other,Unknown,Armin Ronacher,2010-04-11 04:00:17+02:00,4,6,1,1,3,0,1,0,0,0.0,0,3.0,0.0,0.0,11
+pallets/flask,03168a5d53,Removed the useless apishowcase example,refactor,Python,Armin Ronacher,2010-04-11 17:58:45+02:00,17,6,1,0,30,89,7,0,15,2.53,1,0.33,0.0,0.32,11
+pallets/flask,f2dc38cda6,Added tests for minitwit.  Testing with Flask is awesome,feature,Python,Armin Ronacher,2010-04-11 18:45:06+02:00,18,6,1,0,153,4,4,1,13,1.85,1,30.6,0.2,0.37,12
+pallets/flask,ef524f2cfd,No need for the closing import,other,Python,Armin Ronacher,2010-04-11 18:47:32+02:00,18,6,1,0,0,1,1,1,0,0.0,0,0.0,0.5,0.0,13
+pallets/flask,03148dba6b,Added testing documentation,feature,Python,Armin Ronacher,2010-04-11 19:18:40+02:00,19,6,1,0,41,12,3,0,3,1.0,1,3.15,0.0,0.25,13
+pallets/flask,2f5a4f8dbc,Doc updates and typo fixes,bugfix,Python,Armin Ronacher,2010-04-12 00:14:59+02:00,0,0,0,1,127,11,4,1,9,3.11,1,10.58,0.2,0.62,14
+pallets/flask,51c9829a9c,Fixed couple of errors in docs.,bugfix,Unknown,moraes,2010-04-12 16:18:01+08:00,16,0,0,0,4,4,3,0,0,0.0,0,0.8,0.0,0.0,0
+pallets/flask,a01e8b49ca,Fixed a documentation error and implemented template context processors.,bugfix,Python,Armin Ronacher,2010-04-12 19:52:18+02:00,19,0,0,0,28,4,1,0,5,1.6,1,5.6,0.0,0.8,15
+pallets/flask,de03143f6e,Added some basic tests for flask itself,feature,Python,Armin Ronacher,2010-04-12 20:19:16+02:00,20,0,0,0,74,0,1,1,9,1.0,0,74.0,0.5,0.5,16
+pallets/flask,4affedec35,Testing URL generation,test,Python,Armin Ronacher,2010-04-12 20:39:52+02:00,20,0,0,0,8,0,1,1,2,1.0,0,8.0,0.5,0.5,16
+pallets/flask,36071ca1f4,added in example tornado and gevent usage for flask integration,feature,Unknown,Justin Quick,2010-04-12 23:54:30+08:00,23,0,0,1,39,0,1,0,0,0.0,0,39.0,0.0,0.0,0
+pallets/flask,959b5df004,Flask can depend on Jinja2 and Werkzeug now that they are relased.,other,Python,Armin Ronacher,2010-04-13 01:08:52+02:00,1,1,0,1,2,3,1,0,0,0.0,1,0.5,0.0,0.0,16
+pallets/flask,a42728568e,Improved Flask README regarding Jinja2 and Werkzeug,docs,Unknown,Armin Ronacher,2010-04-13 01:42:31+02:00,1,1,0,1,4,4,1,0,0,0.0,0,0.8,0.0,0.0,17
+pallets/flask,8009bd9869,Fixed the mod_wsgi docs. Thanks Graham,bugfix,Unknown,Armin Ronacher,2010-04-14 02:17:55+02:00,2,2,0,1,1,1,1,0,0,0.0,0,0.5,0.0,0.0,17
+pallets/flask,08f1f0dc32,Added more Flask tests,feature,Python,Armin Ronacher,2010-04-14 02:42:12+02:00,2,2,0,1,197,82,5,2,40,1.0,0,2.37,0.33,0.17,17
+pallets/flask,ca520fb7e4,"Static files are active in the WSGI app now, not just the server.",other,Python,Armin Ronacher,2010-04-14 14:11:00+02:00,14,2,0,0,15,5,3,1,3,2.0,1,2.5,0.25,0.5,17
+pallets/flask,2d9bb69272,Flask now runs without the presence of pkg_resources as well.,other,Python,Armin Ronacher,2010-04-14 15:16:38+02:00,15,2,0,0,24,3,1,0,3,2.33,1,6.0,0.0,1.16,18
+pallets/flask,c33675f025,Added mini blogging application as Flask example.  This should become the tutorial.,feature,Python,Armin Ronacher,2010-04-14 16:44:29+02:00,16,2,0,0,241,0,7,1,13,1.38,1,241.0,0.12,0.17,19
+pallets/flask,fc94599285,Removed useless imports and added README,feature,Python,Armin Ronacher,2010-04-14 16:47:53+02:00,16,2,0,0,26,2,2,0,0,0.0,0,8.67,0.0,0.0,20
+pallets/flask,1d8432ebfd,Can't believe I forgot that future import.,other,Python,Armin Ronacher,2010-04-14 17:08:38+02:00,17,2,0,0,1,0,1,0,0,0.0,1,1.0,0.0,0.0,20
+pallets/flask,c4f5c2fb9a,Fixed a typo,bugfix,Unknown,Armin Ronacher,2010-04-14 17:09:34+02:00,17,2,0,0,1,1,1,0,0,0.0,0,0.5,0.0,0.0,21
+pallets/flask,1246f4088a,First part of the tutorial.  Many explanations missing but it's a start.,other,Python,Armin Ronacher,2010-04-15 02:21:46+02:00,2,3,0,1,394,14,9,0,2,1.5,1,26.27,0.0,0.15,21
+pallets/flask,6dd92ae4b3,Beefed up the tutorial,other,Python,Armin Ronacher,2010-04-16 02:03:45+02:00,2,4,0,1,306,92,7,2,2,1.0,0,3.29,0.25,0.12,22
+pallets/flask,40e0024d7b,Added screenshot of the debugger to Flask docs.  Flask now runs from the shell again.,bugfix,Python,Armin Ronacher,2010-04-16 02:14:54+02:00,2,4,0,1,16,2,3,0,2,2.5,1,5.33,0.0,0.62,22
+pallets/flask,7b5015010b,Preserve the request context in debug mode.  This makes it possible to access request information in the interactive debugger.  Closes #8.,bugfix,Python,Armin Ronacher,2010-04-16 02:27:37+02:00,2,4,0,1,11,7,1,0,3,1.67,1,1.38,0.0,0.84,23
+pallets/flask,fb2d2e446b,request_init -> before_request and request_shutdown -> after_request  This fixes #9.,bugfix,Python,Armin Ronacher,2010-04-16 11:03:16+02:00,11,4,0,0,30,29,6,1,8,1.75,1,1.0,0.14,0.25,24
+pallets/flask,26f86b1d49,Restructured documentation a bit.,docs,Unknown,Armin Ronacher,2010-04-16 12:21:31+02:00,12,4,0,0,213,8,2,0,0,0.0,0,23.67,0.0,0.0,25
+pallets/flask,b608785801,Recentered README,docs,Unknown,Armin Ronacher,2010-04-16 12:23:46+02:00,12,4,0,0,3,3,1,0,0,0.0,0,0.75,0.0,0.0,25
+pallets/flask,61d07b8be9,Added note about decorators to becomingbig.,feature,Unknown,Armin Ronacher,2010-04-16 12:29:52+02:00,12,4,0,0,4,1,1,0,0,0.0,0,2.0,0.0,0.0,25
+pallets/flask,f54c4fd04f,Fixed wording for circular imports,bugfix,Unknown,Armin Ronacher,2010-04-16 13:15:44+02:00,13,4,0,0,1,1,1,0,0,0.0,0,0.5,0.0,0.0,25
+pallets/flask,6418551efb,More typo fixes,bugfix,Unknown,Armin Ronacher,2010-04-16 13:29:01+02:00,13,4,0,0,5,4,2,0,0,0.0,0,1.0,0.0,0.0,25
+pallets/flask,7c9303b750,More typo fixes,bugfix,Unknown,Armin Ronacher,2010-04-16 13:31:48+02:00,13,4,0,0,2,2,1,0,0,0.0,0,0.67,0.0,0.0,25
+pallets/flask,6d556acb3f,"added coming soon to parts of the docs, linked scoped_session",feature,Python,Armin Ronacher,2010-04-16 13:42:47+02:00,13,4,0,0,16,2,2,0,0,0.0,0,5.33,0.0,0.0,25
+pallets/flask,5348eff445,fixed headers,bugfix,Unknown,Armin Ronacher,2010-04-16 13:45:52+02:00,13,4,0,0,2,2,1,0,0,0.0,0,0.67,0.0,0.0,25
+pallets/flask,855e7e9327,Added license file,feature,Unknown,Armin Ronacher,2010-04-16 14:12:31+02:00,14,4,0,0,31,0,1,0,0,0.0,0,31.0,0.0,0.0,25
+pallets/flask,f769e15fec,Added website sources,feature,Unknown,Armin Ronacher,2010-04-16 14:17:24+02:00,14,4,0,0,56,0,2,0,0,0.0,0,56.0,0.0,0.0,25
+pallets/flask,aae5de7301,-x on files,other,Unknown,Armin Ronacher,2010-04-16 14:20:02+02:00,14,4,0,0,0,0,2,0,0,0.0,0,0.0,0.0,0.0,25
+pallets/flask,0bb8b4f9a1,Beefed up setup.py,other,Python,Armin Ronacher,2010-04-16 14:24:12+02:00,14,4,0,0,50,0,1,0,0,0.0,1,50.0,0.0,0.0,25
+pallets/flask,8605cc310d,ignore dist folder,other,Unknown,Armin Ronacher,2010-04-16 14:25:24+02:00,14,4,0,0,1,0,1,0,0,0.0,0,1.0,0.0,0.0,26
+pallets/flask,9fbf9a062c,head is 0.2-dev,other,Python,Armin Ronacher,2010-04-16 14:32:59+02:00,14,4,0,0,1,1,1,0,0,0.0,1,0.5,0.0,0.0,26
+pallets/flask,791cdb28f5,Fixed capitalization on website,bugfix,Unknown,Armin Ronacher,2010-04-16 14:33:12+02:00,14,4,0,0,2,2,1,0,0,0.0,0,0.67,0.0,0.0,27
+pallets/flask,5310fc3822,Session falls back to a dummy object now if secret_key is missing.  This makes it possible to still read-only access the empty session but requires the secret key to be set for write access.  The erro,other,Python,Armin Ronacher,2010-04-17 14:10:47+02:00,14,5,1,0,34,3,2,1,6,1.83,1,8.5,0.33,0.61,27
+pallets/flask,b9cae3564a,Reordered deployment docs,docs,Unknown,Armin Ronacher,2010-04-17 14:24:12+02:00,14,5,1,0,127,126,1,0,0,0.0,0,1.0,0.0,0.0,28
+pallets/flask,74862dcbca,Added makefile target for website and doc updating.,feature,Unknown,Armin Ronacher,2010-04-17 14:30:28+02:00,14,5,1,0,6,0,1,0,0,0.0,0,6.0,0.0,0.0,28
+pallets/flask,0b9c2b5eb1,removed refactoring leftover,refactor,Python,Armin Ronacher,2010-04-17 14:32:52+02:00,14,5,1,0,0,1,1,0,1,2.0,0,0.0,0.0,1.0,28
+pallets/flask,fe6c279df1,Synched tagline :),other,Unknown,Armin Ronacher,2010-04-17 18:14:42+02:00,18,5,1,0,1,2,1,0,0,0.0,0,0.33,0.0,0.0,28
+pallets/flask,325dfa2469,Larger fonts in the docs,docs,Unknown,Armin Ronacher,2010-04-17 20:52:37+02:00,20,5,1,0,40,16,3,0,0,0.0,0,2.35,0.0,0.0,28
+pallets/flask,b4cd70d054,Updated website,other,Unknown,Armin Ronacher,2010-04-18 03:07:08+02:00,3,6,1,1,47,0,3,0,0,0.0,0,47.0,0.0,0.0,28
+pallets/flask,42dd94b756,Fixed title.,bugfix,Unknown,Armin Ronacher,2010-04-18 03:08:16+02:00,3,6,1,1,1,1,1,0,0,0.0,0,0.5,0.0,0.0,28
+pallets/flask,bcf347fe8d,New style for the documentation.  Looks more like the website now.,feature,Unknown,Armin Ronacher,2010-04-18 13:15:00+02:00,13,6,1,0,601,569,15,1,0,0.0,0,1.05,0.06,0.0,28
+pallets/flask,88ea383394,Less flashy color for highlights.,other,Unknown,Armin Ronacher,2010-04-18 13:17:21+02:00,13,6,1,0,4,0,1,0,0,0.0,0,4.0,0.0,0.0,28
+pallets/flask,fdf4d79bdc,Normalized line heights.,other,Unknown,Armin Ronacher,2010-04-18 13:19:57+02:00,13,6,1,0,3,2,2,0,0,0.0,0,1.0,0.0,0.0,28
+pallets/flask,764b4e4f7d,dirhtml > html for websites,other,Unknown,Armin Ronacher,2010-04-18 13:29:21+02:00,13,6,1,0,1,1,1,0,0,0.0,0,0.5,0.0,0.0,28
+pallets/flask,123a1ad019,Breaking docs up into smaller pieces,docs,Unknown,Armin Ronacher,2010-04-18 13:35:40+02:00,13,6,1,0,443,445,8,0,0,0.0,0,0.99,0.0,0.0,28
+pallets/flask,42a46ed09b,Fixed homepage links,bugfix,Unknown,Armin Ronacher,2010-04-18 13:58:48+02:00,13,6,1,0,4,4,1,0,0,0.0,0,0.8,0.0,0.0,28
+pallets/flask,63593d281b,removed unused import,refactor,Python,Armin Ronacher,2010-04-18 14:39:27+02:00,14,6,1,0,0,1,1,0,0,0.0,0,0.0,0.0,0.0,28
+pallets/flask,ab54924186,Fixed a font name.,bugfix,Unknown,Armin Ronacher,2010-04-18 14:56:08+02:00,14,6,1,0,2,2,1,0,0,0.0,0,0.67,0.0,0.0,28
+pallets/flask,190059c8f0,Added support for macro pulling and documented certain design decisions.,feature,Python,Armin Ronacher,2010-04-18 15:44:06+02:00,15,6,1,0,187,1,6,1,3,1.33,1,93.5,0.14,0.19,28
+pallets/flask,bf52a17902,Removed useless code,refactor,Python,Armin Ronacher,2010-04-18 16:29:41+02:00,16,6,1,0,0,2,2,2,1,1.0,0,0.0,0.67,0.33,29
+pallets/flask,1309038936,updated README,docs,Unknown,Armin Ronacher,2010-04-18 17:32:23+02:00,17,6,1,0,5,3,1,0,0,0.0,0,1.25,0.0,0.0,29
+pallets/flask,94cf620914,Updated SQLAlchemy docs.,docs,Unknown,Armin Ronacher,2010-04-18 18:29:55+02:00,18,6,1,0,92,2,1,0,0,0.0,0,30.67,0.0,0.0,29
+pallets/flask,100776147a,Added troubleshooting section to the tutorial,feature,Unknown,Armin Ronacher,2010-04-18 18:40:52+02:00,18,6,1,0,6,0,1,0,0,0.0,0,6.0,0.0,0.0,29
+pallets/flask,3491465d55,No sudo for windows users.,other,Unknown,Armin Ronacher,2010-04-18 20:43:18+02:00,20,6,1,0,2,1,1,0,0,0.0,0,1.0,0.0,0.0,29
+pallets/flask,0770f5c637,Removed two unused imports.,refactor,Python,Armin Ronacher,2010-04-18 23:37:03+02:00,23,6,1,1,2,3,1,0,0,0.0,1,0.5,0.0,0.0,29
+pallets/flask,73a47a0db1,Removed unused stuff from minitwit and fixed a bug.,bugfix,Python,Armin Ronacher,2010-04-18 23:42:11+02:00,23,6,1,1,1,3,1,0,2,2.5,1,0.25,0.0,1.25,30
+pallets/flask,ce18d4575d,Added WTForms documentation.,feature,Python,Armin Ronacher,2010-04-19 02:22:59+02:00,2,0,0,1,115,10,6,0,0,0.0,0,10.45,0.0,0.0,31
+pallets/flask,976e792336,Added links for SQLAlchemy and WTForms.,feature,Unknown,Armin Ronacher,2010-04-19 02:24:02+02:00,2,0,0,1,8,0,2,0,0,0.0,0,8.0,0.0,0.0,31
+pallets/flask,56675b3bad,Fixed indentation of an example.,bugfix,Unknown,Armin Ronacher,2010-04-19 02:25:31+02:00,2,0,0,1,6,8,1,0,0,0.0,0,0.67,0.0,0.0,31
+pallets/flask,166f5ed254,Forgot to link the website.,other,Unknown,Armin Ronacher,2010-04-19 02:28:05+02:00,2,0,0,1,2,1,1,0,0,0.0,0,1.0,0.0,0.0,31
+pallets/flask,84899948be,Corrected order of the tutorial,other,Unknown,Armin Ronacher,2010-04-19 02:45:44+02:00,2,0,0,1,1,1,1,0,0,0.0,0,0.5,0.0,0.0,31
+pallets/flask,a50a87c4ca,ScriptName -> ScriptAlias,other,Unknown,Armin Ronacher,2010-04-19 10:37:10+02:00,10,0,0,0,1,1,1,0,0,0.0,0,0.5,0.0,0.0,31
+pallets/flask,c64a4e0bef,Break up deployment docs into separate documents.,docs,Unknown,Armin Ronacher,2010-04-19 11:23:44+02:00,11,0,0,0,318,308,7,0,0,0.0,0,1.03,0.0,0.0,31
+pallets/flask,6e2be6a0b3,Added JSON Support and started working on jQuery docs,feature,Python,Armin Ronacher,2010-04-19 15:39:07+02:00,15,0,0,0,254,9,7,1,11,1.64,1,25.4,0.12,0.2,31
+pallets/flask,a99e408bd1,Finished jQuery example documentation.,docs,Unknown,Armin Ronacher,2010-04-19 15:59:16+02:00,15,0,0,0,119,13,3,0,0,0.0,0,8.5,0.0,0.0,32
+pallets/flask,f878919753,With -> with in headline,other,Unknown,Armin Ronacher,2010-04-19 16:01:14+02:00,16,0,0,0,1,1,1,0,0,0.0,0,0.5,0.0,0.0,32
+pallets/flask,3d32017681,Added instructions about how to run the latest development version.,feature,Unknown,Armin Ronacher,2010-04-19 17:03:08+02:00,17,0,0,0,38,0,1,0,0,0.0,0,38.0,0.0,0.0,32
+pallets/flask,07e515b071,Leaving -> living ....,other,Unknown,Armin Ronacher,2010-04-19 17:05:24+02:00,17,0,0,0,2,2,1,0,0,0.0,0,0.67,0.0,0.0,32
+pallets/flask,ade490514d,Fixed a security problem caused by changed simplejson semantics.  Notice: this was never in a release version of Flask.,bugfix,Python,Armin Ronacher,2010-04-19 18:51:04+02:00,18,0,0,0,16,2,4,1,3,2.0,1,5.33,0.2,0.4,32
+pallets/flask,36f105c293,Removed possible bashism. source -> .,refactor,Unknown,Armin Ronacher,2010-04-19 18:56:12+02:00,18,0,0,0,7,3,1,0,0,0.0,0,1.75,0.0,0.0,33
+pallets/flask,a7ff9dbddd,Proofreading the documentation,docs,Unknown,Chris Edgemon,2010-04-19 23:25:51-05:00,23,0,0,1,58,58,8,1,0,0.0,0,0.98,0.11,0.0,0
+pallets/flask,95750b3287,Documented some routing converter possibilities.,docs,Python,Armin Ronacher,2010-04-19 23:49:02+02:00,23,0,0,1,36,6,3,1,6,1.67,1,5.14,0.25,0.42,33
+pallets/flask,06ec917dde,"Only escape backslashes if they follow ""<"" in JSON dumping for templates.",other,Python,Armin Ronacher,2010-04-19 23:54:38+02:00,23,0,0,1,1,1,1,0,1,1.0,1,0.5,0.0,0.5,34
+pallets/flask,5acc491c94,Refactored the @route decorator to use the new add_url_rule method. Tagged add_url_rule with versionadded of 0.2,feature,Python,cgrinds,2010-04-20 01:33:12+08:00,1,1,0,1,3,2,1,0,3,1.33,1,1.0,0.0,0.66,0
+pallets/flask,3088a9371e,"Make it easier to associate a rule, endpoint and view_function This resolves http://github.com/mitsuhiko/flask/issues/issue/11",other,Python,unknown,2010-04-20 01:33:12+08:00,1,1,0,1,33,3,2,1,5,1.2,1,8.25,0.33,0.4,0
+pallets/flask,50a3313071,Fixed typo in form docs,bugfix,Unknown,Armin Ronacher,2010-04-20 01:35:22+02:00,1,1,0,1,1,1,1,0,0,0.0,0,0.5,0.0,0.0,35
+pallets/flask,4ff9493e57,POST -> post in HTML,other,Unknown,Armin Ronacher,2010-04-20 01:37:51+02:00,1,1,0,1,1,1,1,0,0,0.0,0,0.5,0.0,0.0,35
+pallets/flask,9f0b2429d6,The testsuite skips JSON tests now is not available and runs the example tests as well.,test,Python,Armin Ronacher,2010-04-20 10:51:36+02:00,10,1,0,0,22,1,1,1,1,2.0,0,11.0,0.5,1.0,35
+pallets/flask,1404a85bc5,Fixed WTForms example.,bugfix,Unknown,Armin Ronacher,2010-04-20 11:22:20+02:00,11,1,0,0,3,3,1,0,0,0.0,0,0.75,0.0,0.0,35
+pallets/flask,715f64d2af,Some more documentation updates.,docs,Python,Armin Ronacher,2010-04-20 13:01:10+02:00,13,1,0,0,32,12,2,0,6,2.5,1,2.46,0.0,0.83,35
+pallets/flask,3a1e518657,Fixed typo and added AUTHORS file and license text to docs.,bugfix,Python,Armin Ronacher,2010-04-20 13:29:54+02:00,13,1,0,0,47,11,5,0,1,3.0,1,3.92,0.0,0.5,36
+pallets/flask,268302fc68,Changed link to license.,other,Unknown,Armin Ronacher,2010-04-20 14:22:34+02:00,14,1,0,0,1,1,1,0,0,0.0,0,0.5,0.0,0.0,37
+pallets/flask,9f6bc93e4d,Fixed XSS problem by escaping all slashes in JSON.  This also probes simplejson first to figure out if it escapes slashes which it did in earlier versions.,bugfix,Python,Armin Ronacher,2010-04-20 15:12:16+02:00,15,1,0,0,13,1,2,1,2,2.0,1,6.5,0.33,0.67,37
+pallets/flask,3c821a0fa4,Fix typos and remove unused import.,bugfix,Python,florentx,2010-04-20 18:40:58+02:00,18,1,0,0,15,14,6,0,5,1.8,1,1.0,0.0,0.26,0
+pallets/flask,75057bb411,Slightly faster _tojson_filter.,other,Python,florentx,2010-04-20 18:44:54+02:00,18,1,0,0,9,10,1,0,1,2.0,1,0.82,0.0,1.0,1
+pallets/flask,eae44e465b,Typo in README,docs,Unknown,florentx,2010-04-20 18:48:49+02:00,18,1,0,0,2,2,1,0,0,0.0,0,0.67,0.0,0.0,2
+pallets/flask,af3b73f70d,Tiny refactoring,refactor,Python,Armin Ronacher,2010-04-20 19:03:18+02:00,19,1,0,0,5,9,1,0,2,2.0,1,0.5,0.0,1.0,38
+pallets/flask,3053fcdb0d,Make the example tests pass on Windows.  Also updated the documentation regarding that.,test,Python,Armin Ronacher,2010-04-20 20:01:00+02:00,20,1,0,0,37,17,3,3,4,1.0,0,2.06,0.75,0.25,39
+pallets/flask,f6b9efc1e9,Added missing os import.,feature,Unknown,Armin Ronacher,2010-04-20 20:03:03+02:00,20,1,0,0,2,1,1,1,0,0.0,0,1.0,0.5,0.0,39
+pallets/flask,260b4dfe61,"Added changelog, restructured docs a bit.",feature,Unknown,Armin Ronacher,2010-04-20 20:21:01+02:00,20,1,0,0,35,4,3,0,0,0.0,0,7.0,0.0,0.0,39
+pallets/flask,00f87f679c,flask uses 127.0.0.1 as host by default now. stupid chrome.,other,Python,Armin Ronacher,2010-04-20 21:44:52+02:00,21,1,0,0,3,16,2,0,2,2.0,1,0.18,0.0,0.67,39
+pallets/flask,9cf2ea2abc,Documented hostname change.,docs,Unknown,Armin Ronacher,2010-04-20 21:45:36+02:00,21,1,0,0,1,0,1,0,0,0.0,0,1.0,0.0,0.0,40
+pallets/flask,9d340ad747,"Fix a doc oversight, and revert 5876a8fd.",bugfix,Python,florentx,2010-04-20 22:46:36+02:00,22,1,0,1,3,2,2,1,0,0.0,0,1.0,0.33,0.0,2
+pallets/flask,7cf5a9bf6e,"Use a tuple to store _flashes, and simplify the flask.Request class.",other,Python,florentx,2010-04-21 00:40:43+02:00,0,2,0,1,3,7,1,0,3,1.33,0,0.38,0.0,0.66,2
+pallets/flask,b6e7330539,Use setdefault() because it sets session.modified correctly.,other,Python,florentx,2010-04-21 01:23:09+02:00,1,2,0,1,14,2,2,1,3,1.33,0,4.67,0.33,0.44,2
+pallets/flask,5876a8fd96,Merge more upstream changes,other,Unknown,cgrinds,2010-04-21 03:59:21+08:00,3,2,0,1,14,18,1,0,0,0.0,0,0.74,0.0,0.0,1
+pallets/flask,7e8019565f,Added florentx to the AUTHORS file,feature,Unknown,Armin Ronacher,2010-04-21 10:37:05+02:00,10,2,0,0,1,0,1,0,0,0.0,0,1.0,0.0,0.0,40
+pallets/flask,f014ce29a7,"Fix a doc oversight, and revert 5876a8fd.",bugfix,Python,florentx,2010-04-21 16:36:19+08:00,16,2,0,0,3,2,2,1,0,0.0,1,1.0,0.33,0.0,2
+pallets/flask,3eacc1d068,"Use a tuple to store _flashes, and simplify the flask.Request class.",other,Python,florentx,2010-04-21 16:36:19+08:00,16,2,0,0,3,7,1,0,3,1.33,1,0.38,0.0,0.66,3
+pallets/flask,dbe0df756b,Use setdefault() because it sets session.modified correctly.,other,Python,florentx,2010-04-21 16:36:20+08:00,16,2,0,0,14,2,2,1,3,1.33,1,4.67,0.33,0.44,4
+pallets/flask,3261357ba7,Removed website from main branch.  Makes no sense to be there,refactor,Unknown,Armin Ronacher,2010-04-21 18:39:25+02:00,18,2,0,0,0,131,6,0,0,0.0,0,0.0,0.0,0.0,40
+pallets/flask,1cb75df8f1,Add leftovers from website branch to gitignore,feature,Unknown,Armin Ronacher,2010-04-21 18:39:51+02:00,18,2,0,0,1,0,1,0,0,0.0,0,1.0,0.0,0.0,40
+pallets/flask,ebb07a0656,Better English.,other,Unknown,Armin Ronacher,2010-04-21 21:10:57+02:00,21,2,0,0,1,1,1,0,0,0.0,0,0.5,0.0,0.0,40
+pallets/flask,be15340e0f,Added mailinglist link to the README,feature,Unknown,Armin Ronacher,2010-04-21 21:47:45+02:00,21,2,0,0,5,0,1,0,0,0.0,0,5.0,0.0,0.0,40
+pallets/flask,dc3f13df54,Corrected validator usage in the wtforms docs.,docs,Unknown,Armin Ronacher,2010-04-23 12:17:12+02:00,12,4,0,0,5,3,1,0,0,0.0,0,1.25,0.0,0.0,40
+pallets/flask,88f671aaae,Another try for #12,other,Python,Armin Ronacher,2010-04-23 16:04:54+02:00,16,4,0,0,42,0,1,0,8,1.25,1,42.0,0.0,0.62,40
+pallets/flask,a862ead5f2,Warn on None responses.,other,Python,Armin Ronacher,2010-04-23 16:30:04+02:00,16,4,0,0,20,1,2,1,3,2.67,1,10.0,0.33,0.89,41
+pallets/flask,444e642531,extended URL generation,other,Python,Armin Ronacher,2010-04-23 16:44:49+02:00,16,4,0,0,24,16,1,0,8,2.75,1,1.41,0.0,1.38,42
+pallets/flask,e0148a00c0,"Basic module support is working, but does not look very nice.",other,Python,Armin Ronacher,2010-04-23 17:01:20+02:00,17,4,0,0,66,14,2,1,11,2.36,1,4.4,0.33,0.79,43
+pallets/flask,5c52fe980e,Added request/response processing based on modules.,feature,Python,Armin Ronacher,2010-04-23 17:10:22+02:00,17,4,0,0,44,6,2,1,11,1.73,1,6.29,0.33,0.58,44
+pallets/flask,2f181e1949,Removed unused package_name attribute,refactor,Python,Armin Ronacher,2010-04-23 17:16:59+02:00,17,4,0,0,1,2,1,0,2,1.0,0,0.33,0.0,0.5,45
+pallets/flask,67f4b0f315,Modules are now instanciated with the package name.  This makes it possible to load resources from the folder the module is located in.,other,Python,Armin Ronacher,2010-04-24 17:07:16+02:00,17,5,1,0,96,73,2,1,19,1.58,1,1.3,0.33,0.53,45
+pallets/flask,c0a9f5d0c4,Documentation update for the flask module support.,docs,Python,Armin Ronacher,2010-04-24 17:35:25+02:00,17,5,1,0,87,6,2,0,7,1.14,1,12.43,0.0,0.38,46
+pallets/flask,ef34638f5d,Updated docs for external server information.  This fixes #14.,bugfix,Unknown,Armin Ronacher,2010-04-24 17:46:06+02:00,17,5,1,0,22,9,2,0,0,0.0,0,2.2,0.0,0.0,47
+pallets/flask,0da39c76e3,More documentation updates :),docs,Python,Armin Ronacher,2010-04-24 18:30:38+02:00,18,5,1,0,129,0,2,0,1,4.0,1,129.0,0.0,1.33,47
+pallets/flask,0c54d0a0e5,Added pattern for file uploads.,feature,Unknown,Armin Ronacher,2010-04-24 20:36:06+02:00,20,5,1,0,1,0,1,0,0,0.0,0,1.0,0.0,0.0,48
+pallets/flask,85d43079d1,Added missing file (fileupload docs),feature,Unknown,Armin Ronacher,2010-04-25 03:46:42+02:00,3,6,1,1,158,0,1,0,0,0.0,0,158.0,0.0,0.0,48
+pallets/flask,58fa088abc,Added missing file (fileupload docs),feature,Unknown,Armin Ronacher,2010-04-25 13:18:53+02:00,13,6,1,0,158,0,1,0,0,0.0,0,158.0,0.0,0.0,48
+pallets/flask,3ac4ec670c,Beefed up PDF docs.  They actually look like something now.,docs,Python,Armin Ronacher,2010-04-25 17:05:25+02:00,17,6,1,0,130,60,6,0,0,0.0,0,2.13,0.0,0.0,48
+pallets/flask,d22428bc8e,Updated Makefile to also upload and build pdf docs.,docs,Unknown,Armin Ronacher,2010-04-25 17:08:44+02:00,17,6,1,0,4,1,1,0,0,0.0,0,2.0,0.0,0.0,48
+pallets/flask,606b006e23,Fixed at least one build warning by renaming files.,bugfix,Unknown,Armin Ronacher,2010-04-25 17:25:16+02:00,17,6,1,0,5,3,4,0,0,0.0,0,1.25,0.0,0.0,48
+pallets/flask,f419937d2c,License after API docs,docs,Unknown,Armin Ronacher,2010-04-25 17:33:56+02:00,17,6,1,0,11,11,1,0,0,0.0,0,0.92,0.0,0.0,48
+pallets/flask,4559e4f0f1,Added docs on caching and decorators.,feature,Unknown,Armin Ronacher,2010-04-25 18:55:01+02:00,18,6,1,0,164,0,3,0,0,0.0,0,164.0,0.0,0.0,48
+pallets/flask,a9bb965b6d,add a decorator to add custom template filter,feature,Python,Sebastien Estienne,2010-04-25 20:51:26+08:00,20,6,1,0,48,0,2,1,8,1.25,1,48.0,0.33,0.42,0
+pallets/flask,5c9ef2c44d,the template_filter now expects the parentheses,other,Python,Sebastien Estienne,2010-04-25 20:51:27+08:00,20,6,1,0,4,17,2,1,7,1.29,1,0.22,0.33,0.43,1
+pallets/flask,4395e9493c,add tests for template_filter using a real template,feature,Python,Sebastien Estienne,2010-04-25 20:51:27+08:00,20,6,1,0,24,0,2,1,6,1.0,0,24.0,0.33,0.33,2
+pallets/flask,2ba88eefb5,Fixed simple typo,bugfix,Unknown,unknown,2010-04-26 14:57:53+08:00,14,0,0,0,1,1,1,0,0,0.0,0,0.5,0.0,0.0,1
+pallets/flask,36717b0273,Added support for long running sessions.  This closes #16.,feature,Python,Armin Ronacher,2010-04-27 14:32:09+02:00,14,1,0,0,62,5,4,1,6,1.33,1,10.33,0.2,0.27,48
+pallets/flask,31493850de,Fixed typo in flask quickstart docs. This fixes #21,bugfix,Unknown,Armin Ronacher,2010-05-02 11:32:14+02:00,11,6,1,0,1,1,1,0,0,0.0,0,0.5,0.0,0.0,49
+pallets/flask,f1603d33f2,Docs mention query args now.  This fixes #20,bugfix,Python,Armin Ronacher,2010-05-02 11:36:42+02:00,11,6,1,0,10,1,2,0,1,1.0,1,5.0,0.0,0.33,49
+pallets/flask,a9284afde9,Fixed typo in tutorial.  This fixes #19,bugfix,Unknown,Armin Ronacher,2010-05-02 11:38:40+02:00,11,6,1,0,4,5,1,1,0,0.0,0,0.67,0.5,0.0,50
+pallets/flask,8d49440d8b,Added example for context bound objects to the testing docs.  This fixes #18,bugfix,Unknown,Armin Ronacher,2010-05-02 11:45:40+02:00,11,6,1,0,19,0,1,1,0,0.0,0,19.0,0.5,0.0,50
+pallets/flask,a7266ffb90,Added @templated decorator to the patterns.,feature,Unknown,Armin Ronacher,2010-05-02 12:08:17+02:00,12,6,1,0,49,0,1,0,0,0.0,0,49.0,0.0,0.0,50
+pallets/flask,7e1db5978c,Added module support to templated decorator.,feature,Unknown,Armin Ronacher,2010-05-02 12:11:04+02:00,12,6,1,0,6,5,1,0,0,0.0,0,1.0,0.0,0.0,50
+pallets/flask,75461c1467,Added _external support to url_for,feature,Python,Armin Ronacher,2010-05-02 19:10:44+02:00,19,6,1,0,7,1,3,1,2,1.0,1,3.5,0.25,0.25,50
+pallets/flask,d0eefb01d1,Added link to snippets website to the patterns docs.,feature,Unknown,Armin Ronacher,2010-05-03 12:22:27+02:00,12,0,0,0,3,0,1,0,0,0.0,0,3.0,0.0,0.0,51
+pallets/flask,9248a7baca,None responses fail properly now.  This fixes #24,bugfix,Python,Armin Ronacher,2010-05-03 13:07:30+02:00,13,0,0,0,1,4,1,0,1,5.0,1,0.2,0.0,2.5,51
+pallets/flask,dffb3d091c,Removed useless import and adapted tests,refactor,Python,Armin Ronacher,2010-05-03 14:39:16+02:00,14,0,0,0,3,4,2,1,1,2.0,0,0.6,0.33,0.67,52
+pallets/flask,f345af8d9d,Use unicode in SQLAlchemy pattern.,other,Unknown,Armin Ronacher,2010-05-03 19:58:07+02:00,19,0,0,0,3,3,1,0,0,0.0,0,0.75,0.0,0.0,52
+pallets/flask,67fc465262,"Fix typo, remove useless import, limit lines to 79 columns.",bugfix,Python,florentx,2010-05-04 02:03:20+08:00,2,1,0,1,12,9,2,1,8,1.38,1,1.2,0.33,0.46,5
+pallets/flask,bc0c0559e3,Added OpenID example,feature,Python,Armin Ronacher,2010-05-04 11:23:01+02:00,11,1,0,0,390,0,9,0,20,2.05,0,390.0,0.0,0.2,52
+pallets/flask,a921aef6c4,Fixed late binding of url_prefix.  This fixes #29.,bugfix,Python,Armin Ronacher,2010-05-04 11:41:54+02:00,11,1,0,0,10,1,2,1,4,1.25,1,5.0,0.33,0.42,52
+pallets/flask,f6da77e894,Fixed URL examples.  This fixes #30.,bugfix,Unknown,Armin Ronacher,2010-05-04 11:43:19+02:00,11,1,0,0,2,2,1,0,0,0.0,0,0.67,0.0,0.0,53
+pallets/flask,745638e774,Added missing decorators for module wide context processors.  This fixes #25.,bugfix,Python,Armin Ronacher,2010-05-04 11:51:07+02:00,11,1,0,0,41,2,2,1,9,1.0,1,13.67,0.33,0.33,53
+pallets/flask,b93ec1465b,Documented module changes in CHANGES,docs,Unknown,Armin Ronacher,2010-05-04 16:41:04+02:00,16,1,0,0,2,0,1,0,0,0.0,0,2.0,0.0,0.0,54
+pallets/flask,da8f88a22e,"Removed OpenID example, that's now in flaskext.openid anyways.",refactor,Python,Armin Ronacher,2010-05-06 13:32:52+02:00,13,3,0,0,0,390,9,0,20,2.05,0,0.0,0.0,0.2,54
+pallets/flask,34e3d64892,"Removed theme, this is now refactored to an external reusable theme.",refactor,Python,Armin Ronacher,2010-05-07 20:16:00+02:00,20,4,0,0,2,352,3,0,0,0.0,0,0.01,0.0,0.0,54
+pallets/flask,4156bd412f,added theme submodule,feature,Unknown,Armin Ronacher,2010-05-07 20:23:38+02:00,20,4,0,0,4,0,2,0,0,0.0,0,4.0,0.0,0.0,54
+pallets/flask,2d87e9bc37,Added support for send_file,feature,Python,Armin Ronacher,2010-05-10 11:27:42+02:00,11,0,0,0,161,2,4,1,6,3.5,1,53.67,0.2,0.7,54
+pallets/flask,5bb2b55a28,Explicitly set the pygments style for the PDF,other,Python,Armin Ronacher,2010-05-10 11:35:43+02:00,11,0,0,0,2,0,1,0,0,0.0,0,2.0,0.0,0.0,55
+pallets/flask,f80e1d3b5a,Added note on send_file security.,feature,Python,Armin Ronacher,2010-05-12 01:02:20+02:00,1,2,0,1,7,0,1,0,1,15.0,1,7.0,0.0,7.5,55
+pallets/flask,b0ab127015,Added logo with new slogan,feature,Python,Armin Ronacher,2010-05-12 01:29:25+02:00,1,2,0,1,106,132,6,0,0,0.0,0,0.8,0.0,0.0,56
+pallets/flask,e0fa5aec3a,Updated README as well.,docs,Unknown,Armin Ronacher,2010-05-12 01:30:10+02:00,1,2,0,1,1,1,1,0,0,0.0,0,0.5,0.0,0.0,56
+pallets/flask,07581b2404,HEAD is 0.5-dev,other,Python,Armin Ronacher,2010-05-12 01:32:29+02:00,1,2,0,1,6,1,2,0,0,0.0,0,3.0,0.0,0.0,56
+pallets/flask,f4269b1fe7,Updated logo in the PDF docs,docs,Unknown,Armin Ronacher,2010-05-12 02:06:40+02:00,2,2,0,1,0,0,1,0,0,0.0,0,0.0,0.0,0.0,56
+pallets/flask,e409bc792d,Fixed typo,bugfix,Python,Armin Ronacher,2010-05-12 02:34:22+02:00,2,2,0,1,1,1,1,0,1,1.0,1,0.5,0.0,0.5,56
+pallets/flask,93a8ca0282,Fixed some minor typos throughout docs.,bugfix,Unknown,Ron DuPlain,2010-05-13 18:31:08+08:00,18,3,0,0,17,17,5,0,0,0.0,0,0.94,0.0,0.0,0
+pallets/flask,a5a41d40aa,Fix typo.,bugfix,Python,Zhao Xiaohong,2010-05-13 18:31:26+08:00,18,3,0,0,1,1,1,0,0,0.0,1,0.5,0.0,0.0,0
+pallets/flask,693e4449f8,Fix typo.,bugfix,Python,Zhao Xiaohong,2010-05-13 18:31:27+08:00,18,3,0,0,2,2,1,0,1,1.0,1,0.67,0.0,0.5,1
+pallets/flask,35ed617fe4,Added support for flashing categories.  This fixes #35.,bugfix,Python,Armin Ronacher,2010-05-17 00:37:55+02:00,0,0,0,1,60,4,3,1,7,1.57,1,12.0,0.25,0.39,57
+pallets/flask,931dcc4c80,Fixed a doc bug and added distribtue docs.,bugfix,Python,Armin Ronacher,2010-05-17 01:41:57+02:00,1,0,0,1,202,1,5,0,1,1.0,0,101.0,0.0,0.17,58
+pallets/flask,b18560fcaa,s/will//,other,Unknown,Armin Ronacher,2010-05-17 01:51:16+02:00,1,0,0,1,1,1,1,0,0,0.0,0,0.5,0.0,0.0,58
+pallets/flask,c6e6792cd5,Added MANIFEST.in.  This fixes #39,bugfix,Unknown,Armin Ronacher,2010-05-17 02:01:23+02:00,2,0,0,1,4,0,1,0,0,0.0,0,4.0,0.0,0.0,58
+pallets/flask,8c26bec55c,Added links to downloadable docs in the docs,feature,Unknown,Armin Ronacher,2010-05-17 12:10:45+02:00,12,0,0,0,5,0,1,0,0,0.0,0,5.0,0.0,0.0,58
+pallets/flask,e7f67e1333,Added logging support.,feature,Python,Armin Ronacher,2010-05-17 16:06:30+02:00,16,0,0,0,132,10,3,1,12,1.83,0,12.0,0.25,0.46,58
+pallets/flask,ea5e654e9e,Added a documentation chapter about logging,feature,Python,Armin Ronacher,2010-05-17 22:46:35+02:00,22,0,0,1,307,11,9,1,8,2.0,0,25.58,0.1,0.2,58
+psf/requests,e7615cbc6b,first commit,other,Unknown,Kenneth Reitz,2011-02-13 13:41:18-05:00,13,6,1,0,0,0,1,0,0,0.0,0,0.0,0.0,0.0,0
+psf/requests,d0bf553809,no mo of that,other,Unknown,Kenneth Reitz,2011-02-13 13:52:30-05:00,13,6,1,0,0,0,1,0,0,0.0,0,0.0,0.0,0.0,0
+psf/requests,0477018761,easy setup.py,other,Python,Kenneth Reitz,2011-02-13 13:52:37-05:00,13,6,1,0,48,0,1,0,1,1.0,0,48.0,0.0,0.5,0
+psf/requests,75b499dd04,sample test fixtures (none),bugfix,Python,Kenneth Reitz,2011-02-13 13:52:47-05:00,13,6,1,0,4,0,1,1,0,0.0,0,4.0,0.5,0.0,0
+psf/requests,c51b44d96b,ISC License by mee,other,Unknown,Kenneth Reitz,2011-02-13 13:53:01-05:00,13,6,1,0,13,0,1,0,0,0.0,0,13.0,0.0,0.0,0
+psf/requests,72e99c0f49,histories,other,Unknown,Kenneth Reitz,2011-02-13 13:53:08-05:00,13,6,1,0,0,0,1,0,0,0.0,0,0.0,0.0,0.0,0
+psf/requests,ffdbc387ea,ignore it,other,Unknown,Kenneth Reitz,2011-02-13 13:53:15-05:00,13,6,1,0,1,0,1,0,0,0.0,0,1.0,0.0,0.0,0
+psf/requests,853a4fd04c,generic skeleton,other,Python,Kenneth Reitz,2011-02-13 13:53:25-05:00,13,6,1,0,4,0,3,0,0,0.0,1,4.0,0.0,0.0,0
+psf/requests,a6ffd97ef1,initial readme,docs,Unknown,Kenneth Reitz,2011-02-13 13:56:54-05:00,13,6,1,0,59,0,1,0,0,0.0,0,59.0,0.0,0.0,1
+psf/requests,45c6897128,good readme update,docs,Unknown,Kenneth Reitz,2011-02-13 15:08:32-05:00,15,6,1,0,52,3,1,0,0,0.0,0,13.0,0.0,0.0,1
+psf/requests,23842865e9,readme update,docs,Unknown,Kenneth Reitz,2011-02-13 15:10:54-05:00,15,6,1,0,2,1,1,0,0,0.0,0,1.0,0.0,0.0,1
+psf/requests,b079a4e03e,added content attributes,feature,Unknown,Kenneth Reitz,2011-02-13 15:47:00-05:00,15,6,1,0,1,0,1,0,0,0.0,0,1.0,0.0,0.0,1
+psf/requests,c840bc7d09,readme update,docs,Unknown,Kenneth Reitz,2011-02-13 15:49:34-05:00,15,6,1,0,11,3,1,0,0,0.0,0,2.75,0.0,0.0,1
+psf/requests,d6cf93e398,added url parameter,feature,Unknown,Kenneth Reitz,2011-02-13 15:50:55-05:00,15,6,1,0,1,0,1,0,0,0.0,0,1.0,0.0,0.0,1
+psf/requests,d8b19573f3,basic layout in place,other,Python,Kenneth Reitz,2011-02-13 16:03:47-05:00,16,6,1,0,56,1,1,0,5,1.0,1,28.0,0.0,0.5,1
+psf/requests,b72e1d19af,AuthAuths,other,Python,Kenneth Reitz,2011-02-13 16:16:36-05:00,16,6,1,0,43,5,1,0,13,1.15,1,7.17,0.0,0.57,2
+psf/requests,54240b4811,core update,other,Python,Kenneth Reitz,2011-02-13 16:24:14-05:00,16,6,1,0,25,4,1,0,1,1.0,1,5.0,0.0,0.5,3
+psf/requests,ef9bae8d9f,basic handling configuration in place w/ autoauth,other,Python,Kenneth Reitz,2011-02-13 16:41:58-05:00,16,6,1,0,43,9,1,0,10,1.3,1,4.3,0.0,0.65,4
+psf/requests,32cc197a81,fixes,bugfix,Python,Kenneth Reitz,2011-02-13 16:59:01-05:00,16,6,1,0,53,13,1,0,8,1.62,1,3.79,0.0,0.81,5
+psf/requests,49f915fb90,"temp ""tests""",test,Python,Kenneth Reitz,2011-02-13 16:59:13-05:00,16,6,1,0,8,1,1,1,0,0.0,0,4.0,0.5,0.0,6
+psf/requests,af272d5827,Base GET in place. No AUTH yet.,other,Python,Kenneth Reitz,2011-02-13 17:13:10-05:00,17,6,1,0,37,3,1,0,3,6.33,1,9.25,0.0,3.16,6
+psf/requests,e9c2b917d2,filling out the gaps,other,Python,Kenneth Reitz,2011-02-13 17:17:33-05:00,17,6,1,0,49,14,1,0,2,11.5,1,3.27,0.0,5.75,7
+psf/requests,d4c1eccb44,Readme redirection mention,docs,Unknown,Kenneth Reitz,2011-02-13 18:03:33-05:00,18,6,1,0,1,2,1,0,0,0.0,0,0.33,0.0,0.0,8
+psf/requests,44aa6806f3,Basic POST in place.,other,Python,Kenneth Reitz,2011-02-13 18:03:48-05:00,18,6,1,0,41,14,1,0,6,5.0,1,2.73,0.0,2.5,8
+psf/requests,327d923ce6,GET and POST completely in place,other,Python,Kenneth Reitz,2011-02-13 18:07:37-05:00,18,6,1,0,33,1,1,0,1,28.0,1,16.5,0.0,14.0,9
+psf/requests,4f9d598ff4,parameters working for GETs now. This is awesome.,other,Python,Kenneth Reitz,2011-02-13 18:26:17-05:00,18,6,1,0,32,23,1,0,3,10.0,1,1.33,0.0,5.0,10
+psf/requests,871de2ab23,HEAD Support,other,Python,Kenneth Reitz,2011-02-13 18:33:50-05:00,18,6,1,0,10,15,1,0,3,9.0,1,0.62,0.0,4.5,11
+psf/requests,71df02df2c,urllib2 Request subclass w/ settable methods,other,Python,Kenneth Reitz,2011-02-13 18:49:02-05:00,18,6,1,0,39,9,1,0,4,7.75,1,3.9,0.0,3.88,12
+psf/requests,3c32045da0,FIXED,bugfix,Python,Kenneth Reitz,2011-02-13 19:02:11-05:00,19,6,1,0,25,35,1,0,1,28.0,1,0.69,0.0,14.0,13
+psf/requests,6fb1997b6a,DELETE in place.,other,Python,Kenneth Reitz,2011-02-13 19:04:47-05:00,19,6,1,0,9,6,1,0,2,14.5,1,1.29,0.0,7.25,14
+psf/requests,7de5726a81,log 405 issue,other,Unknown,Kenneth Reitz,2011-02-13 19:05:13-05:00,19,6,1,0,4,0,1,0,0,0.0,0,4.0,0.0,0.0,15
+psf/requests,f1d9aae10e,all caps only for request methods,other,Python,Kenneth Reitz,2011-02-13 22:00:31-05:00,22,6,1,1,6,24,1,0,2,12.5,1,0.24,0.0,6.25,15
+psf/requests,f566bb2140,Much better exception handling,other,Python,Kenneth Reitz,2011-02-13 22:50:45-05:00,22,6,1,1,49,48,1,0,2,11.0,1,1.0,0.0,5.5,16
+psf/requests,59c6aebd60,"Wow, and AUTO_AUTH works. first try!",other,Python,Kenneth Reitz,2011-02-13 22:53:14-05:00,22,6,1,1,1,1,1,0,1,3.0,1,0.5,0.0,1.5,17
+psf/requests,2c168d20a5,no dependencies!,other,Unknown,Kenneth Reitz,2011-02-13 22:56:13-05:00,22,6,1,1,0,0,1,0,0,0.0,0,0.0,0.0,0.0,18
+psf/requests,4018276b54,v0.2.0,other,Python,Kenneth Reitz,2011-02-13 22:56:20-05:00,22,6,1,1,2,4,1,0,0,0.0,1,0.4,0.0,0.0,18
+psf/requests,e796aae504,Documentation update.,docs,Python,Kenneth Reitz,2011-02-13 23:25:41-05:00,23,6,1,1,63,14,1,0,8,3.5,1,4.2,0.0,1.75,19
+psf/requests,e403a8a42c,AutoAuth documentation.,docs,Python,Kenneth Reitz,2011-02-13 23:35:43-05:00,23,6,1,1,19,0,1,0,3,2.0,1,19.0,0.0,1.0,20
+psf/requests,9f4ce17a29,v0.2.0,other,Python,Kenneth Reitz,2011-02-13 23:35:53-05:00,23,6,1,1,1,1,1,0,0,0.0,0,0.5,0.0,0.0,21
+psf/requests,fdd54e14d6,whitepacez,other,Python,Kenneth Reitz,2011-02-13 23:51:29-05:00,23,6,1,1,0,1,1,0,0,0.0,0,0.0,0.0,0.0,21
+psf/requests,4a3f55997b,a few test fixtures for now,bugfix,Python,Kenneth Reitz,2011-02-13 23:51:37-05:00,23,6,1,1,38,2,1,1,8,1.0,0,12.67,0.5,0.5,21
+psf/requests,e76fa91534,Documentation start.,docs,Python,Kenneth Reitz,2011-02-13 23:54:42-05:00,23,6,1,1,595,0,4,0,0,0.0,0,595.0,0.0,0.0,21
+psf/requests,090fcf14c5,no mo todo,other,Unknown,Kenneth Reitz,2011-02-14 00:14:50-05:00,0,0,0,1,0,4,1,0,0,0.0,0,0.0,0.0,0.0,21
+psf/requests,98d257e039,Added history.rst,feature,Unknown,Kenneth Reitz,2011-02-14 00:15:02-05:00,0,0,0,1,16,0,1,0,0,0.0,0,16.0,0.0,0.0,21
+psf/requests,2cc80155cb,Readme update.,docs,Unknown,Kenneth Reitz,2011-02-14 00:22:16-05:00,0,0,0,1,11,1,1,0,0,0.0,0,5.5,0.0,0.0,21
+psf/requests,839873c77f,Added Manifest.,feature,Unknown,Kenneth Reitz,2011-02-14 00:23:46-05:00,0,0,0,1,1,0,1,0,0,0.0,0,1.0,0.0,0.0,21
+psf/requests,71626dea7e,Not that simple.,other,Unknown,Kenneth Reitz,2011-02-14 00:24:13-05:00,0,0,0,1,1,1,1,0,0,0.0,0,0.5,0.0,0.0,21
+psf/requests,2b54b01ce2,Documentation update,docs,Unknown,Kenneth Reitz,2011-02-14 00:39:55-05:00,0,0,0,1,37,46,1,0,0,0.0,0,0.79,0.0,0.0,21
+psf/requests,927294fbd4,big ol' doc update,docs,Unknown,Kenneth Reitz,2011-02-14 00:45:28-05:00,0,0,0,1,61,49,1,0,0,0.0,0,1.22,0.0,0.0,21
+psf/requests,00d900c575,indentz,other,Unknown,Kenneth Reitz,2011-02-14 00:47:07-05:00,0,0,0,1,14,14,1,0,0,0.0,0,0.93,0.0,0.0,21
+psf/requests,d789badbb2,there we go,other,Unknown,Kenneth Reitz,2011-02-14 00:47:42-05:00,0,0,0,1,24,24,1,0,0,0.0,0,0.96,0.0,0.0,21
+psf/requests,a2ecf9c786,indents,other,Unknown,Kenneth Reitz,2011-02-14 00:48:08-05:00,0,0,0,1,3,3,1,0,0,0.0,0,0.75,0.0,0.0,21
+psf/requests,88b64d271f,Added data types to response docs,feature,Unknown,Kenneth Reitz,2011-02-14 00:50:04-05:00,0,0,0,1,3,3,1,0,0,0.0,0,0.75,0.0,0.0,21
+psf/requests,8cca789ba5,Fix it,bugfix,Unknown,Kenneth Reitz,2011-02-14 00:50:52-05:00,0,0,0,1,4,8,1,0,0,0.0,0,0.44,0.0,0.0,21
+psf/requests,4a3bee6cff,documentation update,docs,Unknown,Kenneth Reitz,2011-02-14 01:10:44-05:00,1,0,0,1,8,3,1,0,0,0.0,0,2.0,0.0,0.0,21
+psf/requests,908d7de7b8,Request documentation update,docs,Unknown,Kenneth Reitz,2011-02-14 01:11:27-05:00,1,0,0,1,5,5,1,0,0,0.0,0,0.83,0.0,0.0,21
+psf/requests,bb5614253a,request function update admin,other,Unknown,Kenneth Reitz,2011-02-14 01:12:38-05:00,1,0,0,1,2,0,1,0,0,0.0,0,2.0,0.0,0.0,21
+psf/requests,52de0ba0ce,missed one,other,Unknown,Kenneth Reitz,2011-02-14 01:13:20-05:00,1,0,0,1,1,1,1,0,0,0.0,0,0.5,0.0,0.0,21
+psf/requests,d4db03da53,readme update,docs,Unknown,Kenneth Reitz,2011-02-14 01:26:28-05:00,1,0,0,1,1,1,1,0,0,0.0,0,0.5,0.0,0.0,21
+psf/requests,c9b0f8f19d,repr for datatypes,other,Unknown,Kenneth Reitz,2011-02-14 01:31:56-05:00,1,0,0,1,3,3,1,0,0,0.0,0,0.75,0.0,0.0,21
+psf/requests,7b65838826,more reprs,other,Unknown,Kenneth Reitz,2011-02-14 01:33:41-05:00,1,0,0,1,7,3,1,0,0,0.0,0,1.75,0.0,0.0,21
+psf/requests,1b88561476,Readme update,docs,Unknown,Kenneth Reitz,2011-02-14 01:45:07-05:00,1,0,0,1,11,1,1,0,0,0.0,0,5.5,0.0,0.0,21
+psf/requests,a42c003cdc,request update,other,Unknown,Kenneth Reitz,2011-02-14 01:45:52-05:00,1,0,0,1,2,3,1,0,0,0.0,0,0.5,0.0,0.0,21
+psf/requests,7ed73b29a8,Add manigest to ignores,feature,Unknown,Kenneth Reitz,2011-02-14 01:47:10-05:00,1,0,0,1,1,0,1,0,0,0.0,0,1.0,0.0,0.0,21
+psf/requests,d6e7e19100,Birth!,other,Unknown,Kenneth Reitz,2011-02-14 01:47:16-05:00,1,0,0,1,5,6,1,0,0,0.0,0,0.71,0.0,0.0,21
+psf/requests,8fd480df3f,Fix NameError in example,bugfix,Unknown,Kenneth Reitz,2011-02-14 02:09:09-05:00,2,0,0,1,1,17,1,0,0,0.0,0,0.06,0.0,0.0,21
+psf/requests,18db8b8445,absolute import,other,Python,Kenneth Reitz,2011-02-14 02:13:32-05:00,2,0,0,1,1,1,1,0,0,0.0,0,0.5,0.0,0.0,21
+psf/requests,bb45778029,better repr() support,other,Python,Kenneth Reitz,2011-02-14 02:13:40-05:00,2,0,0,1,13,0,1,0,1,2.0,1,13.0,0.0,1.0,21
+psf/requests,d2427ecae7,Roadmap update,other,Unknown,Kenneth Reitz,2011-02-14 02:15:30-05:00,2,0,0,1,2,4,1,0,0,0.0,0,0.4,0.0,0.0,22
+psf/requests,f66eafdffd,Docstring whitespace,docs,Python,Kenneth Reitz,2011-02-14 02:35:01-05:00,2,0,0,1,88,90,1,0,12,3.0,1,0.97,0.0,1.5,22
+psf/requests,d1dc6aa329,freaking string replace,other,Python,Kenneth Reitz,2011-02-14 02:40:39-05:00,2,0,0,1,19,19,1,0,11,3.18,1,0.95,0.0,1.59,23
+psf/requests,800b03457b,whitespace,other,Python,Kenneth Reitz,2011-02-14 02:42:46-05:00,2,0,0,1,1,0,1,0,0,0.0,1,1.0,0.0,0.0,24
+psf/requests,19db3ead4c,what happened to manifest?,other,Unknown,Kenneth Reitz,2011-02-14 02:45:09-05:00,2,0,0,1,1,0,1,0,0,0.0,0,1.0,0.0,0.0,25
+psf/requests,06b4969383,manifest.in,other,Unknown,Kenneth Reitz,2011-02-14 02:49:18-05:00,2,0,0,1,1,1,1,0,0,0.0,0,0.5,0.0,0.0,25
+psf/requests,9ad8589efd,ISC,other,Python,Kenneth Reitz,2011-02-14 03:58:26-05:00,3,0,0,1,1,1,1,0,0,0.0,0,0.5,0.0,0.0,25
+psf/requests,d961000b96,missed one,other,Python,Kenneth Reitz,2011-02-14 05:15:47-05:00,5,0,0,1,0,1,1,0,1,1.0,0,0.0,0.0,0.5,25
+psf/requests,8e8604d88b,Added NOTICE for Poster vendorization,feature,Unknown,Kenneth Reitz,2011-02-14 08:55:24-05:00,8,0,0,0,12,0,1,0,0,0.0,0,12.0,0.0,0.0,25
+psf/requests,df419fa6fa,vendorized poster,other,Python,Kenneth Reitz,2011-02-14 08:55:55-05:00,8,0,0,0,643,0,4,0,27,3.63,1,643.0,0.0,0.73,25
+psf/requests,e6d5e5319e,added multipart_file syntax,feature,Python,Kenneth Reitz,2011-02-14 09:01:09-05:00,9,0,0,0,4,2,1,0,4,1.0,1,1.33,0.0,0.5,26
+psf/requests,221bed27dd,import poster from site-packages for now,other,Python,Kenneth Reitz,2011-02-14 09:04:35-05:00,9,0,0,0,3,0,1,0,0,0.0,1,3.0,0.0,0.0,27
+psf/requests,127bbbb18d,Worth a shot,other,Python,Kenneth Reitz,2011-02-14 09:04:41-05:00,9,0,0,0,1,0,1,0,0,0.0,0,1.0,0.0,0.0,28
+psf/requests,7dd37d5ea9,proper poster imports,other,Python,Kenneth Reitz,2011-02-14 09:27:47-05:00,9,0,0,0,3,2,2,0,0,0.0,0,1.0,0.0,0.0,28
+psf/requests,f7abfa8a14,multipart_files support!,other,Python,Kenneth Reitz,2011-02-14 09:27:57-05:00,9,0,0,0,23,10,1,0,4,6.25,1,2.09,0.0,3.12,28
+psf/requests,a16278e85d,string formatting supports None. Who knew.,feature,Python,Kenneth Reitz,2011-02-14 09:31:10-05:00,9,0,0,0,4,11,1,0,2,11.0,1,0.33,0.0,5.5,29
+psf/requests,4c8b428bbd,except clause fix for python3,bugfix,Python,Kenneth Reitz,2011-02-14 09:34:36-05:00,9,0,0,0,4,4,1,0,1,21.0,1,0.8,0.0,10.5,30
+psf/requests,4c192ec5ac,absolute imports,other,Python,Kenneth Reitz,2011-02-14 09:36:14-05:00,9,0,0,0,5,5,3,0,0,0.0,1,0.83,0.0,0.0,31
+psf/requests,3216bda174,Added multipart_files support for PUT,feature,Python,Kenneth Reitz,2011-02-14 09:45:12-05:00,9,0,0,0,15,7,1,0,1,23.0,1,1.88,0.0,11.5,32
+psf/requests,e89eba79df,added response.url support for 301's and the like.,feature,Python,Kenneth Reitz,2011-02-14 09:53:56-05:00,9,0,0,0,8,1,2,0,2,12.0,1,4.0,0.0,4.0,33
+psf/requests,324c572b64,renamed multipart_files to files,refactor,Python,Kenneth Reitz,2011-02-14 09:59:42-05:00,9,0,0,0,12,12,1,0,6,5.0,1,0.92,0.0,2.5,34
+psf/requests,02834e353d,added simple test fixture for Postbin and posting  both files and data,bugfix,Python,Kenneth Reitz,2011-02-14 10:00:05-05:00,10,0,0,0,14,0,1,1,1,1.0,0,14.0,0.5,0.5,35
+psf/requests,9f9ebecec2,v0.2.1,other,Python,Kenneth Reitz,2011-02-14 10:35:15-05:00,10,0,0,0,12,3,3,0,0,0.0,1,3.0,0.0,0.0,35
+psf/requests,e1659ed7af,added setup.py test,feature,Python,Kenneth Reitz,2011-02-14 10:37:38-05:00,10,0,0,0,7,6,1,0,1,1.0,0,1.0,0.0,0.5,36
+psf/requests,43790c4d32,updated multipart-upload documentation,docs,Unknown,Kenneth Reitz,2011-02-14 10:43:54-05:00,10,0,0,0,5,2,1,0,0,0.0,0,1.67,0.0,0.0,36
+psf/requests,44d402c1e6,who stole dem cookies,other,Unknown,Kenneth Reitz,2011-02-14 10:50:18-05:00,10,0,0,0,1,0,1,0,0,0.0,0,1.0,0.0,0.0,36
+psf/requests,a82f4de38d,Added AUTHORS file.,feature,Unknown,Kenneth Reitz,2011-02-14 10:50:36-05:00,10,0,0,0,13,0,1,0,0,0.0,0,13.0,0.0,0.0,36
+psf/requests,10280c697d,Handles request in event of HTTPError. Fixes Issue #2 Building of internal request object refactor,bugfix,Python,Kenneth Reitz,2011-02-14 11:31:06-05:00,11,0,0,0,20,21,1,0,2,11.5,1,0.91,0.0,5.75,36
+psf/requests,09740c35e1,typo,other,Python,Kenneth Reitz,2011-02-14 11:31:44-05:00,11,0,0,0,1,1,1,0,1,22.0,1,0.5,0.0,11.0,37
+psf/requests,f70e89a163,eventlet support.,other,Python,Kenneth Reitz,2011-02-14 11:45:50-05:00,11,0,0,0,4,1,1,0,0,0.0,1,2.0,0.0,0.0,38
+psf/requests,d87bcce6ad,Added release 0.2.2 info.,feature,Unknown,Kenneth Reitz,2011-02-14 11:46:04-05:00,11,0,0,0,6,0,1,0,0,0.0,0,6.0,0.0,0.0,39
+psf/requests,bfe91296cb,monkey patchin' (will this suffice?),bugfix,Python,Kenneth Reitz,2011-02-14 11:57:12-05:00,11,0,0,0,12,2,1,0,0,0.0,1,4.0,0.0,0.0,39
+psf/requests,cde3b88f3e,eventlet > gevent (i think),other,Python,Kenneth Reitz,2011-02-14 12:07:34-05:00,12,0,0,0,7,6,1,0,0,0.0,0,1.0,0.0,0.0,40
+psf/requests,2203c3bccd,Added CookieJar,feature,Python,Kenneth Reitz,2011-02-14 12:23:55-05:00,12,0,0,0,19,6,1,0,2,2.0,1,2.71,0.0,1.0,40
+psf/requests,c9b8750597,Upated history,other,Unknown,Kenneth Reitz,2011-02-14 12:24:03-05:00,12,0,0,0,3,1,1,0,0,0.0,0,1.5,0.0,0.0,41
+psf/requests,4452934929,cleanups,refactor,Python,Kenneth Reitz,2011-02-14 12:25:44-05:00,12,0,0,0,2,7,1,0,1,3.0,1,0.25,0.0,1.5,41
+psf/requests,b09218d5ac,temporary,other,Python,Kenneth Reitz,2011-02-14 12:33:12-05:00,12,0,0,0,14,14,1,0,0,0.0,1,0.93,0.0,0.0,42
+psf/requests,16e5119b2a,fixed gevent problem,bugfix,Python,Kenneth Reitz,2011-02-14 12:39:13-05:00,12,0,0,0,17,13,1,0,1,5.0,1,1.21,0.0,2.5,43
+psf/requests,5fe24abfb9,Gevent / Eventlet is back!,other,Python,Kenneth Reitz,2011-02-14 12:40:41-05:00,12,0,0,0,15,14,1,0,0,0.0,1,1.0,0.0,0.0,44
+psf/requests,f023c81dad,cookies system in place.,other,Python,Kenneth Reitz,2011-02-14 12:43:13-05:00,12,0,0,0,10,5,1,0,10,1.2,1,1.67,0.0,0.6,45
+psf/requests,397bd4b676,spelling error,other,Python,Kenneth Reitz,2011-02-14 12:45:03-05:00,12,0,0,0,2,1,1,0,1,2.0,1,1.0,0.0,1.0,46
+psf/requests,98c8a78c3e,Added Cookies documentation.,feature,Python,Kenneth Reitz,2011-02-14 12:52:15-05:00,12,0,0,0,14,8,2,0,5,1.2,1,1.56,0.0,0.4,47
+psf/requests,d511e6f148,Version Bump v0.2.2,other,Python,Kenneth Reitz,2011-02-14 12:58:20-05:00,12,0,0,0,6,5,4,0,0,0.0,1,1.0,0.0,0.0,48
+psf/requests,c900b4379b,Added new HTTPError handing mechanisms.,feature,Python,Kenneth Reitz,2011-02-15 09:18:43-05:00,9,1,0,0,19,11,1,0,4,6.25,1,1.58,0.0,3.12,49
+psf/requests,ce122cc811,"None, not False",other,Python,Kenneth Reitz,2011-02-15 09:22:11-05:00,9,1,0,0,1,1,1,0,1,1.0,1,0.5,0.0,0.5,50
+psf/requests,748633d616,raise_for_status is better,other,Python,Kenneth Reitz,2011-02-15 09:26:07-05:00,9,1,0,0,1,1,1,0,2,2.0,1,0.5,0.0,1.0,51
+psf/requests,6d8a531e87,HTTPError changes are going down in history,other,Unknown,Kenneth Reitz,2011-02-15 09:26:44-05:00,9,1,0,0,10,0,1,0,0,0.0,0,10.0,0.0,0.0,52
+psf/requests,4f1301f6ad,Now Requests has it's own HTTPError,other,Python,Kenneth Reitz,2011-02-15 09:36:34-05:00,9,1,0,0,1,0,1,0,0,0.0,1,1.0,0.0,0.0,52
+psf/requests,7ad08c5eda,New tests for new HTTP STATUS Handling,feature,Python,Kenneth Reitz,2011-02-15 09:37:21-05:00,9,1,0,0,17,1,1,1,3,1.0,0,8.5,0.5,0.5,53
+psf/requests,4ad73c3655,leave room for _,other,Python,Kenneth Reitz,2011-02-15 09:42:05-05:00,9,1,0,0,10,0,1,1,0,0.0,0,10.0,0.5,0.0,53
+psf/requests,83a9bcf1a1,Updating AUTHORS,other,Unknown,Kenneth Reitz,2011-02-15 09:44:52-05:00,9,1,0,0,2,1,1,0,0,0.0,0,1.0,0.0,0.0,53
+psf/requests,933cf49daa,v0.2.3,other,Python,Kenneth Reitz,2011-02-15 09:45:54-05:00,9,1,0,0,2,2,1,0,0,0.0,1,0.67,0.0,0.0,53
+psf/requests,d5256802d4,v0.2.3,other,Python,Kenneth Reitz,2011-02-15 09:46:46-05:00,9,1,0,0,1,1,1,0,0,0.0,0,0.5,0.0,0.0,54
+psf/requests,8ac29b40e9,new documentation on Request changes.,feature,Unknown,Kenneth Reitz,2011-02-15 09:51:46-05:00,9,1,0,0,9,0,1,0,0,0.0,0,9.0,0.0,0.0,54
+psf/requests,fa42c12e5b,I need autodoc.,docs,Unknown,Kenneth Reitz,2011-02-15 09:58:02-05:00,9,1,0,0,8,8,1,0,0,0.0,0,0.89,0.0,0.0,54
+psf/requests,a5517960ea,history indent fix for rest/pypi,bugfix,Unknown,Kenneth Reitz,2011-02-15 10:02:39-05:00,10,1,0,0,4,4,1,0,0,0.0,0,0.8,0.0,0.0,54
+psf/requests,34ca692c9c,from __future__ import absolute_imports,other,Python,Kenneth Reitz,2011-02-16 12:47:58-05:00,12,2,0,0,6,1,3,0,0,0.0,1,3.0,0.0,0.0,54
+psf/requests,f4e03a5d32,gitignore update for jenkins,other,Unknown,Kenneth Reitz,2011-02-17 13:13:52-05:00,13,3,0,0,4,1,1,0,0,0.0,0,2.0,0.0,0.0,55
+psf/requests,efedbd9775,added test_suite.sh for CI,feature,Unknown,Kenneth Reitz,2011-02-17 13:14:03-05:00,13,3,0,0,4,0,1,1,0,0.0,0,4.0,0.5,0.0,55
+psf/requests,f4c4bf3d0b,Much nicer helper functions and constructors,other,Python,Kenneth Reitz,2011-02-17 16:17:46-05:00,16,3,0,0,17,64,1,0,7,1.0,1,0.26,0.0,0.5,55
+psf/requests,015d6b78d5,cleaning up line lengths,refactor,Python,Kenneth Reitz,2011-02-17 16:20:53-05:00,16,3,0,0,17,9,1,0,7,1.0,1,1.7,0.0,0.5,56
+psf/requests,7229dbe033,Making everyone else happy.,other,Python,Kenneth Reitz,2011-02-17 16:22:03-05:00,16,3,0,0,331,331,3,1,33,2.0,1,1.0,0.25,0.5,57
+psf/requests,7b6ed48a86,tox setup for 2.4-2.7,other,Unknown,Kenneth Reitz,2011-02-17 19:38:40-05:00,19,3,0,0,5,1,2,1,0,0.0,0,2.5,0.33,0.0,58
+psf/requests,d3911da653,tox update (usable now?),other,Unknown,Kenneth Reitz,2011-02-18 03:32:10-05:00,3,4,0,1,4,1,1,0,0,0.0,0,2.0,0.0,0.0,58
+psf/requests,6bde955170,Python 2.5 Fixes.,bugfix,Python,Kenneth Reitz,2011-02-18 04:39:53-05:00,4,4,0,1,8,5,2,0,1,21.0,1,1.33,0.0,7.0,58
+psf/requests,4419e7183f,no more test suite,test,Unknown,Kenneth Reitz,2011-02-18 04:41:34-05:00,4,4,0,1,0,4,1,1,0,0.0,0,0.0,0.5,0.0,59
+psf/requests,7e20f32b02,pypy configuration,other,Unknown,Kenneth Reitz,2011-02-18 04:41:42-05:00,4,4,0,1,6,2,1,0,0,0.0,0,2.0,0.0,0.0,59
+psf/requests,a7c87edebe,screw 2.4,other,Unknown,Kenneth Reitz,2011-02-18 15:57:50-05:00,15,4,0,0,1,1,1,0,0,0.0,0,0.5,0.0,0.0,59
+psf/requests,b82e72eb04,cStringIO fix.,bugfix,Python,Kenneth Reitz,2011-02-18 16:00:34-05:00,16,4,0,0,5,1,1,1,0,0.0,0,2.5,0.5,0.0,59
+psf/requests,fbe0393eb3,cstring io fix for py3,bugfix,Python,Kenneth Reitz,2011-02-18 16:08:26-05:00,16,4,0,0,8,4,1,1,0,0.0,0,1.6,0.5,0.0,59
+psf/requests,e8234a0137,import fix,bugfix,Python,Kenneth Reitz,2011-02-18 16:13:49-05:00,16,4,0,0,4,2,1,0,0,0.0,1,1.33,0.0,0.0,59
+psf/requests,8eafb8d3df,Added autoauth tests,feature,Python,Kenneth Reitz,2011-02-19 00:37:33-05:00,0,5,1,1,11,10,1,1,2,1.0,0,1.0,0.5,0.5,60
+psf/requests,5072399f7a,Import fix for python2.5,bugfix,Python,Kenneth Reitz,2011-02-19 00:41:28-05:00,0,5,1,1,2,4,1,0,0,0.0,0,0.4,0.0,0.0,60
+psf/requests,b5c2806e8c,Roadmap update,other,Unknown,Kenneth Reitz,2011-02-19 00:43:27-05:00,0,5,1,1,4,2,1,0,0,0.0,0,1.33,0.0,0.0,60
+psf/requests,f66b35454f,v0.2.4 Release information,other,Unknown,Kenneth Reitz,2011-02-19 00:59:56-05:00,0,5,1,1,8,0,1,0,0,0.0,0,8.0,0.0,0.0,60
+psf/requests,a34e0bea8b,Version Bump (v0.2.4),other,Python,Kenneth Reitz,2011-02-19 01:00:03-05:00,1,5,1,1,2,2,1,0,0,0.0,1,0.67,0.0,0.0,60
+psf/requests,433452f9f1,Simpler setup.py versioning.,other,Python,Kenneth Reitz,2011-02-19 01:01:51-05:00,1,5,1,1,2,1,1,0,0,0.0,0,1.0,0.0,0.0,61
+psf/requests,d2584ff853,Production Ready! Added Python 2.5 to Support list.,feature,Python,Kenneth Reitz,2011-02-19 01:02:01-05:00,1,5,1,1,2,2,1,0,0,0.0,0,0.67,0.0,0.0,61
+psf/requests,720d0b2c38,Version needs to be available externally.,other,Python,Kenneth Reitz,2011-02-19 01:02:13-05:00,1,5,1,1,1,2,1,0,0,0.0,0,0.33,0.0,0.0,61
+psf/requests,5c4aa1f4b7,history date fix,bugfix,Unknown,Kenneth Reitz,2011-02-19 01:30:03-05:00,1,5,1,1,1,1,1,0,0,0.0,0,0.5,0.0,0.0,61
+psf/requests,d1c89333d0,"Remove the eventles code, this should live in requests.async or something so the user explicitly requests it Clean up the code to get rid of the unnecessary AuthObject class Cleanup the send method Cl",feature,Python,digitalxero,2011-02-19 10:51:54-05:00,10,5,1,0,103,203,2,1,19,1.89,1,0.5,0.33,0.63,0
+psf/requests,3b82b06adc,Added an async module to make it explicit to the user that they are using async calls.,feature,Python,digitalxero,2011-02-19 11:13:10-05:00,11,5,1,0,45,2,2,0,0,0.0,1,15.0,0.0,0.0,1
+psf/requests,a9e18e9106,Update the README,docs,Unknown,digitalxero,2011-02-19 11:18:29-05:00,11,5,1,0,52,25,1,0,0,0.0,0,2.0,0.0,0.0,2
+psf/requests,edfdef2396,Add in a proper AuthManager instead of the list version that was being used. Added support for all Auth types that python supports,feature,Python,digitalxero,2011-02-19 15:04:56-05:00,15,5,1,0,158,102,4,1,25,2.52,1,1.53,0.2,0.5,2
+psf/requests,15761fc126,Made it so people can add their own auth handlers and not just the 4 provided by Python,feature,Python,digitalxero,2011-02-19 15:07:58-05:00,15,5,1,0,4,1,1,0,1,2.0,1,2.0,0.0,1.0,3
+psf/requests,718f45698d,Reset copyright on the async module,other,Python,digitalxero,2011-02-19 15:21:47-05:00,15,5,1,0,1,1,1,0,0,0.0,0,0.5,0.0,0.0,4
+psf/requests,f96157d259,Fix a syntax error on py2.5 and pypy,bugfix,Python,digitalxero,2011-02-19 15:33:24-05:00,15,5,1,0,1,1,1,0,2,1.0,1,0.5,0.0,0.5,4
+psf/requests,68dea921e7,Added HACKING file.,feature,Unknown,Kenneth Reitz,2011-02-21 02:25:01-05:00,2,0,0,1,14,0,1,0,0,0.0,0,14.0,0.0,0.0,61
+psf/requests,e788ca7ee6,Safer error response handling.,other,Python,Kenneth Reitz,2011-02-21 14:36:41-05:00,14,0,0,0,3,3,1,0,1,1.0,1,0.75,0.0,0.5,61
+psf/requests,6f5b64bca6,small workaround for issue #7,other,Python,Flavio Percoco Premoli,2011-02-23 08:49:08+01:00,8,2,0,0,9,6,2,0,3,2.67,1,1.29,0.0,0.89,0
+psf/requests,7369e47f18,Added Flavio to AUTHORS,feature,Unknown,Kenneth Reitz,2011-02-24 01:29:51-05:00,1,3,0,1,1,0,1,0,0,0.0,0,1.0,0.0,0.0,62
+psf/requests,47ecb3662d,!+=,other,Python,Kenneth Reitz,2011-02-24 01:30:00-05:00,1,3,0,1,1,1,1,0,1,5.0,1,0.5,0.0,2.5,62
+psf/requests,9e45d201f3,Added Dj Gilcrease to AUTHORS.,feature,Unknown,Kenneth Reitz,2011-02-24 01:38:58-05:00,1,3,0,1,1,0,1,0,0,0.0,0,1.0,0.0,0.0,63
+psf/requests,e7b8e9371a,merge changes,other,Python,Kenneth Reitz,2011-02-24 01:51:53-05:00,1,3,0,1,24,11,2,0,0,0.0,1,2.0,0.0,0.0,63
+psf/requests,3fe4753d5d,Cleanups,refactor,Python,Kenneth Reitz,2011-02-24 02:06:48-05:00,2,3,0,1,11,0,1,0,3,2.0,1,11.0,0.0,1.0,64
+psf/requests,22798ca32b,Prepping for v0.3.0 release.,other,Unknown,Kenneth Reitz,2011-02-25 04:40:33-05:00,4,4,0,1,10,0,1,0,0,0.0,0,10.0,0.0,0.0,65
+psf/requests,9a1d90d184,Proper async module docs,docs,Python,Kenneth Reitz,2011-02-25 04:43:18-05:00,4,4,0,1,4,3,1,0,0,0.0,0,1.0,0.0,0.0,65
+psf/requests,ccb7fdd8c2,Version bump,other,Python,Kenneth Reitz,2011-02-25 04:48:10-05:00,4,4,0,1,2,2,1,0,0,0.0,1,0.67,0.0,0.0,65
+psf/requests,14ba99f975,prettier imports,other,Python,Kenneth Reitz,2011-02-25 05:03:12-05:00,5,4,0,1,27,1,2,0,0,0.0,1,13.5,0.0,0.0,66
+psf/requests,9a8b25d5fa,makin' history,other,Unknown,Kenneth Reitz,2011-02-25 07:20:37-05:00,7,4,0,0,1,0,1,0,0,0.0,0,1.0,0.0,0.0,67
+psf/requests,32f75585ad,"url builder, cleanups",refactor,Python,Kenneth Reitz,2011-02-25 07:20:59-05:00,7,4,0,0,23,9,1,0,5,3.0,1,2.3,0.0,1.5,67
+psf/requests,a74e954788,test improvements,test,Python,Kenneth Reitz,2011-02-25 07:21:11-05:00,7,4,0,0,33,6,1,1,6,1.0,0,4.71,0.5,0.5,68
+psf/requests,b3b2b19212,hmmm,other,Python,Kenneth Reitz,2011-02-25 07:39:19-05:00,7,4,0,0,20,13,2,1,4,3.0,1,1.43,0.33,1.0,68
+psf/requests,b252cd8403,allow files to be upload along with form data,other,Python,Kenneth Reitz,2011-02-25 08:00:11-05:00,8,4,0,0,11,8,1,0,1,8.0,1,1.22,0.0,4.0,69
+psf/requests,839c8cf150,postbin tests were broken,test,Python,Kenneth Reitz,2011-02-25 08:00:23-05:00,8,4,0,0,13,19,1,1,2,1.0,0,0.65,0.5,0.5,70
+psf/requests,99c3970fd3,history,other,Unknown,Kenneth Reitz,2011-02-25 08:04:03-05:00,8,4,0,0,7,5,1,0,0,0.0,0,1.17,0.0,0.0,70
+psf/requests,dd01f8661e,hacking whitespace fixes,bugfix,Unknown,Kenneth Reitz,2011-02-25 08:11:10-05:00,8,4,0,0,8,7,1,0,0,0.0,0,1.0,0.0,0.0,70
+psf/requests,897dd3aaa8,whitespace,other,Unknown,Kenneth Reitz,2011-02-25 08:11:17-05:00,8,4,0,0,0,1,1,0,0,0.0,0,0.0,0.0,0.0,70
+psf/requests,270898e521,Readme Updates,docs,Unknown,Kenneth Reitz,2011-02-25 08:48:09-05:00,8,4,0,0,5,2,1,0,0,0.0,0,1.67,0.0,0.0,70
+psf/requests,f0d2ac3dd5,Readme update,docs,Unknown,Kenneth Reitz,2011-02-25 08:58:17-05:00,8,4,0,0,4,4,1,0,0,0.0,0,0.8,0.0,0.0,70
+psf/requests,f8032e08ae,tests cleanups,refactor,Python,Kenneth Reitz,2011-02-25 08:58:24-05:00,8,4,0,0,3,2,1,1,1,1.0,0,1.0,0.5,0.5,70
+psf/requests,ee43ad2497,Ignore those compiled files,other,Unknown,robmadole,2011-03-01 09:15:14-06:00,9,1,0,0,2,1,1,0,0,0.0,0,1.0,0.0,0.0,0
+psf/requests,e4c690e7bc,Initial support for cookies,other,Python,robmadole,2011-03-01 09:21:00-06:00,9,1,0,0,19,3,2,1,4,4.25,1,4.75,0.33,1.42,0
+psf/requests,c6acfef3d0,Added Justin Murphy to AUTHORS,feature,Unknown,Kenneth Reitz,2011-03-06 18:48:14-05:00,18,6,1,0,2,1,1,0,0,0.0,0,1.0,0.0,0.0,70
+psf/requests,9fdee250de,Better POSTER header compatibility (Fixes #13),bugfix,Python,Kenneth Reitz,2011-03-06 18:48:44-05:00,18,6,1,0,1,1,1,0,1,8.0,1,0.5,0.0,4.0,70
+psf/requests,e17111a5dd,testing requests with poster and adding headers,feature,Python,Kenneth Reitz,2011-03-06 18:50:28-05:00,18,6,1,0,11,0,1,1,1,1.0,0,11.0,0.5,0.5,71
+psf/requests,1d021c5cc1,Added Rob Madole to AUTHORS,feature,Unknown,Kenneth Reitz,2011-03-06 19:07:29-05:00,19,6,1,0,2,1,1,0,0,0.0,0,1.0,0.0,0.0,71
+psf/requests,a67cc5c5a9,someone stole the cookie jar,other,Python,Kenneth Reitz,2011-03-06 19:19:22-05:00,19,6,1,0,9,8,1,0,8,2.62,1,1.0,0.0,1.31,71
+psf/requests,48ffb627fe,added Aram Dulyan to authors,feature,Unknown,Kenneth Reitz,2011-03-09 13:22:47-05:00,13,2,0,0,2,1,1,0,0,0.0,0,1.0,0.0,0.0,72
+psf/requests,89192c64f0,"An empty cookiejar evaluates to False, so it needs to be compared to None for the cookie functionality to work.",other,Python,Aram Dulyan,2011-03-09 22:31:13+11:00,22,2,0,1,2,2,1,0,2,7.0,1,0.67,0.0,3.5,0
+psf/requests,be228043a1,whitespace fix,bugfix,Unknown,Kenneth Reitz,2011-03-21 20:45:37-04:00,20,0,0,0,1,1,1,0,0,0.0,0,0.5,0.0,0.0,72
+psf/requests,2401f14975,Fixing User-agent header problem introduced with Python 2.7.1,bugfix,Python,robmadole,2011-03-30 00:07:24-05:00,0,2,0,1,22,11,2,1,7,2.14,1,1.83,0.33,0.71,1
+psf/requests,e350bea167,added Request.read,feature,Python,Kenneth Reitz,2011-03-31 04:46:19-04:00,4,3,0,1,2,1,1,0,1,1.0,0,1.0,0.0,0.5,72
+psf/requests,f2b04f94ca,Response.read() [file like object],other,Python,Kenneth Reitz,2011-03-31 04:47:02-04:00,4,3,0,1,3,1,1,0,1,1.0,1,1.5,0.0,0.5,72
+psf/requests,267a852ba6,Update history,other,Unknown,Kenneth Reitz,2011-04-01 14:52:33-04:00,14,4,0,0,8,0,1,0,0,0.0,0,8.0,0.0,0.0,73
+psf/requests,ed8ff63048,Version bump to 0.3.1,other,Python,Kenneth Reitz,2011-04-01 14:53:53-04:00,14,4,0,0,2,2,1,0,0,0.0,1,0.67,0.0,0.0,73
+psf/requests,23d5761bd4,accept any extra args to r.read(),other,Python,Kenneth Reitz,2011-04-02 18:22:05-04:00,18,5,1,0,17,17,1,0,8,2.62,1,0.94,0.0,1.31,74
+psf/requests,7a62b10ff2,Automatically decompress gzipped responses if content-type is set. fixes #19,bugfix,Python,Kenneth Reitz,2011-04-14 19:44:29-04:00,19,3,0,0,8,1,1,0,1,3.0,1,4.0,0.0,1.5,75
+psf/requests,1359094cc8,test for gzip decompress,test,Python,Kenneth Reitz,2011-04-14 19:46:35-04:00,19,3,0,0,13,10,1,1,6,1.0,0,1.18,0.5,0.5,76
+psf/requests,2814664e91,Fixes #20.,bugfix,Python,Kenneth Reitz,2011-04-15 17:21:38-04:00,17,4,0,0,17,2,1,0,3,5.0,0,5.67,0.0,2.5,76
+psf/requests,f494cd9c72,add autoauth tuple http basic test,feature,Python,Kenneth Reitz,2011-04-15 17:24:03-04:00,17,4,0,0,8,1,1,1,2,1.0,0,4.0,0.5,0.5,76
+psf/requests,6e14d4704d,version bump,other,Python,Kenneth Reitz,2011-04-15 17:26:51-04:00,17,4,0,0,4,4,2,0,0,0.0,0,0.8,0.0,0.0,76
