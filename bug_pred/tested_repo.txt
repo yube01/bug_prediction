@@ -1,0 +1,74 @@
+microsoft/vscode                    184,300  bug             2/5      ✗ ✗ ✓ ✗ ✓       ❌ Poor
+ant-design/ant-design               97,855   🐛 Bug           3/5      ✗ ✓ ✗ ✓ ✓       🟡 Moderate
+mui/material-ui                     98,238   ?               0/0                      ❌ No bug label
+langgenius/dify                     139,242  bug             2/3      ✓ ✗ ✓           🟡 Moderate
+n8n-io/n8n                          185,704  bug             1/1      ✓               ✅ Excellent
+immich-app/immich                   98,689   changelog:bugfix 0/0                      ❌ Poor
+  ⏳ Rate limit low (14) — sleeping 44s
+DefinitelyTyped/DefinitelyTyped     51,201   Definition:Bug  4/5      ✓ ✗ ✓ ✓ ✓       ✅ Excellent
+react-hook-form/react-hook-form     44,681   bug             5/5      ✓ ✓ ✓ ✓ ✓       ✅ Excellent
+vuetifyjs/vuetify                   40,995   ?               0/0                      ❌ No bug label
+hexojs/hexo                         41,360   bug             4/5      ✓ ✓ ✓ ✓ ✗       ✅ Excellent
+
+
+
+
+2nd repo slot
+
+
+microsoft/monaco-editor             45,911   bug             5/5      ✓ ✓ ✓ ✓ ✓       ✅ Excellent
+prisma/prisma                       45,843   kind/bug        3/5      ✗ ✓ ✓ ✓ ✗       🟡 Moderate
+evanw/esbuild                       39,865   ?               0/0                      ❌ No bug label
+QuivrHQ/quivr                       39,122   bug             0/5      ✗ ✗ ✗ ✗ ✗       ❌ Poor
+NervJS/taro                         37,429   bug             0/5      ✗ ✗ ✗ ✗ ✗       ❌ Poor
+  ⏳ Rate limit low (14) — sleeping 42s
+trpc/trpc                           40,109   bug in documentation/example 4/5      ✓ ✗ ✓ ✓ ✓       ✅ Excellent
+lerna/lerna                         36,071   type: bug       2/5      ✓ ✗ ✓ ✗ ✗       ❌ Poor
+appsmithorg/appsmith                39,691   Bug             0/3      ✗ ✗ ✗           ❌ Poor
+colinhacks/zod                      42,507   ?               0/0                      ❌ No bug label
+
+
+
+
+3rd repo slot
+
+FlowiseAI/Flowise                   52,300   bug             3/5      ✓ ✓ ✓ ✗ ✗       🟡 Moderate
+typeorm/typeorm                     36,465   bug             3/5      ✓ ✓ ✗ ✗ ✓       🟡 Moderate
+ToolJet/ToolJet                     37,794   bug             1/5      ✗ ✗ ✗ ✗ ✓       ❌ Poor
+ccxt/ccxt                           42,078   bug             2/2      ✓ ✓             ✅ Excellent
+calcom/cal.diy                      42,143   ?               0/0                      ❌ No bug label
+  ⏳ Rate limit low (14) — sleeping 44s
+spacedriveapp/spacedrive            37,898   kind/bug        3/5      ✓ ✓ ✓ ✗ ✗       🟡 Moderate
+novuhq/novu                         38,866   bug             2/5      ✓ ✓ ✗ ✗ ✗       ❌ Poor
+
+
+
+4th repo slot
+
+makeplane/plane                     48,426   🐛bug            1/5      ✗ ✗ ✗ ✓ ✗       ❌ Poor
+payloadcms/payload                  42,042   Bug             5/5      ✓ ✓ ✓ ✓ ✓       ✅ Excellent
+swc-project/swc                     33,376   C-bug           3/5      ✗ ✓ ✓ ✗ ✓       🟡 Moderate
+refinedev/refine                    34,559   bug             4/5      ✓ ✗ ✓ ✓ ✓       ✅ Excellent
+sequelize/sequelize                 30,354   type: bug       3/5      ✓ ✓ ✓ ✗ ✗       🟡 Moderate
+  ⏳ Rate limit low (14) — sleeping 40s
+expo/expo                           49,032   bug             2/5      ✗ ✓ ✗ ✗ ✓       ❌ Poor
+directus/directus                   34,919   Bug             3/5      ✓ ✗ ✗ ✓ ✓       🟡 Moderate
+
+
+5th repo slot
+
+statelyai/xstate                    29,544   bug             5/5      ✓ ✓ ✓ ✓ ✓       ✅ Excellent
+vercel/turborepo                    30,262   kind: bug       4/5      ✓ ✓ ✗ ✓ ✓       ✅ Excellent
+withfig/autocomplete                25,143   bug             2/5      ✗ ✓ ✗ ✓ ✗       ❌ Poor
+NativeScript/NativeScript           25,499   bug             5/5      ✓ ✓ ✓ ✓ ✓       ✅ Excellent
+TanStack/table                      27,928   ?               0/0                      ❌ No bug label
+  ⏳ Rate limit low (14) — sleeping 42s
+react-bootstrap/react-bootstrap     22,634   bug             3/5      ✓ ✓ ✗ ✓ ✗       🟡 Moderate
+BabylonJS/Babylon.js                25,426   bug             0/0                      ❌ Poor
+mantinedev/mantine                  31,063   ?               0/0                      ❌ No bug label
+recharts/recharts                   27,050   bug             5/5      ✓ ✓ ✓ ✓ ✓       ✅ Excellent
+palantir/blueprint                  21,682   Resolution: not a bug 0/5      ✗ ✗ ✗ ✗ ✗       ❌ Poor
+
+
+
+
