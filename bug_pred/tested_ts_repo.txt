@@ -72,10 +72,3 @@ palantir/blueprint                  21,682   Resolution: not a bug 0/5      ✗ 
 
 
 
-
-
-
-
-
-
-

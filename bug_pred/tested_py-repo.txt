@@ -1,0 +1,67 @@
+Repo                                Stars    Label           Rate     Per Issue       Verdict
+-----------------------------------------------------------------------------------------------
+pandas-dev/pandas                   48,590   Bug             0/0                      ❌ Poor
+scipy/scipy                         14,645   defect          1/2      ✓ ✗             🟡 Moderate
+numpy/numpy                         31,915   00 - Bug        2/2      ✓ ✓             ✅ Excellent
+pola-rs/polars                      38,321   bug             4/5      ✓ ✓ ✗ ✓ ✓       ✅ Excellent
+matplotlib/matplotlib               22,744   PR: bugfix      0/0                      ❌ Poor
+mwaskom/seaborn                     13,829   bug             4/5      ✓ ✓ ✓ ✓ ✗       ✅ Excellent
+
+
+
+2nd repo slot
+
+-----------------------------------------------------------------------------------------------
+plotly/plotly.py                    18,483   bug             4/5      ✓ ✓ ✓ ✗ ✓       ✅ Excellent
+holoviz/holoviews                   2,891    type: bug       4/5      ✓ ✗ ✓ ✓ ✓       ✅ Excellent
+keras-team/keras                    64,048   type:Bug        5/5      ✓ ✓ ✓ ✓ ✓       ✅ Excellent
+pytorch/pytorch                     99,486   ?               0/0                      ❌ No bug label
+scikit-learn/scikit-learn           65,933   Bug             3/5      ✗ ✓ ✗ ✓ ✓       🟡 Moderate
+  ⏳ Rate limit low (14) — sleeping 32s
+mlflow/mlflow                       25,596   bug             2/5      ✗ ✗ ✓ ✗ ✓       ❌ Poor
+nltk/nltk                           14,597   bug             2/5      ✓ ✗ ✓ ✗ ✗       ❌ Poor
+
+
+
+3rd repo slot
+
+Repo                                Stars    Label           Rate     Per Issue       Verdict
+-----------------------------------------------------------------------------------------------
+piskvorky/gensim                    16,399   bug             1/5      ✗ ✗ ✗ ✗ ✓       ❌ Poor
+explosion/spaCy                     33,519   bug             3/5      ✗ ✓ ✓ ✓ ✗       🟡 Moderate
+holoviz/panel                       5,665    ?               0/0                      ❌ No bug label
+plotly/dash                         24,153   bug             1/5      ✓ ✗ ✗ ✗ ✗       ❌ Poor
+streamlit/streamlit                 44,380   area:debugging  4/5      ✓ ✗ ✓ ✓ ✓       ✅ Excellent
+  ⏳ Rate limit low (14) — sleeping 34s
+python-pillow/Pillow                13,535   Bug             2/5      ✗ ✓ ✓ ✗ ✗       ❌ Poor
+scikit-image/scikit-image           6,504    :adhesive_bandage: type: Bug fix 0/0                      ❌ Poor
+
+
+
+4rd repo slot
+
+
+Repo                                Stars    Label           Rate     Per Issue       Verdict
+-----------------------------------------------------------------------------------------------
+langchain-ai/langchain              135,153  bug             2/5      ✓ ✓ ✗ ✗ ✗       ❌ Poor
+run-llama/llama_index               48,988   bug             3/5      ✓ ✗ ✓ ✗ ✓       🟡 Moderate
+vllm-project/vllm                   78,354   bug             0/0                      ❌ Poor
+numba/numba                         10,995   bug             4/5      ✓ ✓ ✗ ✓ ✓       ✅ Excellent
+dask/dask                           13,808   bug             4/5      ✓ ✓ ✓ ✗ ✓       ✅ Excellent
+ray-project/ray                     42,338   bug             2/5      ✗ ✓ ✓ ✗ ✗       ❌ Poor
+apache/airflow                      45,216   ?               0/0                      ❌ No bug label
+
+
+
+5 repo slot
+
+
+intake/intake                       1,075    bug             1/3      ✗ ✗ ✓           ❌ Poor
+PrefectHQ/prefect                   22,260   bug             2/2      ✓ ✓             ✅ Excellent
+fastapi/fastapi                     97,708   bug             0/0                      ❌ Poor
+flyteorg/flytekit                   315      bug             0/0                      ❌ Poor
+onnx/onnx                           20,726   bug             3/5      ✗ ✗ ✓ ✓ ✓       🟡 Moderate
+
+
+
+
