@@ -1,0 +1,229 @@
+Step 1 — Install Packages
+What it does:
+pip install requests pandas pydriller gitpython...
+Simple: Downloads all tools needed before anything else runs. Like buying ingredients before cooking.
+
+Step 2 — Configuration
+What it does: Sets up all settings in one place.
+Simple breakdown:
+GITHUB_TOKEN      → Your password to talk to GitHub API
+DATE_RANGES       → 3 time periods to collect data from
+                    2018-2020, 2021-2023, 2024-2026
+REPOS_BY_LANG     → Which repos to scrape per language
+                    Python: [numpy, pandas...]
+                    JavaScript: [next.js]
+COMMITS_PER_REPO  → How many commits to collect (500)
+MAX_ISSUES        → How many bug issues to fetch (20)
+BUG_LABELS        → All possible names for "bug" label
+                    ['bug','Bug','BUG','type:bug'...]
+BUG_KEYWORDS      → Words that suggest a bugfix commit
+                    ['fix','crash','hotfix','closes #'...]
+IGNORE_PATTERNS   → Lines to skip during git blame
+                    blank lines, comments, imports
+gh_get()          → Helper that calls GitHub API safely
+                    auto-waits when rate limit is hit
+Bug in your config:
+python'Python': ['']   ← empty — should be ['numpy/numpy', ...]
+
+Step 2b — Repo Scoring (Before Committing to Scrape)
+What it does: Tests each candidate repo BEFORE wasting time scraping.
+Simple:
+For each repo candidate:
+  → Does it have a bug label?
+  → Do closed bug issues link to commits?
+  → Score: Excellent / Moderate / Poor
+
+Like checking a restaurant's reviews before going
+Output example:
+numpy/numpy    ✅ Excellent  4/5 issues linked
+django/django  ❌ Poor       0/5 issues linked
+Only scrape repos that score Excellent or Moderate.
+
+Step 3 — Detect Bug Label Per Repo
+What it does: Finds the correct bug label name for each repo automatically.
+Simple:
+numpy uses    → "00 - Bug"
+pandas uses   → "Bug"
+express uses  → "bug"
+django uses   → nothing (no bug label!)
+Instead of hardcoding, it:
+Step 1: Fetch all labels from repo
+Step 2: Check known variants ['bug','Bug','BUG'...]
+Step 3: If none match → fuzzy check any label with 'bug' in name
+Step 4: If still nothing → skip that repo
+
+Step 4 — Fetch Bug Issues and Find Fix Commits
+What it does: This is the first half of SZZ — finding which commits fixed real bugs.
+Simple — two parts:
+Part A: Fetch bug issues
+GitHub Issues with label "bug" + state "closed"
+→ These are real bugs that were reported and fixed
+→ Collect up to 20 per repo
+Part B: Find the commit that closed each issue
+Uses 2 strategies:
+Strategy 1 — Referenced event:
+  Issue #234 events → "referenced" event → commit SHA
+  Direct link, most reliable
+
+Strategy 2 — PR search:
+  Search GitHub for merged PRs mentioning "#234"
+  Get the PR's merge commit SHA
+  Used when Strategy 1 fails
+Output:
+verified_fix_commits = {
+  'abc123...': {repo, issue_num, issue_title}
+  'def456...': {repo, issue_num, issue_title}
+  ...45 total
+}
+
+Step 5 — Clone Repos Locally
+What it does: Downloads actual git repo to your computer.
+Simple:
+git clone https://github.com/numpy/numpy.git
+Why needed? Because next step uses git blame which needs local files — you cannot git blame over the internet.
+If repo already cloned → just update (git pull)
+If not cloned yet      → fresh clone
+
+Step 6 — Extract Commit Features (PyDriller)
+What it does: Goes through each commit and pulls out all 15 features.
+Simple — for each commit it extracts:
+lines_added       ← commit.insertions
+lines_deleted     ← commit.deletions
+files_changed     ← commit.files
+avg_complexity    ← method.complexity
+test_files        ← filename has "test" or "spec"
+language          ← file extension mapping
+commit_type       ← keywords in message
+commit_hour       ← time of commit
+is_weekend        ← Saturday or Sunday?
+Important settings:
+pythonorder='reverse'   → newest commits first
+                    (so it overlaps with recent fix commits)
+since=start       → only collect within date range
+to=end            → e.g. 2018 to 2020
+max 200 per period → per language per time period
+skip merge commits → len(parents) > 1
+All commits stored with full 40-char SHA as key:
+pythonall_commits['abc123...full...sha'] = {features}
+
+Step 7 — SZZ Blame Loop
+What it does: The core of SZZ — traces bug-fix commits backwards to find who introduced the bug.
+Simple step by step:
+For each fix commit (from Step 4):
+  
+  1. Get the lines it changed (git diff)
+     "Fix changed lines 42, 67, 89 in login.py"
+  
+  2. Skip noise lines
+     blank, comments, imports → ignored
+  
+  3. git blame each line BEFORE the fix
+     "Who wrote line 42 before this fix existed?"
+     → Points to commit ABC (from 3 months ago)
+  
+  4. Check 3 filters:
+     ✓ Is ABC in our collected commits?
+     ✓ Is ABC NOT a refactor commit?
+     ✓ Is ABC older than the fix commit?
+  
+  5. If all pass → label ABC as is_buggy = 1
+     Calculate confidence = lines blamed / total lines changed
+Stats output:
+fix_commits   : 45   (how many fixes processed)
+lines_blamed  : 140  (how many lines traced)
+refactor_skip : 1    (skipped — was just renaming)
+time_skip     : 0    (skipped — wasn't older)
+no_match      : 56   (SHA not in our dataset)
+labeled       : 12   (real SZZ labels found)
+
+Step 8 — Hybrid Labeling
+What it does: Applies labels to the dataset. If SZZ found too few, adds keyword labels as backup.
+Simple — 3 phases:
+Phase 1: Reset everything
+All commits → is_buggy = 0
+Start fresh to avoid old labels bleeding in
+Phase 2: Apply SZZ labels
+12 commits SZZ found → is_buggy = 1, confidence = 0.85
+Phase 3: Keyword fallback (if SZZ < 20)
+Search commit messages for:
+"fixes #", "closes #", "bugfix", "hotfix"
+AND commit_type == bugfix
+→ label as is_buggy = 1, confidence = 0.4
+Max 100 keyword labels (hard cap)
+Why hybrid:
+SZZ alone     → too few labels (12) → model can't learn
+Keyword alone → too noisy (660)     → model learns wrong things
+Hybrid        → 12 + 18 = 30       → balanced and accurate
+
+Step 9 — Build DataFrame and Feature Engineering
+What it does: Converts all collected data into a proper table and adds 3 calculated columns.
+Simple:
+all_commits dict → pandas DataFrame (2000 rows × 26 columns)
+
+New columns calculated:
+  churn_ratio         = lines_added / (lines_deleted + 1)
+  test_ratio          = test_files / (files_changed + 1)
+  complexity_per_file = avg_complexity / (files_changed + 1)
+
+prior_bugs_author:
+  Sort by date → for each commit count how many bugs
+  that author caused BEFORE this commit
+  → rolling history per developer
+
+Step 10 — Save CSV Files
+What it does: Saves two versions of the data.
+Simple:
+szz_final_labels.csv      → FULL version
+                             all 26 columns
+                             includes metadata (author, message, sha)
+
+szz_training_ready.csv    → CLEAN version
+                             drops metadata columns
+                             only features + is_buggy
+                             ready to feed directly into model
+
+Step 11 — EDA (Charts and Analysis)
+What it does: Creates 6 charts to verify data quality.
+Simple — what each chart shows:
+Chart 1: Label distribution
+         → How many clean vs buggy (should be ~95/5)
+
+Chart 2: Label source
+         → How many SZZ vs keyword labels
+
+Chart 3: Confidence distribution
+         → Are labels high confidence or low?
+
+Chart 4: Lines added box plot
+         → Do buggy commits have more lines than clean?
+
+Chart 5: Correlation heatmap
+         → Which features actually correlate with bugs?
+
+Chart 6: Bug rate by commit type
+         → bugfix type = highest bug rate?
+
+Step 12 — Load into Training Notebook
+What it does: Instructions to use the data in the actual model training notebook.
+Simple:
+pythondf = pd.read_csv('szz_training_ready.csv')
+
+# Optional filter — only high quality labels
+df = df[df['confidence'] >= 0.3]
+
+# Then train your model
+RandomForestClassifier(class_weight='balanced')
+
+Full Picture in One Flow:
+Step 1  → Install tools
+Step 2  → Set config + score repos
+Step 3  → Find correct bug label per repo
+Step 4  → Find fix commits from GitHub Issues
+Step 5  → Clone repos locally
+Step 6  → Extract 15 features per commit
+Step 7  → SZZ: blame lines → find bug introducer
+Step 8  → Label bugs (SZZ + keyword fallback)
+Step 9  → Build DataFrame + engineer features
+Step 10 → Save CSV files
+Step 11 → Visualize data quality
+Step 12 → Load into model training
