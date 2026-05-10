@@ -53,7 +53,7 @@ refinedev/refine                    34,559   bug             4/5      ✓ ✗ �
 sequelize/sequelize                 30,354   type: bug       3/5      ✓ ✓ ✓ ✗ ✗       🟡 Moderate
   ⏳ Rate limit low (14) — sleeping 40s
 expo/expo                           49,032   bug             2/5      ✗ ✓ ✗ ✗ ✓       ❌ Poor
-directus/directus                   34,919   Bug             3/5      ✓ ✗ ✗ ✓ ✓       🟡 Moderate
+
 
 
 5th repo slot
