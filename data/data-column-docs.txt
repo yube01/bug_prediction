@@ -1,0 +1,156 @@
+Timing Columns
+
+commit_hour
+What  : Hour of day the commit was made (0-23)
+Range : 0 to 23
+Sample: 15 = 3pm
+Why   : Night commits (10pm-5am) are historically riskier
+
+day_of_week
+What  : Day of week (0=Monday to 6=Sunday)
+Range : 0 to 6
+Sample: 6 = Sunday
+Why   : Weekend commits tend to be less reviewed
+
+is_weekend
+What  : Was it committed on Saturday or Sunday?
+Values: 0 = weekday,  1 = weekend
+Sample: 1 = yes it was a weekend commit
+Why   : Weekend = less team around = less review
+
+is_night_commit
+What  : Was it committed after 10pm or before 5am?
+Values: 0 = day,  1 = night
+Sample: 0 = committed during day
+Why   : Late night = tired developer = more mistakes
+
+
+
+Size Columns
+
+lines_added
+What  : How many lines of code were added
+Range : 0 to 1,572,552 (yes one commit added 1.5M lines!)
+Sample: 2 lines added
+Why   : Bigger commits = harder to review = more bugs
+
+lines_deleted
+What  : How many lines of code were removed
+Range : 0 to 1,089,731
+Sample: 2 lines deleted
+Why   : Large deletions can accidentally remove important logic
+
+files_changed
+What  : How many files were touched in this commit
+Range : 0 to 2,032
+Sample: 1 file changed
+Why   : Touching many files = more chances to break something
+
+
+
+Test Quality Columns
+
+test_files_changed
+What  : How many test files were modified
+Range : 0 to 193
+Sample: 1 test file changed
+Why   : If you change code but not tests = risky
+        If you change tests too = safer
+
+
+test_ratio
+What  : test_files_changed / files_changed
+Range : 0.0 to 0.99
+Sample: 0.5 = half the changed files were test files
+Why   : Higher ratio = better test coverage in this commit
+        0.0 = no tests updated at all (risky)
+        1.0 = only test files changed (very safe)
+
+
+
+Complexity Columns
+num_methods
+What  : How many functions/methods were changed
+Range : 0 to 5,577
+Sample: 1 method changed
+Why   : More methods changed = more logic affected = riskier
+
+
+avg_complexity
+What  : Average cyclomatic complexity of changed methods
+Range : 0 to 579.75
+Sample: 19.0
+Why   : Cyclomatic complexity = number of decision paths in code
+        Higher = more if/else/loops = harder to get right
+        Simple: complexity 1 = straight line code
+                complexity 10 = 10 different paths through code
+
+
+complexity_per_file
+What  : avg_complexity / files_changed
+Range : 0 to 95.5
+Sample: 9.5
+Why   : Measures how dense the complexity is
+        High = complex code crammed into few files
+        Derived column — calculated from above two
+
+
+
+Derived Size Columns
+
+churn_ratio
+What  : lines_added / (lines_deleted + 1)
+Range : 0 to 11,614
+Sample: 0.67 = deleted more than added (cleanup commit)
+Why   : High ratio = added much more than deleted
+        Low ratio  = cleaned up more than added
+        Balance = normal feature commit
+
+
+
+Label Columns
+is_buggy
+What  : Did this commit introduce a bug?
+Values: 0 = clean commit
+        1 = bug-introducing commit
+Sample: 0 = this commit was clean
+This is your TARGET — what the model predicts
+confidence
+What  : How confident is the label?
+Range : 0.006 to 1.0
+Values: 1.0   = clean commit (very sure)
+        0.85  = SZZ labeled (highly confident)
+        0.4   = keyword labeled (less confident)
+Sample: 1.0 = clean, very confident
+Note  : NOT used as a feature — only for filtering
+
+
+
+Group Columns
+
+language_group
+What  : Programming language of the repo
+Values: Python or TypeScript
+Sample: Python
+Why   : Used to separate models in cross-language experiment
+Note  : NOT used as feature in language-specific model
+        IS used as feature in universal model (lang_enc)
+
+
+time_period
+What  : Which era the commit belongs to
+Values: 2018-2020, 2021-2023, 2024-2026
+Sample: 2018-2020
+Why   : Used for concept drift analysis
+        Does bug prediction change across time periods?
+Note  : Encoded to number (time_enc) before training
+
+
+prior_bugs_author
+What  : How many bugs this author caused BEFORE this commit
+Range : 0 to 59
+Sample: 0 = first time this author caused a bug
+Why   : STRONGEST predictor (0.30 correlation)
+        If an author caused 5 bugs before
+        they are statistically more likely to cause another
+        Rolling count — only counts past bugs not future
