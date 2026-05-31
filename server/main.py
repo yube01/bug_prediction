@@ -19,7 +19,7 @@ import joblib
 import os
 
 # ── Load model files ─────────────────────────────────────────
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'modalv1')
 
 try:
     model        = joblib.load(os.path.join(BASE_DIR, 'bug_prediction_model.pkl'))
