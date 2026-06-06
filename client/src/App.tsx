@@ -1,147 +1,213 @@
-import { useEffect, useState } from 'react'
-import { getHealth } from './api'
-import type { HealthResponse } from './types'
-import PredictPage from './pages/PredictPage'
-import ModelPage   from './pages/ModelPage'
+import { useState, useCallback } from 'react'
+import type { GithubCommit, GithubBranch, RepoStats } from './types'
+import { fetchBranches, fetchCommits, parseRepo } from './api/github'
+import RepoInput    from './components/website/RepoInput'
+import BranchSelect from './components/website/BranchSelect'
+import StatCards    from './components/website/StatCards'
+import CommitRow    from './components/website/CommitRow'
+import Pagination   from './components/website/Pagination'
+import RateLimitBar from './components/website/RateLimitBar'
 
-type Page = 'predict' | 'model'
+const PER_PAGE = 20
+type Status = 'idle' | 'ok' | 'error'
 
 export default function App() {
-  const [page,   setPage]   = useState<Page>('predict')
-  const [health, setHealth] = useState<HealthResponse | null>(null)
+  const [repo,          setRepo]          = useState('')
+  const [branches,      setBranches]      = useState<GithubBranch[]>([])
+  const [currentBranch, setCurrentBranch] = useState('')
+  const [commits,       setCommits]       = useState<GithubCommit[]>([])
+  const [stats,         setStats]         = useState<RepoStats | null>(null)
+  const [page,          setPage]          = useState(1)
+  const [loading,       setLoading]       = useState(false)
+  const [status,        setStatus]        = useState<Status>('idle')
+  const [error,         setError]         = useState<string | null>(null)
 
-  useEffect(() => {
-    getHealth()
-      .then(setHealth)
-      .catch(() => setHealth({ status: 'error', model_loaded: false, version: '' }))
+  const loadCommits = useCallback(async (repoName: string, branch: string) => {
+    setLoading(true)
+    setError(null)
+    setCommits([])
+    setStats(null)
+    try {
+      const page1 = await fetchCommits(repoName, branch, 1)
+      let all = page1
+      if (page1.length === 100) {
+        const page2 = await fetchCommits(repoName, branch, 2).catch(() => [])
+        all = [...page1, ...page2]
+      }
+      setCommits(all)
+      setPage(1)
+      setStatus('ok')
+
+      const dates   = all.map(c => new Date(c.commit.author.date).getTime())
+      const newest  = Math.max(...dates)
+      const oldest  = Math.min(...dates)
+      const authors = new Set(all.map(c => c.commit.author.email)).size
+      setStats({
+        totalCommits: all.length,
+        contributors: authors,
+        spanDays:     Math.max(1, Math.round((newest - oldest) / 86400000)),
+        oldestDate:   new Date(oldest).toISOString(),
+        newestDate:   new Date(newest).toISOString(),
+      })
+    } catch (e) {
+      setError((e as Error).message)
+      setStatus('error')
+    } finally {
+      setLoading(false)
+    }
   }, [])
 
-  const online     = health?.status === 'ok'
-  const dotColor   = online ? '#00c97a' : '#f03a4f'
-  const statusText = health ? (online ? 'API ONLINE' : 'API OFFLINE') : 'CHECKING...'
+  const handleLoad = useCallback(async (input: string) => {
+    const repoName = parseRepo(input)
+    if (!repoName) { setError('Enter a valid repo: owner/repo or paste the GitHub URL'); return }
+    setLoading(true)
+    setError(null)
+    setRepo(repoName)
+    setStatus('idle')
+    try {
+      const branchList = await fetchBranches(repoName)
+      setBranches(branchList)
+      const defaultBranch =
+        branchList.find(b => b.name === 'main')?.name ??
+        branchList.find(b => b.name === 'master')?.name ??
+        branchList[0]?.name ?? 'main'
+      setCurrentBranch(defaultBranch)
+      await loadCommits(repoName, defaultBranch)
+    } catch (e) {
+      setError((e as Error).message)
+      setStatus('error')
+      setLoading(false)
+    }
+  }, [loadCommits])
+
+  const handleBranchChange = useCallback(async (branch: string) => {
+    setCurrentBranch(branch)
+    await loadCommits(repo, branch)
+  }, [repo, loadCommits])
+
+  const paginated  = commits.slice((page - 1) * PER_PAGE, page * PER_PAGE)
+  const totalPages = Math.ceil(commits.length / PER_PAGE)
 
   return (
-    <div style={{ minHeight: '100vh', background: 'var(--bg)' }}>
+    <div style={{ maxWidth: 860, margin: '0 auto', padding: '2rem 1.5rem', fontFamily: 'var(--font-sans)' }}>
 
-      {/* Grid bg */}
+      {/* Header row */}
       <div style={{
-        position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 0,
-        backgroundImage: `
-          linear-gradient(rgba(91,82,232,0.025) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(91,82,232,0.025) 1px, transparent 1px)
-        `,
-        backgroundSize: '36px 36px',
-      }} />
-
-      {/* Header */}
-      <header style={{
-        position: 'sticky', top: 0, zIndex: 100,
-        background: 'rgba(7,7,15,0.88)', backdropFilter: 'blur(18px)',
-        borderBottom: '1px solid var(--border)', padding: '0 28px',
+        display: 'flex', justifyContent: 'space-between',
+        alignItems: 'flex-start', marginBottom: '1.5rem',
       }}>
+        <div>
+          <h1 style={{ fontSize: 22, fontWeight: 500, marginBottom: '0.25rem' }}>
+            Commit explorer
+          </h1>
+          <p style={{ fontSize: 14, color: 'var(--color-text-secondary)' }}>
+            Enter a public GitHub repo to browse commits with bug risk indicators.
+          </p>
+        </div>
+
+        {/* Rate limit indicator — top right */}
+        <div style={{ flexShrink: 0, marginTop: 4 }}>
+          <RateLimitBar />
+        </div>
+      </div>
+
+      {/* Input card */}
+      <div style={{
+        background: 'var(--color-background-primary)',
+        border: '0.5px solid var(--color-border-tertiary)',
+        borderRadius: 'var(--border-radius-lg)',
+        padding: '1rem 1.25rem',
+        marginBottom: '1rem',
+        display: 'flex', flexDirection: 'column', gap: 12,
+      }}>
+        <RepoInput onLoad={handleLoad} loading={loading} />
+        <BranchSelect
+          branches={branches}
+          currentBranch={currentBranch}
+          onChange={handleBranchChange}
+          loading={loading}
+          status={status}
+        />
+      </div>
+
+      {/* Error */}
+      {error && (
         <div style={{
-          maxWidth: 1160, margin: '0 auto',
-          display: 'flex', alignItems: 'center', gap: 28, height: 58,
+          padding: '12px 16px',
+          borderRadius: 'var(--border-radius-md)',
+          background: '#FCEBEB', color: '#A32D2D',
+          border: '0.5px solid #F09595',
+          fontSize: 13, marginBottom: '1rem',
         }}>
-          {/* Logo */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 9 }}>
-            <div style={{
-              width: 30, height: 30, borderRadius: 7,
-              background: 'linear-gradient(135deg, var(--accent), var(--accent2))',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontSize: 14, boxShadow: '0 4px 12px rgba(91,82,232,0.4)',
-            }}>🐛</div>
-            <div>
-              <div style={{ fontFamily: 'Syne', fontWeight: 800, fontSize: 14, letterSpacing: '0.02em' }}>
-                BugPredict
-              </div>
-              <div style={{ fontSize: 8, color: '#44446a', letterSpacing: '0.12em' }}>
-                CLZ RESEARCH
-              </div>
-            </div>
-          </div>
+          {error}
+        </div>
+      )}
 
-          {/* Nav */}
-          <nav style={{ display: 'flex', gap: 3, flex: 1 }}>
-            {([
-              { id: 'predict' as Page, label: '[ PREDICT ]' },
-              { id: 'model'   as Page, label: '[ MODEL INFO ]' },
-            ]).map(({ id, label }) => (
-              <button key={id} onClick={() => setPage(id)} style={{
-                padding: '7px 14px', borderRadius: 'var(--r2)',
-                border: `1px solid ${page === id ? 'var(--accent)44' : 'transparent'}`,
-                background: page === id ? 'rgba(91,82,232,0.1)' : 'transparent',
-                color: page === id ? 'var(--accent2)' : 'var(--text2)',
-                cursor: 'pointer', fontFamily: 'Space Mono', fontSize: 11,
-                transition: 'all 0.2s',
-              }}>
-                {label}
-              </button>
-            ))}
-          </nav>
-
-          {/* Status */}
+      {/* Loading */}
+      {loading && (
+        <div style={{
+          display: 'flex', justifyContent: 'center',
+          alignItems: 'center', gap: 10,
+          padding: '2.5rem',
+          color: 'var(--color-text-secondary)', fontSize: 13,
+        }}>
           <div style={{
-            display: 'flex', alignItems: 'center', gap: 7,
-            padding: '5px 12px', borderRadius: 999,
-            background: online ? 'rgba(0,201,122,0.07)' : 'rgba(240,58,79,0.07)',
-            border: `1px solid ${dotColor}30`,
+            width: 20, height: 20,
+            border: '2px solid var(--color-border-tertiary)',
+            borderTopColor: 'var(--color-text-secondary)',
+            borderRadius: '50%',
+            animation: 'spin 0.7s linear infinite',
+          }} />
+          Fetching commits…
+        </div>
+      )}
+
+      {/* Stats */}
+      {!loading && stats && (
+        <div style={{ marginBottom: '1rem' }}>
+          <StatCards stats={stats} branch={currentBranch} repoName={repo.split('/')[1]} />
+        </div>
+      )}
+
+      {/* Commit list */}
+      {!loading && commits.length > 0 && (
+        <div style={{
+          background: 'var(--color-background-primary)',
+          border: '0.5px solid var(--color-border-tertiary)',
+          borderRadius: 'var(--border-radius-lg)',
+          padding: '0 1.25rem',
+        }}>
+          <div style={{
+            display: 'flex', justifyContent: 'space-between',
+            alignItems: 'center',
+            padding: '1rem 0',
+            borderBottom: '0.5px solid var(--color-border-tertiary)',
           }}>
-            <div style={{
-              width: 6, height: 6, borderRadius: '50%',
-              background: dotColor, boxShadow: `0 0 7px ${dotColor}`,
-              animation: online ? 'pulse 2s ease infinite' : 'none',
-            }} />
-            <span style={{ fontSize: 9, color: dotColor, fontFamily: 'Space Mono', letterSpacing: '0.1em' }}>
-              {statusText}
+            <span style={{ fontSize: 13, color: 'var(--color-text-secondary)' }}>
+              Showing {(page - 1) * PER_PAGE + 1}–{Math.min(page * PER_PAGE, commits.length)} of {commits.length} commits
+            </span>
+            <span style={{ fontSize: 12, color: 'var(--color-text-secondary)' }}>
+              Page {page} of {totalPages}
             </span>
           </div>
-        </div>
-      </header>
 
-      {/* Content */}
-      <main style={{ maxWidth: 1160, margin: '0 auto', padding: '28px 28px 72px', position: 'relative', zIndex: 1 }}>
-        <div style={{ marginBottom: 26 }}>
-          {page === 'predict' ? (
-            <>
-              <div style={{ fontSize: 10, color: 'var(--accent)', textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: 7, fontFamily: 'Space Mono' }}>
-                ▸ COMMIT ANALYSIS
-              </div>
-              <h1 style={{ fontFamily: 'Syne', fontWeight: 800, fontSize: 26, lineHeight: 1.2 }}>
-                Predict Bug Risk
-              </h1>
-              <p style={{ color: 'var(--text2)', marginTop: 7, fontSize: 12, maxWidth: 500 }}>
-                Enter commit details to get a bug probability score — Random Forest trained on 16,722 real GitHub commits.
-              </p>
-            </>
-          ) : (
-            <>
-              <div style={{ fontSize: 10, color: 'var(--accent)', textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: 7, fontFamily: 'Space Mono' }}>
-                ▸ MODEL DETAILS
-              </div>
-              <h1 style={{ fontFamily: 'Syne', fontWeight: 800, fontSize: 26, lineHeight: 1.2 }}>
-                Model Information
-              </h1>
-              <p style={{ color: 'var(--text2)', marginTop: 7, fontSize: 12, maxWidth: 500 }}>
-                Performance metrics, features, and risk thresholds for the CLZ bug prediction model.
-              </p>
-            </>
-          )}
-        </div>
+          {paginated.map(c => (
+            <CommitRow key={c.sha} commit={c} repo={repo} />
+          ))}
 
-        <div key={page} style={{ animation: 'fadeUp 0.3s ease' }}>
-          {page === 'predict' && <PredictPage />}
-          {page === 'model'   && <ModelPage />}
+          <div style={{ padding: '1rem 0' }}>
+            <Pagination
+              currentPage={page}
+              totalPages={totalPages}
+              onPageChange={setPage}
+            />
+          </div>
         </div>
-      </main>
+      )}
 
-      <footer style={{
-        borderTop: '1px solid var(--border)', padding: '16px 28px',
-        textAlign: 'center', color: '#44446a', fontSize: 10,
-        fontFamily: 'Space Mono', letterSpacing: '0.05em',
-      }}>
-        CLZ Bug Prediction System — Random Forest | AUC 0.869 | 16,722 commits | Python + TypeScript | 2018–2026
-      </footer>
+      <style>{`
+        @keyframes spin { to { transform: rotate(360deg) } }
+      `}</style>
     </div>
   )
 }
