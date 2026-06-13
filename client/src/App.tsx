@@ -1,6 +1,8 @@
 import { useState, useCallback } from 'react'
 import type { GithubCommit, GithubBranch, RepoStats } from './types'
-import { fetchBranches, fetchCommits, parseRepo } from './api/github'
+import { predictBatch } from './api'
+import { fetchBranches, fetchCommitDetails, fetchCommits, parseRepo } from './api/github'
+import { buildCommitFeatures } from './utils/modelFeatures'
 import RepoInput    from './components/website/RepoInput'
 import BranchSelect from './components/website/BranchSelect'
 import StatCards    from './components/website/StatCards'
@@ -10,6 +12,29 @@ import RateLimitBar from './components/website/RateLimitBar'
 
 const PER_PAGE = 20
 type Status = 'idle' | 'ok' | 'error'
+
+async function mapWithLimit<T, R>(
+  items: T[],
+  limit: number,
+  mapper: (item: T) => Promise<R>,
+): Promise<R[]> {
+  const results: R[] = []
+  let index = 0
+
+  async function worker() {
+    while (index < items.length) {
+      const current = index
+      index += 1
+      results[current] = await mapper(items[current])
+    }
+  }
+
+  await Promise.all(
+    Array.from({ length: Math.min(limit, items.length) }, () => worker()),
+  )
+
+  return results
+}
 
 export default function App() {
   const [repo,          setRepo]          = useState('')
@@ -21,10 +46,12 @@ export default function App() {
   const [loading,       setLoading]       = useState(false)
   const [status,        setStatus]        = useState<Status>('idle')
   const [error,         setError]         = useState<string | null>(null)
+  const [predictionError, setPredictionError] = useState<string | null>(null)
 
   const loadCommits = useCallback(async (repoName: string, branch: string) => {
     setLoading(true)
     setError(null)
+    setPredictionError(null)
     setCommits([])
     setStats(null)
     try {
@@ -34,16 +61,32 @@ export default function App() {
         const page2 = await fetchCommits(repoName, branch, 2).catch(() => [])
         all = [...page1, ...page2]
       }
-      setCommits(all)
+      const detailed = await mapWithLimit(all, 8, commit =>
+        fetchCommitDetails(repoName, commit.sha).catch(() => commit),
+      )
+
+      try {
+        const features = buildCommitFeatures(detailed)
+        const batch = await predictBatch(features)
+        const withPredictions = detailed.map((commit, i) => ({
+          ...commit,
+          prediction: batch.predictions[i],
+        }))
+        setCommits(withPredictions)
+      } catch (e) {
+        setPredictionError((e as Error).message)
+        setCommits(detailed)
+      }
+
       setPage(1)
       setStatus('ok')
 
-      const dates   = all.map(c => new Date(c.commit.author.date).getTime())
+      const dates   = detailed.map(c => new Date(c.commit.author.date).getTime())
       const newest  = Math.max(...dates)
       const oldest  = Math.min(...dates)
-      const authors = new Set(all.map(c => c.commit.author.email)).size
+      const authors = new Set(detailed.map(c => c.commit.author.email)).size
       setStats({
-        totalCommits: all.length,
+        totalCommits: detailed.length,
         contributors: authors,
         spanDays:     Math.max(1, Math.round((newest - oldest) / 86400000)),
         oldestDate:   new Date(oldest).toISOString(),
@@ -140,6 +183,18 @@ export default function App() {
           fontSize: 13, marginBottom: '1rem',
         }}>
           {error}
+        </div>
+      )}
+
+      {predictionError && !error && (
+        <div style={{
+          padding: '12px 16px',
+          borderRadius: 'var(--border-radius-md)',
+          background: '#FAEEDA', color: '#854F0B',
+          border: '0.5px solid #E7B85B',
+          fontSize: 13, marginBottom: '1rem',
+        }}>
+          Commits loaded, but model predictions failed: {predictionError}
         </div>
       )}
 

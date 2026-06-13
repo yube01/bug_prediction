@@ -52,6 +52,10 @@ export async function fetchCommits(
     )
 }
 
+export async function fetchCommitDetails(repo: string, sha: string): Promise<GithubCommit> {
+    return get<GithubCommit>(`${BASE}/repos/${repo}/commits/${sha}`)
+}
+
 export async function fetchRateLimit(): Promise<RateLimitInfo> {
     const res = await fetch(`${BASE}/rate_limit`, { headers: HEADERS })
     const data = await res.json() as { rate: { remaining: number; limit: number; reset: number } }

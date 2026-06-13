@@ -6,7 +6,11 @@ import type {
   ModelInfoResponse,
 } from './types'
 
-const BASE = '/api'
+const MODEL_API_URL = 'https://yube08-bug-prediction-system-v1.hf.space'
+const BASE = (
+  (import.meta as ImportMeta & { env?: { VITE_MODEL_API_URL?: string } }).env?.VITE_MODEL_API_URL
+  ?? MODEL_API_URL
+).replace(/\/$/, '')
 
 async function req<T>(url: string, options?: RequestInit): Promise<T> {
   const res = await fetch(url, options)

@@ -1,3 +1,5 @@
+
+
 """
 Bug Prediction System — FastAPI
 ================================
@@ -9,6 +11,7 @@ Loads the trained model and exposes 3 endpoints:
   GET  /model/info     → model details and feature list
 """
 
+from fastapi.responses import RedirectResponse
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
@@ -149,6 +152,28 @@ def encode_input(commit: CommitFeatures) -> pd.DataFrame:
     return row
 
 
+def encode_inputs(commits: List[CommitFeatures]) -> pd.DataFrame:
+    """Convert a list of CommitFeatures to a single model input DataFrame."""
+    dicts = [c.model_dump() for c in commits]
+
+    # Pre-encode language labels in batch (much faster than individual calls)
+    langs = [d.get('language_group', 'Python') for d in dicts]
+    langs_cleaned = [l if l in le_lang.classes_ else le_lang.classes_[0] for l in langs]
+    lang_encs = le_lang.transform(langs_cleaned)
+
+    # Pre-encode time periods in batch
+    periods = [d.get('time_period', '2024-2026') for d in dicts]
+    periods_cleaned = [p if p in le_period.classes_ else le_period.classes_[0] for p in periods]
+    period_encs = le_period.transform(periods_cleaned)
+
+    for i, d in enumerate(dicts):
+        d['lang_enc'] = int(lang_encs[i])
+        d['period_enc'] = int(period_encs[i])
+
+    rows = [{col: d.get(col, 0) for col in FEATURES} for d in dicts]
+    return pd.DataFrame(rows)
+
+
 def get_risk_factors(commit: CommitFeatures) -> List[str]:
     """Return top risk factors for this commit in plain English."""
     factors = []
@@ -174,10 +199,8 @@ def get_risk_factors(commit: CommitFeatures) -> List[str]:
     return factors[:3] if factors else ["No major risk factors detected"]
 
 
-def make_prediction(commit: CommitFeatures) -> PredictionResponse:
-    """Run model and return structured prediction."""
-    row  = encode_input(commit)
-    prob = float(model.predict_proba(row)[0][1])
+def format_prediction(commit: CommitFeatures, prob: float) -> PredictionResponse:
+    """Format the prediction probability into the standard PredictionResponse schema."""
     score = int(prob * 100)
 
     if prob >= 0.6:
@@ -203,7 +226,21 @@ def make_prediction(commit: CommitFeatures) -> PredictionResponse:
     )
 
 
+def make_prediction(commit: CommitFeatures) -> PredictionResponse:
+    """Run model and return structured prediction."""
+    row  = encode_input(commit)
+    prob = float(model.predict_proba(row)[0][1])
+    return format_prediction(commit, prob)
+
+
 # ── Endpoints ─────────────────────────────────────────────────
+
+
+@app.get("/")
+def root():
+    return RedirectResponse(url="/docs")
+
+    
 @app.get("/health", tags=["System"])
 def health_check():
     """Check if API and model are running."""
@@ -273,7 +310,14 @@ def predict_batch(request: BatchRequest):
         raise HTTPException(status_code=400, detail="Max 500 commits per batch")
 
     try:
-        predictions = [make_prediction(c) for c in request.commits]
+        df = encode_inputs(request.commits)
+        probs = model.predict_proba(df)[:, 1]
+
+        predictions = []
+        for i, commit in enumerate(request.commits):
+            pred = format_prediction(commit, float(probs[i]))
+            predictions.append(pred)
+
         return BatchResponse(
             total       = len(predictions),
             high_risk   = sum(1 for p in predictions if p.risk_level == "HIGH RISK"),
