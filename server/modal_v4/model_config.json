@@ -1,0 +1,29 @@
+{
+  "optimal_threshold": 0.23999999463558197,
+  "feature_names": [
+    "commit_hour",
+    "day_of_week",
+    "is_weekend",
+    "is_night_commit",
+    "lines_added",
+    "lines_deleted",
+    "files_changed",
+    "test_files_changed",
+    "num_methods",
+    "avg_complexity",
+    "language_group",
+    "time_period",
+    "churn_ratio",
+    "test_ratio",
+    "complexity_per_file",
+    "prior_bugs_author",
+    "night_x_complexity",
+    "weekend_x_lines",
+    "size_x_complexity",
+    "files_x_complexity"
+  ],
+  "model_type": "xgboost_isotonic_calibrated",
+  "scale_pos_weight": 18.17369308600337,
+  "auc_roc": 0.8634988733663814,
+  "pr_auc": 0.36383463708765545
+}
