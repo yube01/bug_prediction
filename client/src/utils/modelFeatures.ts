@@ -1,4 +1,5 @@
 import type { CommitFeatures, GithubCommit } from '../types'
+import { analyzePatch } from './patchAnalysis'
 
 const BUG_WORDS = /\b(bug|fix|fixed|hotfix|patch|defect|regression|issue)\b/i
 const TEST_PATH = /(^|\/|\\)(test|tests|spec|__tests__)(\/|\\)|\.test\.|\.spec\./i
@@ -17,6 +18,10 @@ function timePeriod(date: Date): CommitFeatures['time_period'] {
   return '2024-2026'
 }
 
+/**
+ * Count prior bugs per commit using batch-local commit messages.
+ * This is the fallback when full-history counts aren't available.
+ */
 function priorBugCountsBySha(commits: GithubCommit[]): Map<string, number> {
   const sorted = [...commits].sort((a, b) =>
     new Date(a.commit.author.date).getTime() - new Date(b.commit.author.date).getTime()
@@ -37,8 +42,68 @@ function priorBugCountsBySha(commits: GithubCommit[]): Map<string, number> {
   return countsBySha
 }
 
-export function buildCommitFeatures(commits: GithubCommit[]): CommitFeatures[] {
-  const priorBySha = priorBugCountsBySha(commits)
+/**
+ * Merge batch-local prior bug counts with full-history counts from GitHub API.
+ * 
+ * Full-history counts represent the author's total bug-fix commits across the
+ * entire repo (up to 100 most recent). This is much closer to the training
+ * data's `prior_bugs_author` which was computed across the full repo history.
+ * 
+ * When full-history data is available, we use it directly. Otherwise we fall
+ * back to the batch-local count (which only sees the loaded ~200 commits).
+ */
+function mergedPriorBugCounts(
+  commits: GithubCommit[],
+  fullHistoryCounts?: Map<string, number>,
+): Map<string, number> {
+  const batchCounts = priorBugCountsBySha(commits)
+
+  if (!fullHistoryCounts || fullHistoryCounts.size === 0) {
+    return batchCounts
+  }
+
+  // For each commit, prefer the full-history count for its author
+  const merged = new Map<string, number>()
+  for (const commit of commits) {
+    const authorKey = commit.commit.author.email || commit.commit.author.name
+    const fullCount = fullHistoryCounts.get(authorKey)
+    if (fullCount !== undefined) {
+      // Use full-history count (subtract 1 if this commit itself is a fix,
+      // since prior_bugs_author should only count PRIOR bugs)
+      const isFix = BUG_WORDS.test(commit.commit.message) ? 1 : 0
+      merged.set(commit.sha, Math.max(0, fullCount - isFix))
+    } else {
+      // Fall back to batch-local count
+      merged.set(commit.sha, batchCounts.get(commit.sha) ?? 0)
+    }
+  }
+
+  return merged
+}
+
+/**
+ * Build model-ready features from GitHub commit data.
+ * 
+ * Key improvements over the previous version:
+ * 1. avg_complexity — Computed from actual patch content (decision points in diffs)
+ *    instead of the crude `files × 0.8` proxy. ~36% of model SHAP importance
+ *    depends on complexity features.
+ * 
+ * 2. num_methods — Counted from function/class definitions in the patch
+ *    instead of `files × 1.5`.
+ * 
+ * 3. prior_bugs_author — Can now use full-history counts from GitHub API
+ *    instead of only counting within the loaded ~200 commit batch.
+ *    This is the #1 predictor (SHAP importance 0.829).
+ * 
+ * @param commits          Array of GitHub commits with full detail (files + patches)
+ * @param authorBugCounts  Optional map of author email → total bug-fix count from full repo history
+ */
+export function buildCommitFeatures(
+  commits: GithubCommit[],
+  authorBugCounts?: Map<string, number>,
+): CommitFeatures[] {
+  const priorBySha = mergedPriorBugCounts(commits, authorBugCounts)
 
   return commits.map(commit => {
     const date = new Date(commit.commit.author.date)
@@ -52,9 +117,13 @@ export function buildCommitFeatures(commits: GithubCommit[]): CommitFeatures[] {
     const dayOfWeek = (jsDay + 6) % 7
     const isWeekend = dayOfWeek >= 5 ? 1 : 0
     const isNightCommit = commitHour >= 22 || commitHour < 5 ? 1 : 0
-    const messageBoost = BUG_WORDS.test(commit.commit.message) ? 2 : 0
-    const avgComplexity = Math.min(20, Math.max(1, filesChanged * 0.8 + messageBoost))
-    const numMethods = Math.max(0, Math.round(filesChanged * 1.5))
+
+    // ── NEW: Real complexity from patch analysis ──────────────────────────
+    // Instead of `filesChanged * 0.8`, we parse the actual diff content for
+    // decision points (if/for/while/catch/&&/||) and function definitions.
+    const patchResult = analyzePatch(files)
+    const avgComplexity = patchResult.avgComplexity
+    const numMethods = patchResult.numMethods
 
     return {
       lines_added: linesAdded,

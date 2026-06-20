@@ -1,7 +1,7 @@
 import { useState, useCallback } from 'react'
 import type { GithubCommit, GithubBranch, RepoStats } from './types'
 import { predictBatch } from './api'
-import { fetchBranches, fetchCommitDetails, fetchCommits, parseRepo } from './api/github'
+import { fetchBranches, fetchCommitDetails, fetchCommits, fetchAuthorBugCounts, parseRepo } from './api/github'
 import { buildCommitFeatures } from './utils/modelFeatures'
 import RepoInput    from './components/website/RepoInput'
 import BranchSelect from './components/website/BranchSelect'
@@ -66,7 +66,16 @@ export default function App() {
       )
 
       try {
-        const features = buildCommitFeatures(detailed)
+        // Fetch full-history bug counts per author (best-effort — falls back
+        // to batch-local counting if rate limited or on error)
+        let authorBugCounts: Map<string, number> | undefined
+        try {
+          authorBugCounts = await fetchAuthorBugCounts(repoName, detailed)
+        } catch {
+          // Non-critical — modelFeatures will use batch-local fallback
+        }
+
+        const features = buildCommitFeatures(detailed, authorBugCounts)
         const batch = await predictBatch(features)
         const withPredictions = detailed.map((commit, i) => ({
           ...commit,

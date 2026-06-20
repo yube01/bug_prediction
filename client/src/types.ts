@@ -7,7 +7,7 @@ export interface GithubCommit {
   }
   author: { login: string; avatar_url: string } | null
   stats?: { additions: number; deletions: number; total: number }
-  files?: { filename: string; status: string; additions?: number; deletions?: number; changes?: number }[]
+  files?: { filename: string; status: string; additions?: number; deletions?: number; changes?: number; patch?: string }[]
   prediction?: PredictionResponse
 }
 

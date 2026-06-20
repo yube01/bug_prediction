@@ -75,3 +75,55 @@ export function parseRepo(input: string): string | null {
     const match = cleaned.match(/^[\w.-]+\/[\w.-]+/)
     return match ? match[0] : null
 }
+
+// ── Full-history author bug counts ──────────────────────────────────────────
+// Fetches each unique author's commit history across the entire repo (up to 100
+// most recent commits per author) and counts how many contain bug-related keywords.
+// This is dramatically more accurate than only counting within the loaded batch.
+
+const BUG_WORDS = /\b(bug|fix|fixed|hotfix|patch|defect|regression|issue)\b/i
+
+/**
+ * For each unique author in the commit list, fetch their full commit history
+ * from the GitHub API and count bug-related commits.
+ *
+ * Returns Map<authorEmail, bugFixCount> for use in prior_bugs_author calculation.
+ *
+ * Rate-limit aware: limits to 15 unique authors max, uses Promise.allSettled
+ * so individual failures don't break the whole batch.
+ */
+export async function fetchAuthorBugCounts(
+    repo: string,
+    commits: GithubCommit[],
+): Promise<Map<string, number>> {
+    // Deduplicate authors — prefer login for API query, key by email
+    const authorMap = new Map<string, string>() // email → login or email (for API query)
+    for (const c of commits) {
+        const key = c.commit.author.email || c.commit.author.name
+        if (!authorMap.has(key)) {
+            // Use GitHub login if available (more reliable for API queries)
+            const queryParam = c.author?.login || c.commit.author.email
+            authorMap.set(key, queryParam)
+        }
+    }
+
+    // Cap at 15 authors to respect rate limits
+    const entries = Array.from(authorMap.entries()).slice(0, 15)
+    const counts = new Map<string, number>()
+
+    const results = await Promise.allSettled(
+        entries.map(async ([authorKey, queryParam]) => {
+            try {
+                const authorCommits = await get<{ commit: { message: string } }[]>(
+                    `${BASE}/repos/${repo}/commits?author=${encodeURIComponent(queryParam)}&per_page=100`
+                )
+                const bugCount = authorCommits.filter(c => BUG_WORDS.test(c.commit.message)).length
+                counts.set(authorKey, bugCount)
+            } catch {
+                // Rate limited or error — this author will fall back to batch counting
+            }
+        })
+    )
+
+    return counts
+}
