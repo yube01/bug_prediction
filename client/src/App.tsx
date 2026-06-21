@@ -1,14 +1,21 @@
 import { useState, useCallback } from 'react'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import type { GithubCommit, GithubBranch, RepoStats } from './types'
 import { predictBatch } from './api'
 import { fetchBranches, fetchCommitDetails, fetchCommits, fetchAuthorBugCounts, parseRepo } from './api/github'
+import { saveSearch } from './api/auth'
 import { buildCommitFeatures } from './utils/modelFeatures'
+import { useAuth } from './context/AuthContext'
+import ProtectedRoute from './components/ProtectedRoute'
+import SignInPage  from './pages/SignInPage'
+import SignUpPage  from './pages/SignUpPage'
 import RepoInput    from './components/website/RepoInput'
 import BranchSelect from './components/website/BranchSelect'
 import StatCards    from './components/website/StatCards'
 import CommitRow    from './components/website/CommitRow'
 import Pagination   from './components/website/Pagination'
 import RateLimitBar from './components/website/RateLimitBar'
+import SearchHistory from './components/website/SearchHistory'
 
 const PER_PAGE = 20
 type Status = 'idle' | 'ok' | 'error'
@@ -36,7 +43,38 @@ async function mapWithLimit<T, R>(
   return results
 }
 
-export default function App() {
+/* ─── Navbar ───────────────────────────────────────────── */
+function Navbar() {
+  const { user, signOut } = useAuth()
+  return (
+    <nav className="app-navbar">
+      <div className="navbar-left">
+        <div className="navbar-logo">
+          <svg width="24" height="24" viewBox="0 0 32 32" fill="none">
+            <rect width="32" height="32" rx="8" fill="var(--accent)" />
+            <path d="M10 16L14 20L22 12" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+          <span className="navbar-brand">Bug Predictor</span>
+        </div>
+      </div>
+      <div className="navbar-right">
+        <div className="navbar-user">
+          <div className="navbar-avatar">
+            {user?.full_name?.charAt(0)?.toUpperCase() ?? '?'}
+          </div>
+          <span className="navbar-email">{user?.email}</span>
+        </div>
+        <button className="navbar-signout" onClick={signOut}>
+          Sign out
+        </button>
+      </div>
+    </nav>
+  )
+}
+
+/* ─── Dashboard (main commit explorer) ──────────────── */
+function Dashboard() {
+  const { token } = useAuth()
   const [repo,          setRepo]          = useState('')
   const [branches,      setBranches]      = useState<GithubBranch[]>([])
   const [currentBranch, setCurrentBranch] = useState('')
@@ -54,6 +92,9 @@ export default function App() {
     setPredictionError(null)
     setCommits([])
     setStats(null)
+
+    let riskCounts = { high: 0, medium: 0, low: 0 }
+
     try {
       const page1 = await fetchCommits(repoName, branch, 1)
       let all = page1
@@ -66,13 +107,11 @@ export default function App() {
       )
 
       try {
-        // Fetch full-history bug counts per author (best-effort — falls back
-        // to batch-local counting if rate limited or on error)
         let authorBugCounts: Map<string, number> | undefined
         try {
           authorBugCounts = await fetchAuthorBugCounts(repoName, detailed)
         } catch {
-          // Non-critical — modelFeatures will use batch-local fallback
+          // Non-critical
         }
 
         const features = buildCommitFeatures(detailed, authorBugCounts)
@@ -82,6 +121,12 @@ export default function App() {
           prediction: batch.predictions[i],
         }))
         setCommits(withPredictions)
+
+        riskCounts = {
+          high: batch.high_risk,
+          medium: batch.medium_risk,
+          low: batch.low_risk,
+        }
       } catch (e) {
         setPredictionError((e as Error).message)
         setCommits(detailed)
@@ -101,13 +146,30 @@ export default function App() {
         oldestDate:   new Date(oldest).toISOString(),
         newestDate:   new Date(newest).toISOString(),
       })
+
+      // Auto-save search to DB (best-effort)
+      if (token) {
+        saveSearch(token, {
+          repo_name: repoName,
+          branch,
+          total_commits: detailed.length,
+          high_risk_count: riskCounts.high,
+          medium_risk_count: riskCounts.medium,
+          low_risk_count: riskCounts.low,
+        }).then(() => {
+          // Refresh search history panel
+          if ((SearchHistory as any).__refresh) {
+            (SearchHistory as any).__refresh()
+          }
+        }).catch(() => { /* non-critical */ })
+      }
     } catch (e) {
       setError((e as Error).message)
       setStatus('error')
     } finally {
       setLoading(false)
     }
-  }, [])
+  }, [token])
 
   const handleLoad = useCallback(async (input: string) => {
     const repoName = parseRepo(input)
@@ -137,11 +199,15 @@ export default function App() {
     await loadCommits(repo, branch)
   }, [repo, loadCommits])
 
+  const handleReSearch = useCallback((repoName: string) => {
+    handleLoad(repoName)
+  }, [handleLoad])
+
   const paginated  = commits.slice((page - 1) * PER_PAGE, page * PER_PAGE)
   const totalPages = Math.ceil(commits.length / PER_PAGE)
 
   return (
-    <div style={{ maxWidth: 860, margin: '0 auto', padding: '2rem 1.5rem', fontFamily: 'var(--font-sans)' }}>
+    <div style={{ maxWidth: 860, margin: '0 auto', padding: '2rem 1.5rem', fontFamily: 'var(--font-mono)' }}>
 
       {/* Header row */}
       <div style={{
@@ -152,7 +218,7 @@ export default function App() {
           <h1 style={{ fontSize: 22, fontWeight: 500, marginBottom: '0.25rem' }}>
             Commit explorer
           </h1>
-          <p style={{ fontSize: 14, color: 'var(--color-text-secondary)' }}>
+          <p style={{ fontSize: 14, color: 'var(--text2)' }}>
             Enter a public GitHub repo to browse commits with bug risk indicators.
           </p>
         </div>
@@ -163,11 +229,14 @@ export default function App() {
         </div>
       </div>
 
+      {/* Search History */}
+      <SearchHistory onReSearch={handleReSearch} />
+
       {/* Input card */}
       <div style={{
-        background: 'var(--color-background-primary)',
-        border: '0.5px solid var(--color-border-tertiary)',
-        borderRadius: 'var(--border-radius-lg)',
+        background: 'var(--bg2)',
+        border: '0.5px solid var(--border)',
+        borderRadius: 'var(--r)',
         padding: '1rem 1.25rem',
         marginBottom: '1rem',
         display: 'flex', flexDirection: 'column', gap: 12,
@@ -186,9 +255,9 @@ export default function App() {
       {error && (
         <div style={{
           padding: '12px 16px',
-          borderRadius: 'var(--border-radius-md)',
-          background: '#FCEBEB', color: '#A32D2D',
-          border: '0.5px solid #F09595',
+          borderRadius: 'var(--r2)',
+          background: 'rgba(240,58,79,0.12)', color: '#f06070',
+          border: '0.5px solid rgba(240,58,79,0.25)',
           fontSize: 13, marginBottom: '1rem',
         }}>
           {error}
@@ -198,9 +267,9 @@ export default function App() {
       {predictionError && !error && (
         <div style={{
           padding: '12px 16px',
-          borderRadius: 'var(--border-radius-md)',
-          background: '#FAEEDA', color: '#854F0B',
-          border: '0.5px solid #E7B85B',
+          borderRadius: 'var(--r2)',
+          background: 'rgba(245,168,0,0.12)', color: '#f5a800',
+          border: '0.5px solid rgba(245,168,0,0.25)',
           fontSize: 13, marginBottom: '1rem',
         }}>
           Commits loaded, but model predictions failed: {predictionError}
@@ -213,12 +282,12 @@ export default function App() {
           display: 'flex', justifyContent: 'center',
           alignItems: 'center', gap: 10,
           padding: '2.5rem',
-          color: 'var(--color-text-secondary)', fontSize: 13,
+          color: 'var(--text2)', fontSize: 13,
         }}>
           <div style={{
             width: 20, height: 20,
-            border: '2px solid var(--color-border-tertiary)',
-            borderTopColor: 'var(--color-text-secondary)',
+            border: '2px solid var(--border2)',
+            borderTopColor: 'var(--accent)',
             borderRadius: '50%',
             animation: 'spin 0.7s linear infinite',
           }} />
@@ -236,21 +305,21 @@ export default function App() {
       {/* Commit list */}
       {!loading && commits.length > 0 && (
         <div style={{
-          background: 'var(--color-background-primary)',
-          border: '0.5px solid var(--color-border-tertiary)',
-          borderRadius: 'var(--border-radius-lg)',
+          background: 'var(--bg2)',
+          border: '0.5px solid var(--border)',
+          borderRadius: 'var(--r)',
           padding: '0 1.25rem',
         }}>
           <div style={{
             display: 'flex', justifyContent: 'space-between',
             alignItems: 'center',
             padding: '1rem 0',
-            borderBottom: '0.5px solid var(--color-border-tertiary)',
+            borderBottom: '0.5px solid var(--border)',
           }}>
-            <span style={{ fontSize: 13, color: 'var(--color-text-secondary)' }}>
+            <span style={{ fontSize: 13, color: 'var(--text2)' }}>
               Showing {(page - 1) * PER_PAGE + 1}–{Math.min(page * PER_PAGE, commits.length)} of {commits.length} commits
             </span>
-            <span style={{ fontSize: 12, color: 'var(--color-text-secondary)' }}>
+            <span style={{ fontSize: 12, color: 'var(--text2)' }}>
               Page {page} of {totalPages}
             </span>
           </div>
@@ -273,5 +342,27 @@ export default function App() {
         @keyframes spin { to { transform: rotate(360deg) } }
       `}</style>
     </div>
+  )
+}
+
+/* ─── App Router ──────────────────────────────────────── */
+export default function App() {
+  return (
+    <Routes>
+      <Route path="/signin" element={<SignInPage />} />
+      <Route path="/signup" element={<SignUpPage />} />
+      <Route
+        path="/"
+        element={
+          <ProtectedRoute>
+            <>
+              <Navbar />
+              <Dashboard />
+            </>
+          </ProtectedRoute>
+        }
+      />
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
   )
 }

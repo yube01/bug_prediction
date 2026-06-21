@@ -1,5 +1,6 @@
 
 
+
 """
 Bug Prediction System — FastAPI
 ================================
@@ -9,17 +10,36 @@ Loads the trained model and exposes 3 endpoints:
   POST /predict/batch  → predict many commits at once
   GET  /health         → check server is running
   GET  /model/info     → model details and feature list
+
+Authentication:
+  POST /auth/signup    → register new user
+  POST /auth/signin    → login → JWT token
+  GET  /auth/me        → current user profile
+
+Search History:
+  POST /search/save    → save a repo search result
+  GET  /search/history → user's search history
+  DELETE /search/history/{id} → delete a search entry
 """
 
+from contextlib import asynccontextmanager
 from fastapi.responses import RedirectResponse
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Depends
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, EmailStr
 from typing import Optional, List
 import pandas as pd
 import numpy as np
 import joblib
 import os
+from datetime import datetime, timezone
+
+from sqlalchemy import select, delete
+from sqlalchemy.ext.asyncio import AsyncSession
+
+from database import create_tables, get_db
+from models import User, SearchHistory
+from auth import hash_password, verify_password, create_access_token, get_current_user
 
 # ── Load model files ─────────────────────────────────────────
 BASE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'modalv1')
@@ -39,11 +59,20 @@ except Exception as e:
     print(f"❌ Model load failed: {e}")
     print("   Place .pkl files in same folder as main.py")
 
+
+# ── Lifespan — create DB tables on startup ────────────────────
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    await create_tables()
+    yield
+
+
 # ── FastAPI app ───────────────────────────────────────────────
 app = FastAPI(
     title       = "Bug Prediction System",
     description = "Predicts whether a commit is likely to introduce a bug using Random Forest trained on 16,722 real GitHub commits (Python + TypeScript, 2018-2026)",
     version     = "1.0.0",
+    lifespan    = lifespan,
 )
 
 # Allow all origins (for testing — restrict in production)
@@ -127,6 +156,48 @@ class BatchResponse(BaseModel):
     medium_risk     : int
     low_risk        : int
     predictions     : List[PredictionResponse]
+
+
+# ── Auth schemas ──────────────────────────────────────────────
+class SignUpRequest(BaseModel):
+    full_name: str = Field(min_length=1, max_length=100)
+    email:     str = Field(min_length=5, max_length=255)
+    password:  str = Field(min_length=6, max_length=128)
+
+class SignInRequest(BaseModel):
+    email:    str
+    password: str
+
+class AuthResponse(BaseModel):
+    access_token: str
+    token_type:   str = "bearer"
+    user:         dict
+
+class UserResponse(BaseModel):
+    id:        str
+    full_name: str
+    email:     str
+    created_at: str
+
+
+# ── Search history schemas ────────────────────────────────────
+class SaveSearchRequest(BaseModel):
+    repo_name:        str = Field(min_length=3, max_length=255)
+    branch:           str = Field(default="main", max_length=255)
+    total_commits:    int = Field(default=0)
+    high_risk_count:  int = Field(default=0)
+    medium_risk_count: int = Field(default=0)
+    low_risk_count:   int = Field(default=0)
+
+class SearchHistoryResponse(BaseModel):
+    id:               str
+    repo_name:        str
+    branch:           str
+    total_commits:    int
+    high_risk_count:  int
+    medium_risk_count: int
+    low_risk_count:   int
+    searched_at:      str
 
 
 # ── Helper functions ──────────────────────────────────────────
@@ -327,3 +398,155 @@ def predict_batch(request: BatchRequest):
         )
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Batch prediction failed: {str(e)}")
+
+
+# ══════════════════════════════════════════════════════════════
+#  AUTH ENDPOINTS
+# ══════════════════════════════════════════════════════════════
+
+@app.post("/auth/signup", response_model=AuthResponse, tags=["Auth"])
+async def signup(req: SignUpRequest, db: AsyncSession = Depends(get_db)):
+    """Register a new user. Returns JWT token immediately."""
+    # Check if email already exists
+    result = await db.execute(select(User).where(User.email == req.email.lower().strip()))
+    if result.scalar_one_or_none():
+        raise HTTPException(status_code=409, detail="Email already registered")
+
+    user = User(
+        full_name=req.full_name.strip(),
+        email=req.email.lower().strip(),
+        hashed_password=hash_password(req.password),
+    )
+    db.add(user)
+    await db.commit()
+    await db.refresh(user)
+
+    token = create_access_token({"sub": user.email})
+    return AuthResponse(
+        access_token=token,
+        user={
+            "id": str(user.id),
+            "full_name": user.full_name,
+            "email": user.email,
+            "created_at": user.created_at.isoformat(),
+        },
+    )
+
+
+@app.post("/auth/signin", response_model=AuthResponse, tags=["Auth"])
+async def signin(req: SignInRequest, db: AsyncSession = Depends(get_db)):
+    """Authenticate a user and return a JWT token."""
+    result = await db.execute(select(User).where(User.email == req.email.lower().strip()))
+    user = result.scalar_one_or_none()
+    if not user or not verify_password(req.password, user.hashed_password):
+        raise HTTPException(status_code=401, detail="Invalid email or password")
+
+    token = create_access_token({"sub": user.email})
+    return AuthResponse(
+        access_token=token,
+        user={
+            "id": str(user.id),
+            "full_name": user.full_name,
+            "email": user.email,
+            "created_at": user.created_at.isoformat(),
+        },
+    )
+
+
+@app.get("/auth/me", response_model=UserResponse, tags=["Auth"])
+async def get_me(user: User = Depends(get_current_user)):
+    """Get the currently authenticated user's profile."""
+    return UserResponse(
+        id=str(user.id),
+        full_name=user.full_name,
+        email=user.email,
+        created_at=user.created_at.isoformat(),
+    )
+
+
+# ══════════════════════════════════════════════════════════════
+#  SEARCH HISTORY ENDPOINTS
+# ══════════════════════════════════════════════════════════════
+
+@app.post("/search/save", tags=["Search History"])
+async def save_search(
+    req: SaveSearchRequest,
+    user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """Save a repo search result for the authenticated user."""
+    entry = SearchHistory(
+        user_id=user.id,
+        repo_name=req.repo_name,
+        branch=req.branch,
+        total_commits=req.total_commits,
+        high_risk_count=req.high_risk_count,
+        medium_risk_count=req.medium_risk_count,
+        low_risk_count=req.low_risk_count,
+    )
+    db.add(entry)
+    await db.commit()
+    await db.refresh(entry)
+    return {
+        "id": str(entry.id),
+        "repo_name": entry.repo_name,
+        "branch": entry.branch,
+        "searched_at": entry.searched_at.isoformat(),
+        "message": "Search saved",
+    }
+
+
+@app.get("/search/history", response_model=List[SearchHistoryResponse], tags=["Search History"])
+async def get_search_history(
+    user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """Get the authenticated user's search history (most recent first)."""
+    result = await db.execute(
+        select(SearchHistory)
+        .where(SearchHistory.user_id == user.id)
+        .order_by(SearchHistory.searched_at.desc())
+        .limit(50)
+    )
+    rows = result.scalars().all()
+    return [
+        SearchHistoryResponse(
+            id=str(r.id),
+            repo_name=r.repo_name,
+            branch=r.branch,
+            total_commits=r.total_commits,
+            high_risk_count=r.high_risk_count,
+            medium_risk_count=r.medium_risk_count,
+            low_risk_count=r.low_risk_count,
+            searched_at=r.searched_at.isoformat(),
+        )
+        for r in rows
+    ]
+
+
+@app.delete("/search/history/{entry_id}", tags=["Search History"])
+async def delete_search_entry(
+    entry_id: str,
+    user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """Delete a specific search history entry."""
+    import uuid as _uuid
+    try:
+        uid = _uuid.UUID(entry_id)
+    except ValueError:
+        raise HTTPException(status_code=400, detail="Invalid entry ID")
+
+    result = await db.execute(
+        select(SearchHistory).where(
+            SearchHistory.id == uid,
+            SearchHistory.user_id == user.id,
+        )
+    )
+    entry = result.scalar_one_or_none()
+    if not entry:
+        raise HTTPException(status_code=404, detail="Entry not found")
+
+    await db.delete(entry)
+    await db.commit()
+    return {"message": "Deleted"}
