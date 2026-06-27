@@ -111,7 +111,7 @@ export async function fetchAuthorBugCounts(
     const entries = Array.from(authorMap.entries()).slice(0, 15)
     const counts = new Map<string, number>()
 
-    const results = await Promise.allSettled(
+    await Promise.allSettled(
         entries.map(async ([authorKey, queryParam]) => {
             try {
                 const authorCommits = await get<{ commit: { message: string } }[]>(

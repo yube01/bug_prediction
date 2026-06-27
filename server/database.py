@@ -19,6 +19,10 @@ elif _raw_url.startswith("postgres://"):
 else:
     _db_url = _raw_url
 
+# Clean up all query parameters (like sslmode, channel_binding) since asyncpg does not support them in the URL
+if "?" in _db_url:
+    _db_url = _db_url.split("?")[0]
+
 # Neon free-tier needs SSL — asyncpg handles this via connect_args
 engine = create_async_engine(
     _db_url,
