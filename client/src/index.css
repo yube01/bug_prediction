@@ -581,6 +581,35 @@ body {
   letter-spacing: -0.01em;
 }
 
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: 2rem;
+}
+
+.nav-link {
+  font-size: 12px;
+  color: var(--text2);
+  text-decoration: none;
+  font-weight: 500;
+  padding: 5px 12px;
+  border-radius: 6px;
+  transition: all 0.15s ease-in-out;
+  font-family: var(--font-mono);
+}
+
+.nav-link:hover {
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.nav-link.active {
+  color: var(--accent2);
+  background: rgba(91, 82, 232, 0.1);
+  font-weight: 600;
+}
+
 .navbar-right {
   display: flex;
   align-items: center;

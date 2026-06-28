@@ -1,5 +1,5 @@
-import { useState, useCallback } from 'react'
-import { Routes, Route, Navigate } from 'react-router-dom'
+import { useState, useCallback, useEffect } from 'react'
+import { Routes, Route, Navigate, Link, useLocation, useSearchParams } from 'react-router-dom'
 import type { GithubCommit, GithubBranch, RepoStats } from './types'
 import { predictBatch } from './api'
 import { fetchBranches, fetchCommitDetails, fetchCommits, fetchAuthorBugCounts, parseRepo } from './api/github'
@@ -9,6 +9,9 @@ import { useAuth } from './context/AuthContext'
 import ProtectedRoute from './components/ProtectedRoute'
 import SignInPage  from './pages/SignInPage'
 import SignUpPage  from './pages/SignUpPage'
+import DashboardPage from './pages/DashboardPage'
+import PredictPage from './pages/PredictPage'
+import ModelPage from './pages/ModelPage'
 import RepoInput    from './components/website/RepoInput'
 import BranchSelect from './components/website/BranchSelect'
 import StatCards    from './components/website/StatCards'
@@ -46,6 +49,8 @@ async function mapWithLimit<T, R>(
 /* ─── Navbar ───────────────────────────────────────────── */
 function Navbar() {
   const { user, signOut } = useAuth()
+  const location = useLocation()
+  
   return (
     <nav className="app-navbar">
       <div className="navbar-left">
@@ -55,6 +60,20 @@ function Navbar() {
             <path d="M10 16L14 20L22 12" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
           <span className="navbar-brand">Bug Predictor</span>
+        </div>
+        <div className="navbar-links">
+          <Link to="/" className={`nav-link ${location.pathname === '/' ? 'active' : ''}`}>
+            Explorer
+          </Link>
+          <Link to="/dashboard" className={`nav-link ${location.pathname === '/dashboard' ? 'active' : ''}`}>
+            Dashboard
+          </Link>
+          <Link to="/predict" className={`nav-link ${location.pathname === '/predict' ? 'active' : ''}`}>
+            Predict
+          </Link>
+          <Link to="/model" className={`nav-link ${location.pathname === '/model' ? 'active' : ''}`}>
+            Model Info
+          </Link>
         </div>
       </div>
       <div className="navbar-right">
@@ -72,9 +91,14 @@ function Navbar() {
   )
 }
 
-/* ─── Dashboard (main commit explorer) ──────────────── */
-function Dashboard() {
+/* ─── Commit Explorer (main explorer page) ────────────── */
+function CommitExplorer() {
   const { token } = useAuth()
+  const [searchParams] = useSearchParams()
+  const urlRepo = searchParams.get('repo')
+  const urlBranch = searchParams.get('branch')
+  const [initialSearchDone, setInitialSearchDone] = useState(false)
+
   const [repo,          setRepo]          = useState('')
   const [branches,      setBranches]      = useState<GithubBranch[]>([])
   const [currentBranch, setCurrentBranch] = useState('')
@@ -202,6 +226,32 @@ function Dashboard() {
   const handleReSearch = useCallback((repoName: string) => {
     handleLoad(repoName)
   }, [handleLoad])
+
+  useEffect(() => {
+    if (urlRepo && !initialSearchDone) {
+      setInitialSearchDone(true)
+      const repoName = parseRepo(urlRepo)
+      if (repoName) {
+        setRepo(repoName)
+        setLoading(true)
+        setError(null)
+        fetchBranches(repoName).then(async (branchList) => {
+          setBranches(branchList)
+          const targetBranch = urlBranch || (
+            branchList.find(b => b.name === 'main')?.name ??
+            branchList.find(b => b.name === 'master')?.name ??
+            branchList[0]?.name ?? 'main'
+          )
+          setCurrentBranch(targetBranch)
+          await loadCommits(repoName, targetBranch)
+        }).catch((e) => {
+          setError((e as Error).message)
+          setStatus('error')
+          setLoading(false)
+        })
+      }
+    }
+  }, [urlRepo, urlBranch, initialSearchDone, loadCommits])
 
   const paginated  = commits.slice((page - 1) * PER_PAGE, page * PER_PAGE)
   const totalPages = Math.ceil(commits.length / PER_PAGE)
@@ -357,7 +407,44 @@ export default function App() {
           <ProtectedRoute>
             <>
               <Navbar />
-              <Dashboard />
+              <CommitExplorer />
+            </>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/dashboard"
+        element={
+          <ProtectedRoute>
+            <>
+              <Navbar />
+              <DashboardPage />
+            </>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/predict"
+        element={
+          <ProtectedRoute>
+            <>
+              <Navbar />
+              <div style={{ maxWidth: 1100, margin: '0 auto', padding: '2rem 1.5rem', fontFamily: 'var(--font-mono)' }}>
+                <PredictPage />
+              </div>
+            </>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/model"
+        element={
+          <ProtectedRoute>
+            <>
+              <Navbar />
+              <div style={{ maxWidth: 1100, margin: '0 auto', padding: '2rem 1.5rem', fontFamily: 'var(--font-mono)' }}>
+                <ModelPage />
+              </div>
             </>
           </ProtectedRoute>
         }
