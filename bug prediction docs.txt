@@ -1,0 +1,196 @@
+================================================================================
+SIMPLIFIED GUIDE: BUG PREDICTION SYSTEM V4
+================================================================================
+This guide explains how your bug prediction system works step-by-step. 
+It uses simple terms and analogies to explain the machine learning concepts, 
+especially the "Calibration" part which is often confusing!
+
+---
+
+Step 1 — Install & Import Libraries
+--------------------------------------------------------------------------------
+What it does: 
+Downloads and imports all the python packages (tools) needed.
+
+Analogy: 
+Before cooking, you gather all your kitchen tools (knives, pans, mixers) 
+and ingredients on the counter.
+- pandas/numpy = your mixing bowls & measuring cups
+- xgboost = your oven (the main learning engine)
+- shap = your food critic (explains how the model behaves)
+
+---
+
+Step 2 — Load & Inspect Data
+--------------------------------------------------------------------------------
+What it does: 
+Reads your historical git commit data (combined_output.csv) and sorts them from 
+oldest to newest.
+
+Why we sort: 
+Time flows forward. We sort by date so that when we look at history, we only look 
+backward.
+
+The Big Challenge (Imbalanced Data):
+- Only about 5.2% of commits in your data actually contain bugs. 
+- That means 94.8% are safe. 
+- Analogy: If a doctor predicts everyone is perfectly healthy, they would be 
+  95% accurate, but they would miss 100% of sick patients. We have to force our 
+  model NOT to take the easy way out.
+
+---
+
+Step 3 — Feature Engineering
+--------------------------------------------------------------------------------
+What it does: 
+Turns raw data into "clues" (features) that help the model spot bugs.
+
+3a. Drop the Leaked Feature (confidence):
+- What happened: In version 3, the model had a column called "confidence" that 
+  was basically the answer key (correlated -0.98 with bugs). 
+- Simple terms: We took away the cheat sheet so the model actually has to learn 
+  how to code.
+
+3b. Commit Message Clues:
+- Simple terms: Checks the commit description for warning words:
+  * Fix keywords -> "fix", "bug", "crash", "error"
+  * Refactor keywords -> "clean", "rename", "simplif"
+  * WIP keywords -> "wip" (work in progress), "todo", "hack"
+  * Test keywords -> "test", "assert"
+
+3c. Author Track Record (Temporal Rolling Features):
+- Simple terms: Checks how many bugs this developer introduced in the last 30 
+  and 90 days.
+- Crucial trick (shift): We use `.shift(1)` so the calculation of a developer's 
+  history for their current commit doesn't know the outcome of the current 
+  commit. You cannot use today's exam grade to predict today's exam grade!
+- Days since last commit: If a developer hasn't touched the code in a long time, 
+  they might be rusty (higher risk of bugs).
+
+3d. Combined Clues (Interaction Features):
+- Simple terms: Sometimes, two clues combined are worse than each alone.
+  * night_x_complexity = editing highly complex code at 2 AM (very risky!)
+  * weekend_x_lines = writing thousands of lines on Sunday
+
+---
+
+Step 4 — Three-Way Split (The 3 Piles)
+--------------------------------------------------------------------------------
+What it does: 
+Splits your dataset into three separate piles:
+1. Training Pile (68%): Used to teach the model how to predict bugs.
+2. Calibration Pile (12%): Kept separate to tune the model's probability outputs 
+   and warning levels.
+3. Test Pile (20%): Locked away in a vault. Used ONLY at the very end to give 
+   the model a final grade.
+
+---
+
+Step 5 — Train XGBoost
+--------------------------------------------------------------------------------
+What it does: 
+Teaches the model using the Training Pile.
+
+Imbalance Correction (scale_pos_weight):
+- Since bugs are rare (only 5%), we tell the model: 
+  "Missing a real bug is 18 times worse than accidentally warning about a safe commit." 
+- This forces the model to pay close attention to bugs.
+
+---
+
+Step 6 — Probability Calibration (Understanding Calibration)
+--------------------------------------------------------------------------------
+What it does: 
+Adjusts the model's scores so they represent real-world probability.
+
+Why did we get confused here? Let's break it down:
+
+1. The Problem (Distorted Scores):
+- In Step 5, we told the model: "Bugs are 18x more important!" (scale_pos_weight).
+- Because of this, the model gets extremely paranoid. It starts giving very high 
+  risk scores (like 90% or 95%) to commits that only have a small risk.
+- These raw scores are not real probabilities. 
+
+2. The Solution (Calibration):
+- Calibration is like adjusting a weighing scale. If you step on a scale and it 
+  says you weigh 800 lbs because it was misconfigured, you need to calibrate it.
+- We use the Calibration Pile (which the model has never seen before) to see 
+  how the model's raw scores map to actual bug rates.
+- If the calibrated model tells you: "This commit has a 20% probability of a bug", 
+  it means that in a group of 100 commits with that score, exactly 20 will contain 
+  a bug. 
+- It bends the paranoid, exaggerated raw scores back to realistic percentages.
+
+3. Threshold Optimisation (When to ring the alarm):
+- By default, most systems say: "If risk >= 50%, show a warning."
+- But because bugs are rare, a 50% threshold is too high and we will miss most bugs.
+- We search the Calibration Pile to find the absolute best warning cutoff 
+  (e.g., 18%). Any commit with a calibrated probability above 18% gets flagged. 
+  This threshold gives us the best balance of catching bugs (Recall) without 
+  spamming the developer (Precision).
+
+---
+
+Step 7 — Evaluation on Held-Out Test Set (The Final Exam)
+--------------------------------------------------------------------------------
+What it does: 
+Takes the calibrated model and tests it on the locked Test Pile.
+
+Key metrics:
+- AUC-ROC: The model's general ability to rank buggy commits higher than safe ones.
+- PR-AUC: The main metric for imbalanced data. It measures how good the model is 
+  at catching bugs while keeping false alarms low.
+- Default vs Optimal comparison: Shows that using our calibrated optimal threshold 
+  (e.g. 18%) catches way more bugs than the default 50% threshold.
+
+---
+
+Step 8, 9 & 10 — Explaining the Model's Decisions
+--------------------------------------------------------------------------------
+What it does: 
+Explains *why* the model labeled a commit as buggy.
+
+Methods used:
+1. XGBoost Gain (Step 8): Shows which columns were split on the most during 
+   training.
+2. SHAP Values (Step 9): 
+   - Analogy: Imagine a team project. SHAP calculates exactly how much credit 
+     (or blame) each team member deserves for the final score.
+   - It shows you: "This commit got a high risk score because complexity was high 
+     (+15% risk) and it was done at night (+8% risk), even though the author's history 
+     was clean (-3% risk)."
+3. Permutation Importance (Step 10): 
+   - Simple terms: We take a feature column (like "author") and completely shuffle 
+     it up like a deck of cards so it becomes random noise. Then we test the model. 
+     If the model's accuracy drops drastically, it means the model was relying 
+     heavily on that feature.
+
+---
+
+Step 11 & 12 — Graphing the Results
+--------------------------------------------------------------------------------
+What it does: 
+Creates charts to visualize the performance:
+- Calibration Curve (Step 11): A line graph showing how close our calibrated 
+  probabilities are to the perfect diagonal line.
+- ROC & PR Curves (Step 12): Graphs showing the trade-off between sensitivity 
+  and false alarms.
+
+---
+
+Step 13 & 14 — Saving Model Artifacts & Risk Baselines
+--------------------------------------------------------------------------------
+What it does: 
+Saves the trained model and features so they can be loaded by your server API.
+
+What is saved:
+1. The Calibrated Model (.pkl file): Ready to make predictions.
+2. model_config.json: Holds the tuned optimal threshold (so the server knows 
+   when to trigger a warning).
+3. risk_factor_config.json: 
+   - Stores the historical 50th, 75th, and 90th percentiles for every feature.
+   - How it's used: When a developer makes a commit, the API compares it to this 
+     config. It can then show a helpful warning like: 
+     "Warning: This commit has 80 lines added. That is higher than 90% of our 
+     historical commits!"
+================================================================================
