@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useMemo } from 'react'
+import { useState, useEffect, useCallback, useMemo, type ChangeEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { getSearchHistory, deleteSearchEntry, type SearchHistoryItem } from '../api/auth'
@@ -34,8 +34,8 @@ export default function DashboardPage() {
     try {
       const data = await getSearchHistory(token)
       setHistory(data)
-    } catch (err) {
-      setError((err as Error).message || 'Failed to fetch search history')
+    } catch {
+      setError('Failed to fetch search history')
     } finally {
       setLoading(false)
     }
@@ -51,7 +51,7 @@ export default function DashboardPage() {
     try {
       await deleteSearchEntry(token, id)
       setHistory(prev => prev.filter(item => item.id !== id))
-    } catch (err) {
+    } catch {
       alert('Failed to delete search entry')
     }
   }
@@ -388,7 +388,9 @@ export default function DashboardPage() {
             {/* Sort Dropdown */}
             <select
               value={sortBy}
-              onChange={(e) => setSortBy(e.target.value as any)}
+              onChange={(e: ChangeEvent<HTMLSelectElement>) =>
+                setSortBy(e.target.value as 'date' | 'name' | 'commits' | 'high_risk')
+              }
               style={{
                 background: 'var(--bg)',
                 border: '1px solid var(--border)',

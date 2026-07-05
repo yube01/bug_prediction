@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { ChevronDown, ChevronUp, AlertCircle, Sparkles } from 'lucide-react'
-import type { GithubCommit } from '../../types'
-import { getRiskLevel } from '../../utils/risk'
-import RiskBadge from './RiskBadge';
+import type { GithubCommit } from '@/types'
+import { getRiskLevel } from '@/utils/risk'
+import RiskBadge from '../RiskBadge';
 
 interface Props { commit: GithubCommit; repo: string }
 

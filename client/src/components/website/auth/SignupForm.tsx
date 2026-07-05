@@ -7,8 +7,8 @@ import { Button } from '@/components/ui/button'
 import { Input, InputWrapper } from '@/components/ui/input'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Spinner } from '@/components/ui/spinner'
-import { signUp } from "@/api/auth"
 import { Link, useNavigate } from "react-router-dom"
+import { useAuth } from "@/context/AuthContext"
 
 
 const FormSchema = z
@@ -76,6 +76,7 @@ const FormSchema = z
     })
 
 export default function SignUpForm() {
+    const { signUp } = useAuth()
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState<string | null>(null)
     const navigate = useNavigate()
@@ -106,6 +107,7 @@ export default function SignUpForm() {
 
     const onSubmit = async (data: z.infer<typeof FormSchema>) => {
         setError(null)
+        setIsLoading(true)
         try {
             await signUp(data.firstName, data.email, data.password)
             navigate('/', { replace: true })

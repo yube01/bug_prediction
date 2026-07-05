@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
-import { useAuth } from '../../context/AuthContext'
-import { getSearchHistory, deleteSearchEntry, type SearchHistoryItem } from '../../api/auth'
+import { useAuth } from '@/context/AuthContext'
+import { getSearchHistory, deleteSearchEntry, type SearchHistoryItem } from '@/api/auth'
 
 interface Props {
   onReSearch: (repoName: string) => void
@@ -28,7 +28,7 @@ export default function SearchHistory({ onReSearch }: Props) {
   useEffect(() => { load() }, [load])
 
   // Expose refresh so parent can call after saving
-  ;(SearchHistory as any).__refresh = load
+  ;(SearchHistory as unknown as { __refresh?: typeof load }).__refresh = load
 
   const handleDelete = async (id: string) => {
     if (!token) return

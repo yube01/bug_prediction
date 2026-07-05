@@ -1,4 +1,4 @@
-import type { GithubBranch } from '../../types'
+import type { GithubBranch } from '@/types'
 
 interface Props {
     branches: GithubBranch[]

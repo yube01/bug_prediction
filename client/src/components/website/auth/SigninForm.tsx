@@ -7,8 +7,8 @@ import { Button } from '@/components/ui/button'
 import { Input, InputWrapper } from '@/components/ui/input'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Spinner } from '@/components/ui/spinner'
-import { signIn } from "@/api/auth"
 import { Link, useNavigate } from "react-router-dom"
+import { useAuth } from "@/context/AuthContext"
 
 
 const FormSchema = z
@@ -39,6 +39,7 @@ const FormSchema = z
     })
 
 export default function SignInForm() {
+      const { signIn } = useAuth()
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState<string | null>(null)
     const navigate = useNavigate()
@@ -88,7 +89,7 @@ export default function SignInForm() {
                     <p className="text-fg-secondary text-sm">
                         Don't have an account?
                         <Button variant="link" asChild color="primary">
-                            <Link to="/sign-up">Sign up</Link>
+                            <Link to="/signup">Sign up</Link>
                         </Button>
                     </p>
                 </div>
