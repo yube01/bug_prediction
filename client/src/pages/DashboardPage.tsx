@@ -18,11 +18,11 @@ import {
 export default function DashboardPage() {
   const { token } = useAuth()
   const navigate = useNavigate()
-  
+
   const [history, setHistory] = useState<SearchHistoryItem[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  
+
   // Filtering and Sorting States
   const [filterText, setFilterText] = useState('')
   const [sortBy, setSortBy] = useState<'date' | 'name' | 'commits' | 'high_risk'>('date')
@@ -159,27 +159,16 @@ export default function DashboardPage() {
 
   if (loading) {
     return (
-      <div style={{ textAlign: 'center', padding: '100px 0', color: 'var(--text2)' }}>
-        <div style={{
-          width: 28, height: 28, border: '3px solid var(--border)',
-          borderTopColor: 'var(--accent)', borderRadius: '50%',
-          animation: 'spin 0.7s linear infinite', margin: '0 auto 16px',
-        }} />
+      <div>
         Fetching analysis data...
-        <style>{`@keyframes spin { to { transform: rotate(360deg) } }`}</style>
       </div>
     )
   }
 
   if (error) {
     return (
-      <div style={{
-        padding: 20, borderRadius: 'var(--r)', margin: '2rem 0',
-        background: 'rgba(240,58,79,0.08)',
-        border: '1px solid rgba(240,58,79,0.25)', color: '#f03a4f',
-        fontFamily: 'var(--font-mono)', fontSize: 13,
-      }}>
-        ❌ {error} — Make sure the backend server is running on localhost:8000.
+      <div >
+        ❌ {error} — Make sure the backend server is running.
       </div>
     )
   }
@@ -220,80 +209,70 @@ export default function DashboardPage() {
   }
 
   return (
-    <div style={{ maxWidth: 1100, margin: '0 auto', padding: '2rem 1.5rem', fontFamily: 'var(--font-mono)' }}>
+    <div className="p-5 flex flex-col gap-4">
       {/* Header */}
-      <div style={{ marginBottom: '2rem' }}>
-        <h1 style={{ fontFamily: 'Syne, sans-serif', fontSize: 28, fontWeight: 800, marginBottom: '0.5rem', background: 'linear-gradient(90deg, #fff, var(--text2))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+      <div className="flex flex-col gap-1">
+        <h1 className="heading-1">
           Analytics Dashboard
         </h1>
-        <p style={{ fontSize: 13, color: 'var(--text2)', maxWidth: 600, lineHeight: 1.5 }}>
+        <p>
           Aggregate analysis of all historical searches. Diffs, complexities, and developer metrics gathered from your public GitHub repository requests.
         </p>
       </div>
 
       {/* Aggregate Stats Row */}
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-        gap: 16,
-        marginBottom: '2rem'
-      }}>
+      <div className=" flex justify-between gap-4 border border-soft p-4 rounded-xl" >
         {/* Card 1 */}
-        <div style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 'var(--r)', padding: '18px 20px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}>
-          <div style={{ fontSize: 11, color: 'var(--text2)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 6 }}>
+        <div>
+          <p>
             Repos Analyzed
-          </div>
-          <div style={{ fontSize: 26, fontWeight: 700, fontFamily: 'Space Mono', color: 'var(--accent2)' }}>
+          </p>
+          <div >
             {stats.totalRepos}
           </div>
         </div>
 
         {/* Card 2 */}
-        <div style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 'var(--r)', padding: '18px 20px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}>
-          <div style={{ fontSize: 11, color: 'var(--text2)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 6 }}>
+        <div>
+          <p>
             Total Commits
-          </div>
-          <div style={{ fontSize: 26, fontWeight: 700, fontFamily: 'Space Mono', color: 'var(--text)' }}>
+          </p>
+          <div >
             {stats.totalCommits}
           </div>
         </div>
 
         {/* Card 3 */}
-        <div style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 'var(--r)', padding: '18px 20px', borderLeft: '3px solid #f03a4f', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}>
-          <div style={{ fontSize: 11, color: 'var(--text2)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 6 }}>
+        <div>
+          <p>
             High Risk Commits
-          </div>
-          <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
-            <span style={{ fontSize: 26, fontWeight: 700, fontFamily: 'Space Mono', color: '#f03a4f' }}>
+          </p>
+          <div >
+            <span>
               {stats.totalHighRisk}
             </span>
-            <span style={{ fontSize: 12, color: 'var(--text2)', opacity: 0.8 }}>
+            <span>
               ({stats.overallRiskRate}% rate)
             </span>
           </div>
         </div>
 
         {/* Card 4 */}
-        <div style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 'var(--r)', padding: '18px 20px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}>
-          <div style={{ fontSize: 11, color: 'var(--text2)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 6 }}>
+        <div>
+          <p>
             Most Risky Repo
-          </div>
-          <div style={{ fontSize: 15, fontWeight: 700, color: '#f5a800', textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', marginTop: 4 }} title={stats.mostRiskyRepoFull}>
+          </p>
+          <div title={stats.mostRiskyRepoFull}>
             {stats.mostRiskyRepo}
           </div>
         </div>
       </div>
 
       {/* Visualizations Grid */}
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))',
-        gap: 20,
-        marginBottom: '2rem'
-      }}>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Donut Chart: Risk Distribution */}
-        <div style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 'var(--r)', padding: 20 }}>
-          <h3 style={{ fontSize: 12, color: 'var(--accent2)', textTransform: 'uppercase', letterSpacing: '0.1em', borderBottom: '1px solid var(--border)', paddingBottom: 10, marginBottom: 15, fontWeight: 700, fontFamily: 'Syne, sans-serif' }}>
+        <div>
+          <h3>
             Overall Risk Profile Breakdown
           </h3>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: 220, justifyContent: 'center' }}>
@@ -313,7 +292,7 @@ export default function DashboardPage() {
                       <Cell key={`cell-${index}`} fill={entry.color} />
                     ))}
                   </Pie>
-                  <Tooltip 
+                  <Tooltip
                     contentStyle={{ background: 'rgba(13, 13, 26, 0.95)', border: '1px solid var(--border)', borderRadius: 'var(--r)', color: '#fff', fontSize: 11, fontFamily: 'Space Mono' }}
                     itemStyle={{ color: '#fff' }}
                   />
@@ -321,12 +300,12 @@ export default function DashboardPage() {
               </ResponsiveContainer>
             </div>
             {/* Legend info */}
-            <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap', justifyContent: 'center', marginTop: 10 }}>
+            <div >
               {donutData.map((d, i) => (
-                <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11 }}>
-                  <span style={{ width: 8, height: 8, borderRadius: '50%', background: d.color }} />
-                  <span style={{ color: 'var(--text2)' }}>{d.name}:</span>
-                  <span style={{ fontWeight: 700, fontFamily: 'Space Mono' }}>{d.value}</span>
+                <div key={i} >
+                  <span  />
+                  <span >{d.name}:</span>
+                  <span>{d.value}</span>
                 </div>
               ))}
             </div>
@@ -334,8 +313,8 @@ export default function DashboardPage() {
         </div>
 
         {/* Stacked Bar Chart: Repository Comparison */}
-        <div style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 'var(--r)', padding: 20 }}>
-          <h3 style={{ fontSize: 12, color: 'var(--accent2)', textTransform: 'uppercase', letterSpacing: '0.1em', borderBottom: '1px solid var(--border)', paddingBottom: 10, marginBottom: 15, fontWeight: 700, fontFamily: 'Syne, sans-serif' }}>
+        <div>
+          <h3>
             Compare Top Repositories
           </h3>
           <div style={{ height: 230 }}>
@@ -363,7 +342,7 @@ export default function DashboardPage() {
           <h3 style={{ fontSize: 13, color: 'var(--accent2)', textTransform: 'uppercase', letterSpacing: '0.15em', fontWeight: 700, fontFamily: 'Syne, sans-serif', margin: 0 }}>
             Searched Repositories ({uniqueRepos.length})
           </h3>
-          
+
           {/* Controls */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
             {/* Search Input */}

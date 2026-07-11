@@ -33,10 +33,7 @@ export default function CommitRow({ commit, repo }: Props) {
                     : '#3B6D11'
 
     return (
-        <div style={{
-            borderBottom: '0.5px solid var(--color-border-tertiary)',
-            padding: '12px 0',
-        }}>
+        <div className="border border-soft p-2" >
             {/* Header / Clickable row */}
             <div
                 onMouseEnter={() => setIsHovered(true)}

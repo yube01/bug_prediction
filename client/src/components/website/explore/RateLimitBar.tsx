@@ -30,19 +30,13 @@ export default function RateLimitBar() {
   const isLow = info.remaining <= 15
   const isGone = info.remaining === 0
   const barColor = isGone ? '#E24B4A' : isLow ? '#BA7517' : '#1D9E75'
-  const txtColor = isGone ? '#A32D2D' : isLow ? '#854F0B' : '#3B6D11'
 
   return (
 
     <Popover>
       <PopoverTrigger asChild>
-        <Button
-          title="GitHub API rate limit"
-          aria-label={`GitHub API: ${info.remaining} requests remaining`}
-        >
-          <span style={{ fontSize: 11, color: txtColor, whiteSpace: 'nowrap' }}>
-            {info.remaining}/{info.limit} req
-          </span>
+        <Button >
+          <span> {info.remaining}/{info.limit} req</span>
         </Button>
       </PopoverTrigger>
       <PopoverContent className="flex w-80 flex-col gap-2 bg-fill1">
@@ -68,7 +62,7 @@ export default function RateLimitBar() {
             ['Limit', `${info.limit} / hour`],
             ['Resets', formatReset(info.resetAt)],
           ].map(([label, value]) => (
-            <div key={label}className="flex justify-between items-center">
+            <div key={label} className="flex justify-between items-center">
               <span >{label}</span>
               <span >
                 {value}

@@ -17,7 +17,6 @@ import { useSearchParams } from "react-router-dom"
 
 
 const PER_PAGE = 20
-type Status = 'idle' | 'ok' | 'error'
 type SearchHistoryWithRefresh = {
     __refresh?: () => void
 }
@@ -59,7 +58,6 @@ const CommitExplorer = () => {
     const [stats, setStats] = useState<RepoStats | null>(null)
     const [page, setPage] = useState(1)
     const [loading, setLoading] = useState(false)
-    const [status, setStatus] = useState<Status>('idle')
     const [error, setError] = useState<string | null>(null)
     const [predictionError, setPredictionError] = useState<string | null>(null)
 
@@ -110,7 +108,6 @@ const CommitExplorer = () => {
             }
 
             setPage(1)
-            setStatus('ok')
 
             const dates = detailed.map(c => new Date(c.commit.author.date).getTime())
             const newest = Math.max(...dates)
@@ -143,7 +140,6 @@ const CommitExplorer = () => {
             }
         } catch (e) {
             setError((e as Error).message)
-            setStatus('error')
         } finally {
             setLoading(false)
         }
@@ -155,7 +151,6 @@ const CommitExplorer = () => {
         setLoading(true)
         setError(null)
         setRepo(repoName)
-        setStatus('idle')
         try {
             const branchList = await fetchBranches(repoName)
             setBranches(branchList)
@@ -167,7 +162,6 @@ const CommitExplorer = () => {
             await loadCommits(repoName, defaultBranch)
         } catch (e) {
             setError((e as Error).message)
-            setStatus('error')
             setLoading(false)
         }
     }, [loadCommits])
@@ -200,7 +194,6 @@ const CommitExplorer = () => {
                     await loadCommits(repoName, targetBranch)
                 }).catch((e) => {
                     setError((e as Error).message)
-                    setStatus('error')
                     setLoading(false)
                 })
             }
@@ -211,7 +204,7 @@ const CommitExplorer = () => {
     const totalPages = Math.ceil(commits.length / PER_PAGE)
 
     return (
-        <div className="p-4">
+        <div className="p-4 flex gap-6 flex-col">
             {/* Header row */}
             <div className="flex justify-between items-start">
                 <div>
@@ -227,65 +220,34 @@ const CommitExplorer = () => {
             <SearchHistory onReSearch={handleReSearch} />
 
             {/* Input card */}
-            <div style={{
-                background: 'var(--bg2)',
-                border: '0.5px solid var(--border)',
-                borderRadius: 'var(--r)',
-                padding: '1rem 1.25rem',
-                marginBottom: '1rem',
-                display: 'flex', flexDirection: 'column', gap: 12,
-            }}>
+            <div className="flex gap-2  flex-col w-full">
                 <RepoInput onLoad={handleLoad} loading={loading} />
                 <BranchSelect
                     branches={branches}
                     currentBranch={currentBranch}
                     onChange={handleBranchChange}
                     loading={loading}
-                    status={status}
                 />
             </div>
 
             {/* Error */}
             {error && (
-                <div style={{
-                    padding: '12px 16px',
-                    borderRadius: 'var(--r2)',
-                    background: 'rgba(240,58,79,0.12)', color: '#f06070',
-                    border: '0.5px solid rgba(240,58,79,0.25)',
-                    fontSize: 13, marginBottom: '1rem',
-                }}>
+                <div className="px-4 py-3 rounded-sm bg-fill1 text-errror-text border border-soft mb-4">
                     {error}
                 </div>
             )}
 
             {predictionError && !error && (
-                <div style={{
-                    padding: '12px 16px',
-                    borderRadius: 'var(--r2)',
-                    background: 'rgba(245,168,0,0.12)', color: '#f5a800',
-                    border: '0.5px solid rgba(245,168,0,0.25)',
-                    fontSize: 13, marginBottom: '1rem',
-                }}>
+                <div className="px-4 py-3 rounded-sm bg-fill1 text-warning-text border border-soft text-[13px] mb-4">
                     Commits loaded, but model predictions failed: {predictionError}
                 </div>
             )}
 
             {/* Loading */}
             {loading && (
-                <div style={{
-                    display: 'flex', justifyContent: 'center',
-                    alignItems: 'center', gap: 10,
-                    padding: '2.5rem',
-                    color: 'var(--text2)', fontSize: 13,
-                }}>
-                    <div style={{
-                        width: 20, height: 20,
-                        border: '2px solid var(--border2)',
-                        borderTopColor: 'var(--accent)',
-                        borderRadius: '50%',
-                        animation: 'spin 0.7s linear infinite',
-                    }} />
-                    Fetching commits…
+                <div className="flex justify-center items-center gap-2.5 p-10 text-text2 text-[13px]">
+                    <div className="w-5 h-5 rounded-full border-2 border-border2 border-t-accent animate-spin" />
+                    Fetching commits...
                 </div>
             )}
 
@@ -298,22 +260,12 @@ const CommitExplorer = () => {
 
             {/* Commit list */}
             {!loading && commits.length > 0 && (
-                <div style={{
-                    background: 'var(--bg2)',
-                    border: '0.5px solid var(--border)',
-                    borderRadius: 'var(--r)',
-                    padding: '0 1.25rem',
-                }}>
-                    <div style={{
-                        display: 'flex', justifyContent: 'space-between',
-                        alignItems: 'center',
-                        padding: '1rem 0',
-                        borderBottom: '0.5px solid var(--border)',
-                    }}>
-                        <span style={{ fontSize: 13, color: 'var(--text2)' }}>
+                <div className="bg-elevation-level2 border border-soft rounded-sm p-1">
+                    <div className=" flex justify-between items-center p-1 border-b border-soft" >
+                        <span >
                             Showing {(page - 1) * PER_PAGE + 1}–{Math.min(page * PER_PAGE, commits.length)} of {commits.length} commits
                         </span>
-                        <span style={{ fontSize: 12, color: 'var(--text2)' }}>
+                        <span>
                             Page {page} of {totalPages}
                         </span>
                     </div>

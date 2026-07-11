@@ -1,3 +1,5 @@
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 import React, { useState } from 'react'
 
 interface Props {
@@ -14,8 +16,8 @@ export default function RepoInput({ onLoad, loading }: Props) {
   }
 
   return (
-    <form onSubmit={handleSubmit} style={{ display: 'flex', gap: 8 }}>
-      <input
+    <form onSubmit={handleSubmit} className="flex gap-2">
+      <Input
         type="text"
         value={value}
         onChange={e => setValue(e.target.value)}
@@ -24,9 +26,9 @@ export default function RepoInput({ onLoad, loading }: Props) {
         disabled={loading}
         aria-label="GitHub repository"
       />
-      <button type="submit" disabled={loading || !value.trim()} style={{ padding: '0 16px', whiteSpace: 'nowrap' }}>
+      <Button type="submit" disabled={loading || !value.trim()}>
         {loading ? 'Loading…' : 'Load repo'}
-      </button>
+      </Button>
     </form>
   )
 }
