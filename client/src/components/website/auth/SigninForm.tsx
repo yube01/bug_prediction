@@ -87,7 +87,7 @@ export default function SignInForm() {
                 <div className="flex gap-2 flex-col">
                     <h1 className=" heading-5">Sign In</h1>
                     <p className="text-fg-secondary text-sm">
-                        Don't have an account?
+                        Don't have an account?{" "}
                         <Button variant="link" asChild color="primary">
                             <Link to="/signup">Sign up</Link>
                         </Button>

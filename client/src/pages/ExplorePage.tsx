@@ -207,10 +207,7 @@ const CommitExplorer = () => {
         <div className="p-4 flex gap-6 flex-col">
             {/* Header row */}
             <div className="flex justify-between items-start">
-                <div>
-                    <h1 > Commit explore   </h1>
-                    <p >   Enter a public GitHub repo to browse commits with bug risk indicators. </p>
-                </div>
+                <h1 className="heading-2" > Commit explore   </h1>
                 <div>
                     <RateLimitBar />
                 </div>
