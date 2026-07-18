@@ -8,22 +8,22 @@ const Navbar = () => {
     const location = useLocation()
     return (
         <nav className="flex justify-between items-center p-4 bg-fill1 border-b border-border">
-            <div className=" flex gap-2 ">
-                <div className="navbar-logo">
-                    <span className="navbar-brand">Bug Predictor</span>
-                </div>
+            <div className=" flex ">
                 <div className="flex gap-2">
-                    <Link to="/" className={`nav-link ${location.pathname === '/' ? 'active' : ''}`}>
-                        Explorer
+                    <Link to="/" className={` ${location.pathname === '/' ? 'active' : ''}`}>
+                        <Button variant="smooth">
+                            Bug Predictor
+                        </Button>
                     </Link>
-                    <Link to="/dashboard" className={`nav-link ${location.pathname === '/dashboard' ? 'active' : ''}`}>
-                        Dashboard
+                    <Link to="/" className={` ${location.pathname === '/' ? 'active' : ''}`}>
+                        <Button variant="ghost">
+                            Explorer
+                        </Button>
                     </Link>
-                    <Link to="/predict" className={`nav-link ${location.pathname === '/predict' ? 'active' : ''}`}>
-                        Predict
-                    </Link>
-                    <Link to="/model" className={`nav-link ${location.pathname === '/model' ? 'active' : ''}`}>
-                        Model Info
+                    <Link to="/dashboard" className={` ${location.pathname === '/dashboard' ? 'active' : ''}`}>
+                        <Button variant="ghost">
+                            Dashboard
+                        </Button>
                     </Link>
                 </div>
             </div>
