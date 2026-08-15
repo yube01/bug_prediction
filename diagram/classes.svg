@@ -1,0 +1,147 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1020 850" width="100%" height="100%" style="background-color: white;">
+  <defs>
+    <style>
+      .box { fill: #fff; stroke: #000; stroke-width: 1.5; }
+      .line { stroke: #000; stroke-width: 1.5; }
+      .text { font-family: Arial, sans-serif; font-size: 13px; fill: #000; }
+      .bold-text { font-family: Arial, sans-serif; font-size: 14px; font-weight: bold; fill: #000; text-anchor: middle; }
+      .mult { font-family: Arial, sans-serif; font-size: 13px; font-weight: bold; fill: #000; }
+    </style>
+  </defs>
+
+  <!-- Outer Boundary -->
+  <rect x="5" y="5" width="1010" height="840" fill="none" stroke="#000" stroke-width="1.5"/>
+
+  <!-- ================= LINES (Drawn first to sit behind boxes) ================= -->
+  
+  <!-- Settings to User -->
+  <line x1="290" y1="195" x2="400" y2="255" class="line"/>
+  <text x="300" y="190" class="mult">1</text>
+  <text x="385" y="245" class="mult">1</text>
+
+  <!-- User to SearchHistory -->
+  <line x1="640" y1="205" x2="720" y2="155" class="line"/>
+  <text x="650" y="200" class="mult">1</text>
+  <text x="700" y="145" class="mult">M</text>
+
+  <!-- User to CommitFeatures -->
+  <line x1="640" y1="280" x2="720" y2="415" class="line"/>
+  <text x="650" y="275" class="mult">1</text>
+  <text x="700" y="410" class="mult">M</text>
+
+  <!-- User to BatchResponse -->
+  <line x1="640" y1="340" x2="720" y2="600" class="line"/>
+  <text x="650" y="340" class="mult">1</text>
+  <text x="700" y="590" class="mult">M</text>
+
+  <!-- User to PredictionResponse -->
+  <line x1="400" y1="320" x2="320" y2="520" class="line"/>
+  <text x="385" y="315" class="mult">1</text>
+  <text x="325" y="515" class="mult">M</text>
+
+  <!-- User to ModelConfig -->
+  <line x1="520" y1="360" x2="520" y2="550" class="line"/>
+  <text x="505" y="380" class="mult">1</text>
+  <text x="505" y="540" class="mult">1</text>
+
+
+  <!-- ================= CLASSES ================= -->
+
+  <!-- Settings -->
+  <rect x="50" y="100" width="240" height="190" class="box"/>
+  <text x="170" y="120" class="bold-text">Settings (App Config)</text>
+  <line x1="50" y1="130" x2="290" y2="130" class="line"/>
+  <text x="60" y="150" class="text">+ APP_NAME: str</text>
+  <text x="60" y="170" class="text">+ DEBUG: bool</text>
+  <text x="60" y="190" class="text">+ DATABASE_URL: str</text>
+  <text x="60" y="210" class="text">+ SECRET_KEY: str</text>
+  <text x="60" y="230" class="text">+ JWT_SECRET_KEY: str</text>
+  <text x="60" y="250" class="text">+ ACCESS_TOKEN_EXPIRE_DAYS: int</text>
+  <line x1="50" y1="260" x2="290" y2="260" class="line"/>
+  <text x="60" y="280" class="text">+ load_dotenv()</text>
+
+  <!-- User -->
+  <rect x="400" y="150" width="240" height="210" class="box"/>
+  <text x="520" y="170" class="bold-text">User (ORM Table)</text>
+  <line x1="400" y1="180" x2="640" y2="180" class="line"/>
+  <text x="410" y="200" class="text">+ id: UUID (PK)</text>
+  <text x="410" y="220" class="text">+ full_name: String(100)</text>
+  <text x="410" y="240" class="text">+ email: String(255) (Index)</text>
+  <text x="410" y="260" class="text">+ hashed_password: Text</text>
+  <text x="410" y="280" class="text">+ created_at: DateTime</text>
+  <text x="410" y="300" class="text">+ updated_at: DateTime</text>
+  <line x1="400" y1="310" x2="640" y2="310" class="line"/>
+  <text x="410" y="330" class="text">+ searches: relationship</text>
+  <text x="410" y="350" class="text">+ __repr__()</text>
+
+  <!-- SearchHistory -->
+  <rect x="720" y="50" width="240" height="210" class="box"/>
+  <text x="840" y="70" class="bold-text">SearchHistory (ORM Table)</text>
+  <line x1="720" y1="80" x2="960" y2="80" class="line"/>
+  <text x="730" y="100" class="text">+ id: UUID (PK)</text>
+  <text x="730" y="120" class="text">+ user_id: UUID (FK)</text>
+  <text x="730" y="140" class="text">+ repo_name: String(255)</text>
+  <text x="730" y="160" class="text">+ branch: String(255)</text>
+  <text x="730" y="180" class="text">+ total_commits: Integer</text>
+  <text x="730" y="200" class="text">+ high/medium/low_risk_count: Int</text>
+  <line x1="720" y1="210" x2="960" y2="210" class="line"/>
+  <text x="730" y="230" class="text">+ user: relationship</text>
+  <text x="730" y="250" class="text">+ __repr__()</text>
+
+  <!-- CommitFeatures -->
+  <rect x="720" y="300" width="240" height="230" class="box"/>
+  <text x="840" y="320" class="bold-text">CommitFeatures (Pydantic)</text>
+  <line x1="720" y1="330" x2="960" y2="330" class="line"/>
+  <text x="730" y="350" class="text">+ lines_added / deleted: float</text>
+  <text x="730" y="370" class="text">+ files_changed: float</text>
+  <text x="730" y="390" class="text">+ churn_ratio: float</text>
+  <text x="730" y="410" class="text">+ avg_complexity / num_methods: float</text>
+  <text x="730" y="430" class="text">+ test_ratio: float</text>
+  <text x="730" y="450" class="text">+ prior_bugs_author: float</text>
+  <text x="730" y="470" class="text">+ commit_hour / day_of_week: int</text>
+  <text x="730" y="490" class="text">+ language_group / time_period: str</text>
+  <line x1="720" y1="500" x2="960" y2="500" class="line"/>
+  <text x="730" y="520" class="text">+ model_dump()</text>
+
+  <!-- PredictionResponse -->
+  <rect x="80" y="500" width="240" height="210" class="box"/>
+  <text x="200" y="520" class="bold-text">PredictionResponse (Pydantic)</text>
+  <line x1="80" y1="530" x2="320" y2="530" class="line"/>
+  <text x="90" y="550" class="text">+ bug_probability: float</text>
+  <text x="90" y="570" class="text">+ risk_level: str (LOW/MED/HIGH)</text>
+  <text x="90" y="590" class="text">+ risk_icon: str (🟢/🟡/🔴)</text>
+  <text x="90" y="610" class="text">+ risk_score: int (0 - 100)</text>
+  <text x="90" y="630" class="text">+ recommendation: str</text>
+  <text x="90" y="650" class="text">+ top_risk_factors: List[str]</text>
+  <line x1="80" y1="660" x2="320" y2="660" class="line"/>
+  <text x="90" y="680" class="text">+ format_prediction()</text>
+  <text x="90" y="700" class="text">+ get_risk_factors()</text>
+
+  <!-- ModelConfig -->
+  <rect x="400" y="550" width="240" height="190" class="box"/>
+  <text x="520" y="570" class="bold-text">ModelConfig (JSON)</text>
+  <line x1="400" y1="580" x2="640" y2="580" class="line"/>
+  <text x="410" y="600" class="text">+ model_type: str</text>
+  <text x="410" y="620" class="text">+ training_data: str</text>
+  <text x="410" y="640" class="text">+ optimal_threshold: float (0.24)</text>
+  <text x="410" y="660" class="text">+ auc_roc / pr_auc: float</text>
+  <text x="410" y="680" class="text">+ features: List[str]</text>
+  <line x1="400" y1="690" x2="640" y2="690" class="line"/>
+  <text x="410" y="710" class="text">+ model.predict_proba()</text>
+  <text x="410" y="730" class="text">+ load_model_artifacts()</text>
+
+  <!-- BatchResponse -->
+  <rect x="720" y="580" width="240" height="210" class="box"/>
+  <text x="840" y="600" class="bold-text">BatchResponse (Pydantic)</text>
+  <line x1="720" y1="610" x2="960" y2="610" class="line"/>
+  <text x="730" y="630" class="text">+ total: int</text>
+  <text x="730" y="650" class="text">+ high_risk: int</text>
+  <text x="730" y="670" class="text">+ medium_risk: int</text>
+  <text x="730" y="690" class="text">+ low_risk: int</text>
+  <text x="730" y="710" class="text">+ predictions: List[PredResponse]</text>
+  <text x="730" y="730" class="text"></text>
+  <line x1="720" y1="740" x2="960" y2="740" class="line"/>
+  <text x="730" y="760" class="text">+ predict_batch()</text>
+  <text x="730" y="780" class="text">+ build_rows()</text>
+
+</svg>

@@ -1,0 +1,137 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 850 1150" width="100%" height="100%" style="background-color: white; font-family: Arial, sans-serif;">
+  <defs>
+    <!-- Arrowhead for solid lines (if needed) -->
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#333"/>
+    </marker>
+    <!-- Arrowhead for dashed dependency lines -->
+    <marker id="dashed-arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#333"/>
+    </marker>
+  </defs>
+
+  <!-- ================= SYSTEM BOUNDARY ================= -->
+  <rect x="200" y="30" width="600" height="1090" fill="#fdfdfd" stroke="#333" stroke-width="2"/>
+  <text x="500" y="60" font-size="18" font-weight="bold" text-anchor="middle" fill="#000">Bug Prediction System</text>
+
+  <!-- ================= ACTOR: DEVELOPER ================= -->
+  <g id="actor-developer" stroke="#333" stroke-width="2" fill="none">
+    <!-- Head -->
+    <circle cx="80" cy="520" r="15"/>
+    <!-- Body -->
+    <line x1="80" y1="535" x2="80" y2="580"/>
+    <!-- Arms -->
+    <line x1="45" y1="545" x2="115" y2="545"/>
+    <!-- Legs -->
+    <line x1="80" y1="580" x2="55" y2="630"/>
+    <line x1="80" y1="580" x2="105" y2="630"/>
+    
+    <text x="80" y="655" font-size="14" font-weight="bold" text-anchor="middle" fill="#000" stroke="none">User</text>
+    <text x="80" y="670" font-size="14" text-anchor="middle" fill="#000" stroke="none"></text>
+  </g>
+
+  <!-- ================= ACTOR TO USE CASE LINES ================= -->
+  <!-- Note: Left edges of cx=500 is 390. Left edges of cx=360 is 250. -->
+  <g id="actor-lines" stroke="#555" stroke-width="1.5">
+    <line x1="120" y1="540" x2="390" y2="120"/> <!-- Secure Login -->
+    <line x1="120" y1="540" x2="400" y2="200"/> <!-- User Registration -->
+    <line x1="120" y1="540" x2="400" y2="280"/> <!-- View Profile Info -->
+    <line x1="120" y1="540" x2="350" y2="370"/> <!-- Explore GitHub Repository -->
+    <line x1="120" y1="540" x2="250" y2="470"/> <!-- View Analytics Dashboard -->
+    <line x1="120" y1="540" x2="250" y2="610"/> <!-- Analyze Commit for Bugs -->
+    <line x1="120" y1="540" x2="330" y2="780"/> <!-- Review Search History -->
+    <line x1="120" y1="540" x2="380" y2="880"/> <!-- Get Review Recommendations -->
+    <line x1="120" y1="540" x2="390" y2="980"/> <!-- Predict Commit Manually -->
+    <line x1="120" y1="540" x2="390" y2="1060"/> <!-- Logout -->
+  </g>
+
+  <!-- ================= INCLUDES / EXTENDS LINES ================= -->
+  <g id="dependency-lines" stroke="#333" stroke-width="1.5" stroke-dasharray="6,4">
+    
+    <!-- Extend: Filter & Search -> View Dashboard -->
+    <line x1="535" y1="470" x2="480" y2="470" marker-end="url(#dashed-arrow)"/>
+    <text x="507" y="460" font-size="12" font-style="italic" text-anchor="middle" fill="#333" stroke="none">&lt;&lt;extend&gt;&gt;</text>
+
+    <!-- Include: Analyze Commit -> Extract Features -->
+    <line x1="455" y1="590" x2="540" y2="550" marker-end="url(#dashed-arrow)"/>
+    <text x="485" y="560" font-size="12" font-style="italic" text-anchor="middle" fill="#333" stroke="none">&lt;&lt;include&gt;&gt;</text>
+
+    <!-- Include: Analyze Commit -> Calibrated XGBoost Inference -->
+    <line x1="470" y1="615" x2="535" y2="625" marker-end="url(#dashed-arrow)"/>
+    <text x="500" y="615" font-size="12" font-style="italic" text-anchor="middle" fill="#333" stroke="none">&lt;&lt;include&gt;&gt;</text>
+
+    <!-- Include: Analyze Commit -> Categorize Risk Levels -->
+    <line x1="455" y1="630" x2="540" y2="700" marker-end="url(#dashed-arrow)"/>
+    <text x="480" y="690" font-size="12" font-style="italic" text-anchor="middle" fill="#333" stroke="none">&lt;&lt;include&gt;&gt;</text>
+
+    <!-- Include: Get Review Recommendations -> Flag High-Risk Commits -->
+    <line x1="470" y1="880" x2="535" y2="880" marker-end="url(#dashed-arrow)"/>
+    <text x="505" y="870" font-size="12" font-style="italic" text-anchor="middle" fill="#333" stroke="none">&lt;&lt;include&gt;&gt;</text>
+  </g>
+
+  <!-- ================= USE CASES ================= -->
+  <g id="use-cases" fill="#f4f7f9" stroke="#333" stroke-width="1.5">
+    
+    <!-- Center Column (Standalone Features) -->
+    <ellipse cx="500" cy="120" rx="110" ry="35"/>
+    <text x="500" y="125" font-size="14" text-anchor="middle" fill="#000" stroke="none">Secure Login</text>
+
+    <ellipse cx="500" cy="200" rx="110" ry="35"/>
+    <text x="500" y="205" font-size="14" text-anchor="middle" fill="#000" stroke="none">User Registration</text>
+
+    <ellipse cx="500" cy="280" rx="110" ry="35"/>
+    <text x="500" y="285" font-size="14" text-anchor="middle" fill="#000" stroke="none">View Profile Info</text>
+
+    <!-- Left Column (Core Workflow) -->
+    <ellipse cx="400" cy="370" rx="75" ry="40"/>
+    <text x="400" y="365" font-size="14" text-anchor="middle" fill="#000" stroke="none">Explore GitHub</text>
+    <text x="400" y="385" font-size="14" text-anchor="middle" fill="#000" stroke="none">Repository</text>
+
+    <ellipse cx="360" cy="470" rx="110" ry="40"/>
+    <text x="360" y="465" font-size="14" text-anchor="middle" fill="#000" stroke="none">View Analytics</text>
+    <text x="360" y="485" font-size="14" text-anchor="middle" fill="#000" stroke="none">Dashboard</text>
+
+    <ellipse cx="360" cy="610" rx="110" ry="40"/>
+    <text x="360" y="605" font-size="14" text-anchor="middle" fill="#000" stroke="none">Analyze Commit</text>
+    <text x="360" y="625" font-size="14" text-anchor="middle" fill="#000" stroke="none">for Bugs</text>
+
+    <ellipse cx="400" cy="780" rx="80" ry="40"/>
+    <text x="400" y="775" font-size="14" text-anchor="middle" fill="#000" stroke="none">Review Search</text>
+    <text x="400" y="795" font-size="14" text-anchor="middle" fill="#000" stroke="none">History</text>
+
+    <ellipse cx="410" cy="880" rx="60" ry="40"/>
+    <text x="410" y="875" font-size="14" text-anchor="middle" fill="#000" stroke="none">Get Review</text>
+    <text x="410" y="895" font-size="14" text-anchor="middle" fill="#000" stroke="none">Recommendations</text>
+
+    <!-- Right Column (Automated / Sub Features) -->
+    <ellipse cx="650" cy="470" rx="110" ry="40"/>
+    <text x="650" y="465" font-size="14" text-anchor="middle" fill="#000" stroke="none">Filter &amp; Search</text>
+    <text x="650" y="485" font-size="14" text-anchor="middle" fill="#000" stroke="none">Commits</text>
+
+    <ellipse cx="650" cy="555" rx="110" ry="40"/>
+    <text x="650" y="535" font-size="14" text-anchor="middle" fill="#000" stroke="none">Extract Commit</text>
+    <text x="650" y="555" font-size="14" text-anchor="middle" fill="#000" stroke="none">Features</text>
+    <text x="650" y="575" font-size="14" text-anchor="middle" fill="#000" stroke="none">(Automated)</text>
+
+    <ellipse cx="650" cy="640" rx="110" ry="40"/>
+    <text x="650" y="620" font-size="14" text-anchor="middle" fill="#000" stroke="none">Calibrated XGBoost</text>
+    <text x="650" y="640" font-size="14" text-anchor="middle" fill="#000" stroke="none">Model Inference</text>
+    <text x="650" y="660" font-size="14" text-anchor="middle" fill="#000" stroke="none">(Optimal Threshold)</text>
+
+    <ellipse cx="650" cy="720" rx="110" ry="35"/>
+    <text x="650" y="725" font-size="14" text-anchor="middle" fill="#000" stroke="none">Categorize Risk Levels</text>
+
+    <ellipse cx="648" cy="880" rx="110" ry="40"/>
+    <text x="650" y="875" font-size="14" text-anchor="middle" fill="#000" stroke="none">Flag High-Risk</text>
+    <text x="650" y="895" font-size="14" text-anchor="middle" fill="#000" stroke="none">Commits</text>
+
+    <!-- Center Column (Bottom Standalone) -->
+    <ellipse cx="500" cy="980" rx="110" ry="40"/>
+    <text x="500" y="975" font-size="14" text-anchor="middle" fill="#000" stroke="none">Predict Commit</text>
+    <text x="500" y="995" font-size="14" text-anchor="middle" fill="#000" stroke="none">Manually</text>
+
+    <ellipse cx="500" cy="1060" rx="110" ry="35"/>
+    <text x="500" y="1065" font-size="14" text-anchor="middle" fill="#000" stroke="none">Logout</text>
+
+  </g>
+</svg>

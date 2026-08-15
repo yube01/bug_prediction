@@ -1,0 +1,144 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1150" width="800" height="1150" style="background-color: white;">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#000"/>
+    </marker>
+    <g id="comp">
+      <rect x="5" y="0" width="16" height="22" fill="#fff" stroke="#000" stroke-width="1.5"/>
+      <rect x="0" y="4" width="10" height="4" fill="#fff" stroke="#000" stroke-width="1.5"/>
+      <rect x="0" y="14" width="10" height="4" fill="#fff" stroke="#000" stroke-width="1.5"/>
+    </g>
+  </defs>
+
+  <!-- Outer Border -->
+  <rect x="2" y="2" width="796" height="1146" fill="none" stroke="#000" stroke-width="1"/>
+
+  <!-- ==================== FRONTEND PACKAGE ==================== -->
+  <path d="M 50,50 L 200,50 L 220,80 L 750,80 L 750,230 L 50,230 Z" fill="none" stroke="#000" stroke-width="1.5"/>
+  <line x1="50" y1="80" x2="220" y2="80" stroke="#000" stroke-width="1.5"/>
+  <text x="60" y="70" font-family="Arial" font-size="14" font-weight="bold">Frontend (React + TS + Vite)</text>
+
+  <!-- Commit Explorer -->
+  <rect x="80" y="110" width="200" height="90" fill="none" stroke="#000" stroke-width="1.5"/>
+  <use href="#comp" x="250" y="120"/>
+  <text x="180" y="160" font-family="Arial" font-size="13" text-anchor="middle">Commit Explorer</text>
+
+  <!-- User Dashboard -->
+  <rect x="300" y="110" width="200" height="90" fill="none" stroke="#000" stroke-width="1.5"/>
+  <use href="#comp" x="470" y="120"/>
+  <text x="400" y="160" font-family="Arial" font-size="13" text-anchor="middle">User Dashboard</text>
+
+  <!-- Commit Predictor & Model Info -->
+  <rect x="520" y="110" width="200" height="90" fill="none" stroke="#000" stroke-width="1.5"/>
+  <use href="#comp" x="690" y="120"/>
+  <text x="620" y="152" font-family="Arial" font-size="13" text-anchor="middle">Commit Predictor</text>
+  <text x="620" y="170" font-family="Arial" font-size="13" text-anchor="middle">&amp; Model Info</text>
+
+
+  <!-- ==================== ARROW 1 ==================== -->
+  <line x1="400" y1="230" x2="400" y2="320" stroke="#000" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+
+  <!-- ==================== BACKEND PACKAGE ==================== -->
+  <path d="M 50,290 L 200,290 L 220,320 L 750,320 L 750,580 L 50,580 Z" fill="none" stroke="#000" stroke-width="1.5"/>
+  <line x1="50" y1="320" x2="220" y2="320" stroke="#000" stroke-width="1.5"/>
+  <text x="60" y="310" font-family="Arial" font-size="14" font-weight="bold">Backend (FastAPI Monolith)</text>
+
+  <!-- ROW 1: API Router Endpoints -->
+  <!-- Auth Router -->
+  <rect x="70" y="350" width="150" height="80" fill="none" stroke="#000" stroke-width="1.5"/>
+  <use href="#comp" x="190" y="358"/>
+  <text x="145" y="395" font-family="Arial" font-size="13" text-anchor="middle">Auth Router</text>
+
+  <!-- Prediction Router -->
+  <rect x="240" y="350" width="150" height="80" fill="none" stroke="#000" stroke-width="1.5"/>
+  <use href="#comp" x="360" y="358"/>
+  <text x="315" y="395" font-family="Arial" font-size="13" text-anchor="middle">Prediction Router</text>
+
+  <!-- Search History Router -->
+  <rect x="410" y="350" width="150" height="80" fill="none" stroke="#000" stroke-width="1.5"/>
+  <use href="#comp" x="530" y="358"/>
+  <text x="485" y="395" font-family="Arial" font-size="13" text-anchor="middle">Search History Router</text>
+
+  <!-- System & Health API -->
+  <rect x="580" y="350" width="150" height="80" fill="none" stroke="#000" stroke-width="1.5"/>
+  <use href="#comp" x="700" y="358"/>
+  <text x="655" y="395" font-family="Arial" font-size="13" text-anchor="middle">System &amp; Health API</text>
+
+  <!-- ROW 2: Integrated ML Inference Engine -->
+  <!-- Feature Engineering -->
+  <rect x="70" y="470" width="150" height="80" fill="none" stroke="#000" stroke-width="1.5"/>
+  <use href="#comp" x="190" y="478"/>
+  <text x="145" y="515" font-family="Arial" font-size="13" text-anchor="middle">Feature Engineering</text>
+
+  <!-- Label Encoders -->
+  <rect x="240" y="470" width="150" height="80" fill="none" stroke="#000" stroke-width="1.5"/>
+  <use href="#comp" x="360" y="478"/>
+  <text x="315" y="515" font-family="Arial" font-size="13" text-anchor="middle">Label Encoders</text>
+
+  <!-- Calibrated XGBoost Model -->
+  <rect x="410" y="470" width="150" height="80" fill="none" stroke="#000" stroke-width="1.5"/>
+  <use href="#comp" x="530" y="478"/>
+  <text x="485" y="507" font-family="Arial" font-size="13" text-anchor="middle">Calibrated XGBoost</text>
+  <text x="485" y="525" font-family="Arial" font-size="11" text-anchor="middle">(Threshold: 0.24)</text>
+
+  <!-- Risk Factor Calculator -->
+  <rect x="580" y="470" width="150" height="80" fill="none" stroke="#000" stroke-width="1.5"/>
+  <use href="#comp" x="700" y="478"/>
+  <text x="655" y="515" font-family="Arial" font-size="13" text-anchor="middle">Risk Calculator</text>
+
+
+  <!-- ==================== ARROW 2 ==================== -->
+  <line x1="400" y1="580" x2="400" y2="670" stroke="#000" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+
+  <!-- ==================== OFFLINE ML PIPELINE PACKAGE ==================== -->
+  <path d="M 50,640 L 220,640 L 240,670 L 750,670 L 750,820 L 50,820 Z" fill="none" stroke="#000" stroke-width="1.5"/>
+  <line x1="50" y1="670" x2="240" y2="670" stroke="#000" stroke-width="1.5"/>
+  <text x="60" y="660" font-family="Arial" font-size="14" font-weight="bold">Offline ML Pipeline (Python)</text>
+
+  <!-- GitHub API Scraper -->
+  <rect x="80" y="700" width="200" height="90" fill="none" stroke="#000" stroke-width="1.5"/>
+  <use href="#comp" x="250" y="710"/>
+  <text x="180" y="742" font-family="Arial" font-size="13" text-anchor="middle">GitHub API</text>
+  <text x="180" y="760" font-family="Arial" font-size="13" text-anchor="middle">Data Scraper</text>
+
+  <!-- SZZ Labeling Engine -->
+  <rect x="300" y="700" width="200" height="90" fill="none" stroke="#000" stroke-width="1.5"/>
+  <use href="#comp" x="470" y="710"/>
+  <text x="400" y="742" font-family="Arial" font-size="13" text-anchor="middle">SZZ Labeling</text>
+  <text x="400" y="760" font-family="Arial" font-size="13" text-anchor="middle">Engine (git blame)</text>
+
+  <!-- XGBoost & Calibration -->
+  <rect x="520" y="700" width="200" height="90" fill="none" stroke="#000" stroke-width="1.5"/>
+  <use href="#comp" x="690" y="710"/>
+  <text x="620" y="742" font-family="Arial" font-size="13" text-anchor="middle">XGBoost Training</text>
+  <text x="620" y="760" font-family="Arial" font-size="13" text-anchor="middle">&amp; Calibration</text>
+
+
+  <!-- ==================== ARROW 3 ==================== -->
+  <line x1="400" y1="820" x2="400" y2="910" stroke="#000" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+
+  <!-- ==================== DATABASE PACKAGE ==================== -->
+  <path d="M 50,880 L 220,880 L 240,910 L 750,910 L 750,1060 L 50,1060 Z" fill="none" stroke="#000" stroke-width="1.5"/>
+  <line x1="50" y1="910" x2="240" y2="910" stroke="#000" stroke-width="1.5"/>
+  <text x="60" y="900" font-family="Arial" font-size="14" font-weight="bold">Database (Neon PostgreSQL)</text>
+
+  <!-- users Table -->
+  <rect x="80" y="940" width="200" height="90" fill="none" stroke="#000" stroke-width="1.5"/>
+  <use href="#comp" x="250" y="950"/>
+  <text x="180" y="990" font-family="Arial" font-size="13" text-anchor="middle">users Table</text>
+
+  <!-- search_history Table -->
+  <rect x="300" y="940" width="200" height="90" fill="none" stroke="#000" stroke-width="1.5"/>
+  <use href="#comp" x="470" y="950"/>
+  <text x="400" y="990" font-family="Arial" font-size="13" text-anchor="middle">search_history Table</text>
+
+  <!-- Async Connection (asyncpg) -->
+  <rect x="520" y="940" width="200" height="90" fill="none" stroke="#000" stroke-width="1.5"/>
+  <use href="#comp" x="690" y="950"/>
+  <text x="620" y="982" font-family="Arial" font-size="13" text-anchor="middle">SQLAlchemy Async</text>
+  <text x="620" y="1000" font-family="Arial" font-size="13" text-anchor="middle">Connection (asyncpg)</text>
+
+</svg>

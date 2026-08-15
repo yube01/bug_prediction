@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 220" width="100%" height="100%">
+  <style>
+    .box { fill: #ffffff; stroke: #111111; stroke-width: 1.5; }
+    .arrow { stroke: #111111; stroke-width: 1.5; fill: none; }
+    .text-title { font-family: 'Segoe UI', Arial, sans-serif; font-weight: bold; font-size: 13px; fill: #111111; }
+    .text-body { font-family: 'Segoe UI', Arial, sans-serif; font-size: 10.5px; fill: #333333; }
+    .header-text { font-family: 'Segoe UI', Arial, sans-serif; font-weight: bold; font-size: 15px; fill: #111111; }
+  </style>
+
+  <!-- Background (solid white for print-friendly use) -->
+  <rect width="900" height="220" fill="#ffffff" />
+
+  <!-- 1. SZZ ALGORITHM -->
+  <g transform="translate(20, 30)">
+    <rect class="box" width="190" height="150" rx="4" />
+    <text x="15" y="25" class="text-title">1. SZZ Algorithm</text>
+    <line x1="15" y1="32" x2="175" y2="32" stroke="#e5e7eb" stroke-width="1" />
+    
+    <text x="15" y="52" class="text-body">• Finds bug-fix commits.</text>
+    <text x="15" y="70" class="text-body">• Runs git blame on fixes.</text>
+    <text x="15" y="88" class="text-body">• Traces code lines back.</text>
+    <text x="15" y="106" class="text-body">• Pinpoints bug introducer.</text>
+    <text x="15" y="124" class="text-body" font-weight="bold">• Labels dataset (is_buggy=1)</text>
+  </g>
+
+  <!-- CONNECTOR 1 -->
+  <g>
+    <path d="M 210,105 L 240,105" class="arrow" />
+    <polygon points="240,105 232,101 232,109" fill="#111111" />
+  </g>
+
+  <!-- 2. XGBOOST CLASSIFIER -->
+  <g transform="translate(240, 30)">
+    <rect class="box" width="190" height="150" rx="4" />
+    <text x="15" y="25" class="text-title">2. XGBoost Ensemble</text>
+    <line x1="15" y1="32" x2="175" y2="32" stroke="#e5e7eb" stroke-width="1" />
+    
+    <text x="15" y="52" class="text-body">• Trains 100 decision trees.</text>
+    <text x="15" y="70" class="text-body">• Uses scale_pos_weight</text>
+    <text x="23" y="85" class="text-body" font-style="italic">(18.17x weight scaling)</text>
+    <text x="15" y="103" class="text-body">• Mitigates class imbalance.</text>
+    <text x="15" y="121" class="text-body" font-weight="bold">• Output: Raw paranoid score</text>
+  </g>
+
+  <!-- CONNECTOR 2 -->
+  <g>
+    <path d="M 430,105 L 460,105" class="arrow" />
+    <polygon points="460,105 452,101 452,109" fill="#111111" />
+  </g>
+
+  <!-- 3. ISOTONIC REGRESSION -->
+  <g transform="translate(460, 30)">
+    <rect class="box" width="190" height="150" rx="4" />
+    <text x="15" y="25" class="text-title">3. Isotonic Calibration</text>
+    <line x1="15" y1="32" x2="175" y2="32" stroke="#e5e7eb" stroke-width="1" />
+    
+    <text x="15" y="52" class="text-body">• Fits step function m(P).</text>
+    <text x="15" y="70" class="text-body">• Corrects paranoid scores.</text>
+    <text x="15" y="88" class="text-body">• Monotonic constraint</text>
+    <text x="23" y="103" class="text-body" font-style="italic">preserves risk rankings.</text>
+    <text x="15" y="121" class="text-body" font-weight="bold">• Output: Calibrated risk P</text>
+  </g>
+
+  <!-- CONNECTOR 3 -->
+  <g>
+    <path d="M 650,105 L 680,105" class="arrow" />
+    <polygon points="680,105 672,101 672,109" fill="#111111" />
+  </g>
+
+  <!-- 4. HEURISTIC RULE INFERENCE -->
+  <g transform="translate(680, 30)">
+    <rect class="box" width="190" height="150" rx="4" />
+    <text x="15" y="25" class="text-title">4. Heuristic Inference</text>
+    <line x1="15" y1="32" x2="175" y2="32" stroke="#e5e7eb" stroke-width="1" />
+    
+    <text x="15" y="52" class="text-body">• Compares features to stats.</text>
+    <text x="15" y="70" class="text-body">• Classifies risk levels:</text>
+    <text x="23" y="85" class="text-body">Low / Medium / High.</text>
+    <text x="15" y="103" class="text-body">• Assigns recommendations.</text>
+    <text x="15" y="121" class="text-body" font-weight="bold">• Output: Formatted response</text>
+  </g>
+</svg>

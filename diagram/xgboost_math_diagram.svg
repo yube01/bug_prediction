@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 950 680" width="100%" height="100%">
+  <style>
+    .border-box { fill: #ffffff; stroke: #111111; stroke-width: 1.5; }
+    .title-text { font-family: 'Segoe UI', Arial, sans-serif; font-weight: bold; font-size: 14px; fill: #111111; }
+    .header-text { font-family: 'Segoe UI', Arial, sans-serif; font-weight: bold; font-size: 16px; fill: #111111; }
+    .label-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; fill: #555555; }
+    .math-text { font-family: 'Consolas', 'Courier New', monospace; font-size: 13px; fill: #111111; font-weight: bold; }
+    .divider { stroke: #e5e7eb; stroke-width: 1; }
+  </style>
+
+  <!-- Solid white background for printing/document integration -->
+  <rect width="950" height="680" fill="#ffffff" />
+
+  <!-- Main Title -->
+  <g transform="translate(40, 40)">
+    <text class="header-text">Simplified XGBoost Formulation &amp; Probability Calibration</text>
+    <line x1="0" y1="10" x2="870" y2="10" stroke="#111111" stroke-width="2" />
+  </g>
+
+  <!-- 1. PREDICTION RULE -->
+  <g transform="translate(40, 70)">
+    <rect class="border-box" width="410" height="170" rx="4" />
+    <text x="15" y="25" class="title-text">1. Additive Prediction Rule</text>
+    <line x1="15" y1="32" x2="395" y2="32" class="divider" />
+    
+    <text x="25" y="65" class="math-text">raw_score = Tree_1 + Tree_2 + ... + Tree_100</text>
+    <text x="25" y="85" class="label-text">Sum of prediction leaf values across all ensemble trees.</text>
+
+    <text x="25" y="120" class="math-text">raw_prob = 1 / (1 + e^-raw_score)</text>
+    <text x="25" y="140" class="label-text">Converts raw score margins to a uncalibrated 0.0 – 1.0 probability.</text>
+  </g>
+
+  <!-- 2. MODEL PENALTIES (REGULARIZATION) -->
+  <g transform="translate(500, 70)">
+    <rect class="border-box" width="410" height="170" rx="4" />
+    <text x="15" y="25" class="title-text">2. Structural Tree Penalties</text>
+    <line x1="15" y1="32" x2="395" y2="32" class="divider" />
+
+    <text x="25" y="65" class="math-text">Total_Cost = Prediction_Error + Penalty</text>
+    <text x="25" y="85" class="label-text">Goal: Minimize prediction errors while keeping trees small.</text>
+
+    <text x="25" y="120" class="math-text">Penalty = gamma * Num_Leaves + ½ lambda * Sum(w^2)</text>
+    <text x="25" y="140" class="label-text">Prunes nodes (gamma) and constrains leaf weights (lambda).</text>
+  </g>
+
+  <!-- 3. WEIGHT OPTIMIZATION -->
+  <g transform="translate(40, 270)">
+    <rect class="border-box" width="410" height="170" rx="4" />
+    <text x="15" y="25" class="title-text">3. Leaf Weight Optimization</text>
+    <line x1="15" y1="32" x2="395" y2="32" class="divider" />
+
+    <text x="25" y="65" class="math-text">Leaf_Weight = -Sum(Grad) / (Sum(Hess) + lambda)</text>
+    <text x="25" y="85" class="label-text">Calculates the best target leaf output value (w) for a node.</text>
+
+    <text x="25" y="120" class="math-text">Split_Gain = Left + Right - Parent - gamma</text>
+    <text x="25" y="140" class="label-text">A node is split only if Split_Gain is greater than 0.</text>
+  </g>
+
+  <!-- 4. IMBALANCE SCALING (scale_pos_weight) -->
+  <g transform="translate(500, 270)">
+    <rect class="border-box" width="410" height="170" rx="4" />
+    <text x="15" y="25" class="title-text">4. Imbalance Correction (scale_pos_weight)</text>
+    <line x1="15" y1="32" x2="395" y2="32" class="divider" />
+
+    <text x="25" y="60" class="math-text">If Commit contains a Bug (y = 1):</text>
+    <text x="45" y="80" class="math-text">Loss_Weight = 18.17  (Forces 18x focus on bugs)</text>
+
+    <text x="25" y="115" class="math-text">If Commit is Safe (y = 0):</text>
+    <text x="45" y="135" class="math-text">Loss_Weight = 1.00  (Normal learning baseline)</text>
+  </g>
+
+  <!-- 5. ISOTONIC CALIBRATION -->
+  <g transform="translate(40, 470)">
+    <rect class="border-box" width="870" height="170" rx="4" />
+    <text x="15" y="25" class="title-text">5. Isotonic Probability Calibration</text>
+    <line x1="15" y1="32" x2="855" y2="32" class="divider" />
+
+    <!-- Left Column: Walkthrough Example -->
+    <text x="25" y="55" class="title-text" font-size="12">Concrete Commit Example</text>
+    <text x="25" y="75" class="label-text">• Input Commit: 450 lines, complexity 10 at 11:00 PM</text>
+    <text x="25" y="93" class="label-text">• Metric: night_x_complexity = 1 * 10 = 10.0</text>
+    <text x="25" y="111" class="label-text">• Raw Prediction: Exaggerated 92% raw score (paranoid)</text>
+    <text x="25" y="129" class="label-text">• Calibrated Map: Scales raw 92% down to 38.5% probability</text>
+    <text x="25" y="147" class="label-text">• Decision: 38.5% maps to MEDIUM RISK (🟡) warning</text>
+
+    <!-- Vertical Split line -->
+    <line x1="455" y1="42" x2="455" y2="155" stroke="#e5e7eb" stroke-width="1.5" />
+
+    <!-- Right Column: Formulas & Constraints -->
+    <text x="480" y="55" class="title-text" font-size="12">Mathematical Rules</text>
+    <text x="480" y="75" class="math-text">Minimize Sum( (Actual - Calib_P)^2 )</text>
+    <text x="480" y="95" class="label-text">Fits step-wise function over a 12% Calibration Pool.</text>
+    
+    <text x="480" y="120" class="math-text">Rule: Calib_P(A) &lt;= Calib_P(B) when Raw(A) &lt;= Raw(B)</text>
+    <text x="480" y="140" class="label-text">Monotonic constraint: Preserves original model risk ranking.</text>
+  </g>
+</svg>

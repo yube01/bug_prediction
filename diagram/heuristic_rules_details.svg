@@ -1,0 +1,167 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 950 700" width="100%" height="100%">
+  <style>
+    .border-box { fill: #ffffff; stroke: #111111; stroke-width: 1.5; }
+    .rule-box { fill: #ffffff; stroke: #555555; stroke-width: 1.2; }
+    .arrow { stroke: #111111; stroke-width: 1.2; fill: none; }
+    .title-text { font-family: 'Segoe UI', Arial, sans-serif; font-weight: bold; font-size: 13px; fill: #111111; }
+    .header-text { font-family: 'Segoe UI', Arial, sans-serif; font-weight: bold; font-size: 16px; fill: #111111; }
+    .label-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 10.5px; fill: #444444; }
+    .code-text { font-family: 'Consolas', 'Courier New', monospace; font-size: 12px; fill: #111111; font-weight: bold; }
+    .divider { stroke: #e5e7eb; stroke-width: 1; }
+  </style>
+
+  <!-- Background (solid white) -->
+  <rect width="950" height="700" fill="#ffffff" />
+
+  <!-- Main Title -->
+  <g transform="translate(40, 35)">
+    <text class="header-text">Heuristic Risk Extraction &amp; Decision Mapping</text>
+    <line x1="0" y1="10" x2="870" y2="10" stroke="#111111" stroke-width="2" />
+  </g>
+
+  <!-- 1. INPUT COMMIT METRICS -->
+  <g transform="translate(40, 80)">
+    <rect class="border-box" width="200" height="585" rx="4" />
+    <text x="15" y="25" class="title-text">1. Input Commit Metrics</text>
+    <line x1="15" y1="32" x2="185" y2="32" class="divider" />
+    
+    <!-- Y-offsets are aligned to the middle of the rule boxes -->
+    <text x="15" y="114" class="code-text">prior_bugs_author</text>
+    <text x="15" y="189" class="code-text">avg_complexity</text>
+    <text x="15" y="264" class="code-text">lines_added</text>
+    <text x="15" y="339" class="code-text">files_changed</text>
+    <text x="15" y="414" class="code-text">test_ratio</text>
+    <text x="15" y="489" class="code-text">churn_ratio</text>
+    <text x="15" y="564" class="code-text">is_night_commit</text>
+    <text x="15" y="639" class="code-text">is_weekend</text>
+  </g>
+
+  <!-- 2. HEURISTIC THRESHOLD RULES (COLUMN 2) -->
+  <!-- Rule 1: Author Bugs -->
+  <g transform="translate(280, 80)">
+    <rect class="rule-box" width="300" height="60" rx="3" />
+    <text x="12" y="20" class="code-text">If prior_bugs_author &gt;= 3</text>
+    <text x="12" y="40" class="label-text">→ "Author has X prior bugs"</text>
+  </g>
+
+  <!-- Rule 2: Code Complexity -->
+  <g transform="translate(280, 155)">
+    <rect class="rule-box" width="300" height="60" rx="3" />
+    <text x="12" y="20" class="code-text">If avg_complexity &gt;= 10</text>
+    <text x="12" y="40" class="label-text">→ "High cyclomatic complexity (X.X)"</text>
+  </g>
+
+  <!-- Rule 3: Large Commit -->
+  <g transform="translate(280, 230)">
+    <rect class="rule-box" width="300" height="60" rx="3" />
+    <text x="12" y="20" class="code-text">If lines_added &gt;= 300</text>
+    <text x="12" y="40" class="label-text">→ "Large commit (X lines added)"</text>
+  </g>
+
+  <!-- Rule 4: File Count -->
+  <g transform="translate(280, 305)">
+    <rect class="rule-box" width="300" height="60" rx="3" />
+    <text x="12" y="20" class="code-text">If files_changed &gt;= 10</text>
+    <text x="12" y="40" class="label-text">→ "Many files changed (X)"</text>
+  </g>
+
+  <!-- Rule 5: Test Ratio -->
+  <g transform="translate(280, 380)">
+    <rect class="rule-box" width="300" height="60" rx="3" />
+    <text x="12" y="20" class="code-text">If test_ratio == 0 and files &gt; 0</text>
+    <text x="12" y="40" class="label-text">→ "No test files updated"</text>
+  </g>
+
+  <!-- Rule 6: Churn Ratio -->
+  <g transform="translate(280, 455)">
+    <rect class="rule-box" width="300" height="60" rx="3" />
+    <text x="12" y="20" class="code-text">If churn_ratio &gt;= 5</text>
+    <text x="12" y="40" class="label-text">→ "High churn ratio (X.Xx)"</text>
+  </g>
+
+  <!-- Rule 7: Late Night -->
+  <g transform="translate(280, 530)">
+    <rect class="rule-box" width="300" height="60" rx="3" />
+    <text x="12" y="20" class="code-text">If is_night_commit == 1</text>
+    <text x="12" y="40" class="label-text">→ "Night commit with complex changes" (if comp &gt; 5)</text>
+  </g>
+
+  <!-- Rule 8: Weekend -->
+  <g transform="translate(280, 605)">
+    <rect class="rule-box" width="300" height="60" rx="3" />
+    <text x="12" y="20" class="code-text">If is_weekend == 1 and lines &gt; 70</text>
+    <text x="12" y="40" class="label-text">→ "Weekend commit with many changes"</text>
+  </g>
+
+  <!-- 3. DECISION BANDS & PRIORITIZATION -->
+  <g transform="translate(620, 80)">
+    <rect class="border-box" width="290" height="585" rx="4" />
+    <text x="15" y="25" class="title-text">3. Output Filter &amp; Decision Band</text>
+    <line x1="15" y1="32" x2="275" y2="32" class="divider" />
+
+    <!-- Prioritization -->
+    <text x="15" y="60" class="title-text" font-size="11">Rule Factor Truncation:</text>
+    <text x="15" y="80" class="label-text">• Evaluates all 8 rules in parallel.</text>
+    <text x="15" y="98" class="label-text">• Sorts triggered warnings.</text>
+    <text x="15" y="116" class="label-text">• Outputs top 3 warning strings max.</text>
+    <text x="15" y="134" class="label-text">• If 0 triggers: "No major risk factors".</text>
+
+    <line x1="15" y1="165" x2="275" y2="165" class="divider" />
+
+    <!-- Mapping bands -->
+    <text x="15" y="195" class="title-text" font-size="11">Calibrated Risk Classification:</text>
+    <text x="15" y="220" class="label-text" font-weight="bold" fill="#b91c1c">🔴 HIGH RISK (P &gt;= 0.450)</text>
+    <text x="15" y="238" class="label-text" fill="#555555">Rec: Mandatory review required before</text>
+    <text x="15" y="252" class="label-text" fill="#555555">merge. Break into smaller commits.</text>
+
+    <text x="15" y="290" class="label-text" font-weight="bold" fill="#b45309">🟡 MEDIUM RISK (0.240 &lt;= P &lt; 0.450)</text>
+    <text x="15" y="308" class="label-text" fill="#555555">Rec: Review recommended. Check test</text>
+    <text x="15" y="322" class="label-text" fill="#555555">coverage and complexity before merge.</text>
+
+    <text x="15" y="360" class="label-text" font-weight="bold" fill="#047857">🟢 LOW RISK (P &lt; 0.240)</text>
+    <text x="15" y="378" class="label-text" fill="#555555">Rec: Looks safe to merge. Standard</text>
+    <text x="15" y="392" class="label-text" fill="#555555">review process applies.</text>
+  </g>
+
+  <!-- Straight Horizontal Connectors from Metrics to Rules -->
+  <g>
+    <!-- Arrow 1 -->
+    <path d="M 240,110 L 280,110" class="arrow" />
+    <polygon points="280,110 272,106 272,114" fill="#111111" />
+    
+    <!-- Arrow 2 -->
+    <path d="M 240,185 L 280,185" class="arrow" />
+    <polygon points="280,185 272,181 272,189" fill="#111111" />
+    
+    <!-- Arrow 3 -->
+    <path d="M 240,260 L 280,260" class="arrow" />
+    <polygon points="280,260 272,256 272,264" fill="#111111" />
+    
+    <!-- Arrow 4 -->
+    <path d="M 240,335 L 280,335" class="arrow" />
+    <polygon points="280,335 272,331 272,339" fill="#111111" />
+    
+    <!-- Arrow 5 -->
+    <path d="M 240,410 L 280,410" class="arrow" />
+    <polygon points="280,410 272,406 272,414" fill="#111111" />
+    
+    <!-- Arrow 6 -->
+    <path d="M 240,485 L 280,485" class="arrow" />
+    <polygon points="280,485 272,481 272,489" fill="#111111" />
+    
+    <!-- Arrow 7 -->
+    <path d="M 240,560 L 280,560" class="arrow" />
+    <polygon points="280,560 272,556 272,564" fill="#111111" />
+    
+    <!-- Arrow 8 -->
+    <path d="M 240,635 L 280,635" class="arrow" />
+    <polygon points="280,635 272,631 272,639" fill="#111111" />
+  </g>
+
+  <!-- Connectors from Rules to Output Box -->
+  <g>
+    <path d="M 580,110 L 620,110" class="arrow" /><polygon points="620,110 612,106 612,114" fill="#111111" />
+    <path d="M 580,335 L 620,335" class="arrow" /><polygon points="620,335 612,331 612,339" fill="#111111" />
+    <path d="M 580,635 L 620,635" class="arrow" /><polygon points="620,635 612,631 612,639" fill="#111111" />
+  </g>
+</svg>

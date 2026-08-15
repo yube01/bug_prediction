@@ -1,0 +1,200 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1200" width="1000" height="1200" style="background-color: white;">
+  <defs>
+    <!-- Arrowhead for solid lines -->
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#000"/>
+    </marker>
+    <!-- Arrowhead for dashed lines -->
+    <marker id="arrow-dashed" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#000"/>
+    </marker>
+  </defs>
+
+  <style>
+    .line { stroke: #000; stroke-width: 1.5; }
+    .dashed { stroke: #000; stroke-width: 1.5; stroke-dasharray: 5,5; }
+    .box { fill: #fff; stroke: #000; stroke-width: 1.5; }
+    .text { font-family: Arial, sans-serif; font-size: 12px; fill: #000; }
+    .bold-text { font-family: Arial, sans-serif; font-size: 12px; font-weight: bold; fill: #000; }
+    .alt-box { fill: none; stroke: #000; stroke-width: 1; }
+    .alt-tab { fill: #f9f9f9; stroke: #000; stroke-width: 1; }
+  </style>
+
+  <!-- Outline Border -->
+  <rect x="5" y="5" width="990" height="1190" class="box" fill="none"/>
+
+  <!-- ACTORS & COMPONENTS -->
+  <!-- User/Developer -->
+  <circle cx="80" cy="50" r="10" class="box"/>
+  <line x1="80" y1="60" x2="80" y2="80" class="line"/>
+  <line x1="60" y1="70" x2="100" y2="70" class="line"/>
+  <line x1="80" y1="80" x2="70" y2="100" class="line"/>
+  <line x1="80" y1="80" x2="90" y2="100" class="line"/>
+  <text x="80" y="115" class="text" text-anchor="middle">Developer</text>
+  
+  <!-- React Frontend -->
+  <rect x="210" y="50" width="100" height="30" class="box"/>
+  <text x="260" y="70" class="text" text-anchor="middle">React Frontend</text>
+
+  <!-- FastAPI Backend -->
+  <rect x="410" y="50" width="100" height="30" class="box"/>
+  <text x="460" y="70" class="text" text-anchor="middle">FastAPI Backend</text>
+
+  <!-- Neon PostgreSQL -->
+  <rect x="610" y="50" width="100" height="30" class="box"/>
+  <text x="660" y="70" class="text" text-anchor="middle">Neon PostgreSQL</text>
+
+  <!-- In-Memory ML Engine -->
+  <rect x="810" y="50" width="100" height="30" class="box"/>
+  <text x="860" y="70" class="text" text-anchor="middle">In-Memory ML</text>
+
+  <!-- LIFELINES -->
+  <line x1="80" y1="120" x2="80" y2="1160" class="dashed"/>
+  <line x1="260" y1="80" x2="260" y2="1160" class="dashed"/>
+  <line x1="460" y1="80" x2="460" y2="1160" class="dashed"/>
+  <line x1="660" y1="80" x2="660" y2="1160" class="dashed"/>
+  <line x1="860" y1="80" x2="860" y2="1160" class="dashed"/>
+
+  <!-- ACTIVATION BOXES -->
+  <rect x="255" y="130" width="10" height="1000" class="box"/>
+  <rect x="455" y="160" width="10" height="970" class="box"/>
+  <rect x="655" y="200" width="10" height="80" class="box"/>
+  <rect x="655" y="820" width="10" height="280" class="box"/>
+  <rect x="855" y="590" width="10" height="230" class="box"/>
+
+  <!-- SEQUENCE MESSAGES -->
+  <!-- 1. Enter Credentials -->
+  <line x1="80" y1="150" x2="250" y2="150" class="line" marker-end="url(#arrow)"/>
+  <text x="165" y="135" class="text" text-anchor="middle">1. Enter</text>
+  <text x="165" y="147" class="text" text-anchor="middle">Credentials</text>
+
+  <!-- 2. Login Request -->
+  <line x1="265" y1="180" x2="450" y2="180" class="line" marker-end="url(#arrow)"/>
+  <text x="357" y="175" class="text" text-anchor="middle">2. Login Request</text>
+
+  <!-- 3. Verify -->
+  <line x1="465" y1="210" x2="650" y2="210" class="line" marker-end="url(#arrow)"/>
+  <text x="557" y="195" class="text" text-anchor="middle">3. Send User Data and</text>
+  <text x="557" y="207" class="text" text-anchor="middle">Credentials</text>
+
+  <!-- 4. Result -->
+  <line x1="650" y1="250" x2="470" y2="250" class="dashed" marker-end="url(#arrow-dashed)"/>
+  <text x="557" y="245" class="text" text-anchor="middle">4. Result</text>
+
+  <!-- ALT BOX 1: Auth -->
+  <rect x="20" y="270" width="500" height="150" class="alt-box"/>
+  <path d="M 20,295 L 70,295 L 80,285 L 80,270" class="alt-box" fill="#f0f0f0"/>
+  <text x="40" y="285" class="bold-text">Alt</text>
+  <text x="30" y="315" class="text">Valid</text>
+  <line x1="20" y1="350" x2="520" y2="350" class="dashed"/>
+  <text x="30" y="380" class="text">Invalid</text>
+
+  <!-- 5 & 6. Auth Success -->
+  <line x1="450" y1="310" x2="270" y2="310" class="dashed" marker-end="url(#arrow-dashed)"/>
+  <text x="360" y="305" class="text" text-anchor="middle">5. Authentication Success</text>
+  
+  <line x1="250" y1="330" x2="80" y2="330" class="dashed" marker-end="url(#arrow-dashed)"/>
+  <text x="165" y="315" class="text" text-anchor="middle">6. Redirect to</text>
+  <text x="165" y="327" class="text" text-anchor="middle">Dashboard</text>
+
+  <!-- 7, 8, 9, 10. Auth Failed -->
+  <line x1="450" y1="370" x2="270" y2="370" class="dashed" marker-end="url(#arrow-dashed)"/>
+  <text x="360" y="365" class="text" text-anchor="middle">7. Authentication Failed</text>
+
+  <line x1="250" y1="390" x2="80" y2="390" class="dashed" marker-end="url(#arrow-dashed)"/>
+  <text x="165" y="385" class="text" text-anchor="middle">8. Redirect to Login</text>
+
+  <line x1="80" y1="410" x2="250" y2="410" class="line" marker-end="url(#arrow)"/>
+  <text x="165" y="405" class="text" text-anchor="middle">9. Redirect to Register</text>
+
+  <line x1="265" y1="400" x2="450" y2="400" class="line" marker-end="url(#arrow)"/>
+  <text x="357" y="395" class="text" text-anchor="middle">10. User Exists?</text>
+
+  <!-- ALT BOX 2: Register -->
+  <rect x="20" y="450" width="500" height="130" class="alt-box"/>
+  <path d="M 20,475 L 70,475 L 80,465 L 80,450" class="alt-box" fill="#f0f0f0"/>
+  <text x="40" y="465" class="bold-text">Alt</text>
+  <text x="30" y="495" class="text">if user not</text>
+  <text x="30" y="510" class="text">exist</text>
+  <line x1="20" y1="530" x2="520" y2="530" class="dashed"/>
+  <text x="30" y="555" class="text">else</text>
+
+  <line x1="265" y1="475" x2="450" y2="475" class="line" marker-end="url(#arrow)"/>
+  <text x="357" y="470" class="text" text-anchor="middle">11. Register User</text>
+
+  <line x1="250" y1="500" x2="80" y2="500" class="dashed" marker-end="url(#arrow-dashed)"/>
+  <text x="165" y="485" class="text" text-anchor="middle">12. User Data and</text>
+  <text x="165" y="497" class="text" text-anchor="middle">Preference</text>
+
+  <line x1="250" y1="520" x2="80" y2="520" class="dashed" marker-end="url(#arrow-dashed)"/>
+  <text x="165" y="515" class="text" text-anchor="middle">13. Redirect Dashboard</text>
+
+  <line x1="450" y1="550" x2="270" y2="550" class="dashed" marker-end="url(#arrow-dashed)"/>
+  <text x="360" y="545" class="text" text-anchor="middle">14. User Already Exists</text>
+
+  <line x1="250" y1="570" x2="80" y2="570" class="dashed" marker-end="url(#arrow-dashed)"/>
+  <text x="165" y="565" class="text" text-anchor="middle">15. Redirect to Login</text>
+
+  <!-- 16. Request Bug Prediction -->
+  <line x1="465" y1="610" x2="850" y2="610" class="line" marker-end="url(#arrow)"/>
+  <text x="657" y="595" class="text" text-anchor="middle">16. Request</text>
+  <text x="657" y="607" class="text" text-anchor="middle">Commit Analysis</text>
+
+  <!-- 17. Feature Engineering -->
+  <path d="M 855,630 L 820,630 L 820,650 L 855,650" fill="none" stroke="#000" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="810" y="635" class="text" text-anchor="end">17. Feature Engineering</text>
+  <text x="810" y="647" class="text" text-anchor="end">(_compute_derived)</text>
+
+  <!-- 18. Ensemble Model -->
+  <path d="M 855,680 L 820,680 L 820,700 L 855,700" fill="none" stroke="#000" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="810" y="685" class="text" text-anchor="end">18. Calibrated XGBoost</text>
+  <text x="810" y="697" class="text" text-anchor="end">Inference (Threshold: 0.24)</text>
+
+  <!-- 19. Bug Risk Score -->
+  <path d="M 855,730 L 820,730 L 820,750 L 855,750" fill="none" stroke="#000" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="810" y="735" class="text" text-anchor="end">19. Assign Bug</text>
+  <text x="810" y="747" class="text" text-anchor="end">Risk &amp; Probability</text>
+
+  <!-- 20. Prediction Result -->
+  <line x1="850" y1="790" x2="470" y2="790" class="dashed" marker-end="url(#arrow-dashed)"/>
+  <text x="657" y="775" class="text" text-anchor="middle">20. Prediction</text>
+  <text x="657" y="787" class="text" text-anchor="middle">Result</text>
+
+  <!-- 21. Save Prediction -->
+  <line x1="465" y1="830" x2="650" y2="830" class="line" marker-end="url(#arrow)"/>
+  <text x="557" y="815" class="text" text-anchor="middle">21. Format Risk Levels</text>
+  <text x="557" y="827" class="text" text-anchor="middle">&amp; Recommendations</text>
+
+  <!-- 22. Display Dashboard -->
+  <line x1="450" y1="870" x2="270" y2="870" class="dashed" marker-end="url(#arrow-dashed)"/>
+  <text x="360" y="855" class="text" text-anchor="middle">22. Display Analysis</text>
+  <text x="360" y="867" class="text" text-anchor="middle">on Explorer Page</text>
+
+  <!-- 23. Review Commit -->
+  <line x1="80" y1="910" x2="250" y2="910" class="line" marker-end="url(#arrow)"/>
+  <text x="165" y="895" class="text" text-anchor="middle">23. Inspect Risk</text>
+  <text x="165" y="907" class="text" text-anchor="middle">Factors &amp; Recs</text>
+
+  <!-- 24. Save Search Request -->
+  <line x1="265" y1="950" x2="450" y2="950" class="line" marker-end="url(#arrow)"/>
+  <text x="357" y="945" class="text" text-anchor="middle">24. Save Search Request (/search/save)</text>
+
+  <!-- 25. Save Progress -->
+  <line x1="465" y1="990" x2="650" y2="990" class="line" marker-end="url(#arrow)"/>
+  <text x="557" y="975" class="text" text-anchor="middle">25. Insert search_history</text>
+  <text x="557" y="987" class="text" text-anchor="middle">Table Record</text>
+
+  <!-- 26. Retrieve History -->
+  <line x1="465" y1="1030" x2="650" y2="1030" class="line" marker-end="url(#arrow)"/>
+  <text x="557" y="1025" class="text" text-anchor="middle">26. Retrieve history (/search/history)</text>
+
+  <!-- 27. History Data -->
+  <line x1="650" y1="1070" x2="470" y2="1070" class="dashed" marker-end="url(#arrow-dashed)"/>
+  <text x="557" y="1065" class="text" text-anchor="middle">27. Saved History Records</text>
+
+  <!-- 28. Display Charts -->
+  <line x1="450" y1="1120" x2="270" y2="1120" class="dashed" marker-end="url(#arrow-dashed)"/>
+  <text x="360" y="1105" class="text" text-anchor="middle">28. Display History</text>
+  <text x="360" y="1117" class="text" text-anchor="middle">Stats &amp; Charts</text>
+
+</svg>

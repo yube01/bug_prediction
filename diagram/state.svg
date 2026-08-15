@@ -1,0 +1,188 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 650" width="100%" height="100%" style="background-color: white; font-family: Arial, sans-serif;">
+  <defs>
+    <!-- Standard Arrowhead -->
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#000"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  
+  <!-- Outer Canvas Border (Optional, matching style) -->
+  <rect x="2" y="2" width="1196" height="646" fill="none" stroke="#ccc" stroke-width="1"/>
+
+  <!-- ================= DEVELOPER FLOW DASHED BOX ================= -->
+  <rect x="60" y="260" width="1080" height="300" rx="20" fill="none" stroke="#555" stroke-width="1.5" stroke-dasharray="10,10"/>
+  <text x="600" y="285" font-size="14" font-weight="bold" text-anchor="middle" fill="#555">DEVELOPER FLOW</text>
+
+  <!-- ================= STATE BOXES ================= -->
+  <g fill="#fff" stroke="#000" stroke-width="1.5">
+    
+    <!-- Welcome (SignUp/Register) -->
+    <rect x="100" y="100" width="150" height="75" rx="12"/>
+    <line x1="100" y1="125" x2="250" y2="125"/>
+    
+    <!-- Login -->
+    <rect x="350" y="100" width="150" height="75" rx="12"/>
+    <line x1="350" y1="125" x2="500" y2="125"/>
+
+    <!-- Developer Dashboard -->
+    <rect x="100" y="300" width="150" height="75" rx="12"/>
+    <line x1="100" y1="325" x2="250" y2="325"/>
+
+    <!-- Explore Repository -->
+    <rect x="320" y="300" width="150" height="75" rx="12"/>
+    <line x1="320" y1="325" x2="470" y2="325"/>
+
+    <!-- Fetch Commits -->
+    <rect x="540" y="300" width="150" height="75" rx="12"/>
+    <line x1="540" y1="325" x2="690" y2="325"/>
+
+    <!-- Risk Prediction -->
+    <rect x="760" y="300" width="150" height="75" rx="12"/>
+    <line x1="760" y1="325" x2="910" y2="325"/>
+
+    <!-- View Risk Reports -->
+    <rect x="980" y="300" width="150" height="75" rx="12"/>
+    <line x1="980" y1="325" x2="1130" y2="325"/>
+
+    <!-- Save Search History -->
+    <rect x="760" y="450" width="150" height="75" rx="12"/>
+    <line x1="760" y1="475" x2="910" y2="475"/>
+
+    <!-- Manual Predict Form -->
+    <rect x="540" y="450" width="150" height="75" rx="12"/>
+    <line x1="540" y1="475" x2="690" y2="475"/>
+
+    <!-- Logged Out -->
+    <rect x="320" y="450" width="150" height="75" rx="12"/>
+    <line x1="320" y1="475" x2="470" y2="475"/>
+    
+  </g>
+
+  <!-- ================= TEXT IN BOXES ================= -->
+  <g font-size="11" text-anchor="middle" fill="#000" stroke="none">
+    <!-- Register -->
+    <text x="175" y="118" font-size="12" font-weight="bold">Register</text>
+    <text x="175" y="145">Entry / Show</text>
+    <text x="175" y="160">SignUp Page</text>
+
+    <!-- Login -->
+    <text x="425" y="118" font-size="12" font-weight="bold">Login / SignIn</text>
+    <text x="425" y="145">Entry / Show</text>
+    <text x="425" y="160">SignIn Page</text>
+
+    <!-- Dashboard -->
+    <text x="175" y="318" font-size="12" font-weight="bold">user dashboard</text>
+    <text x="175" y="345">Entry / Show History</text>
+    <text x="175" y="360">Stats &amp; Saved Repos</text>
+
+    <!-- Explore Repo -->
+    <text x="395" y="318" font-size="12" font-weight="bold">explore commits</text>
+    <text x="395" y="345">Entry / Search Repo</text>
+    <text x="395" y="360">ExplorePage.tsx</text>
+
+    <!-- Fetch Commits -->
+    <text x="615" y="318" font-size="12" font-weight="bold">fetch commits</text>
+    <text x="615" y="345">Entry / Query GitHub</text>
+    <text x="615" y="360">REST API for Commits</text>
+
+    <!-- Risk Prediction -->
+    <text x="835" y="318" font-size="12" font-weight="bold">risk prediction</text>
+    <text x="835" y="345">Entry / XGBoost Calibrated</text>
+    <text x="835" y="360">Inference (Thresh 0.24)</text>
+
+    <!-- View Reports -->
+    <text x="1055" y="318" font-size="12" font-weight="bold">view risk reports</text>
+    <text x="1055" y="345">Entry / Display Risk</text>
+    <text x="1055" y="360">Low, Medium, High Bands</text>
+
+    <!-- Save History -->
+    <text x="835" y="468" font-size="12" font-weight="bold">save search</text>
+    <text x="835" y="495">Entry / POST to</text>
+    <text x="835" y="510">/search/save Table Row</text>
+
+    <!-- Manual Predict -->
+    <text x="615" y="468" font-size="12" font-weight="bold">manual predict</text>
+    <text x="615" y="495">Entry / Custom Form</text>
+    <text x="615" y="510">Input Features</text>
+
+    <!-- Logged Out -->
+    <text x="395" y="468" font-size="12" font-weight="bold">logged out</text>
+    <text x="395" y="495">Entry / Destroy JWT</text>
+    <text x="395" y="510">Clear User Session</text>
+  </g>
+
+  <!-- ================= TRANSITION ARROWS & PATHS ================= -->
+  <g stroke="#000" stroke-width="1.5" fill="none">
+    
+    <!-- Start Circle -->
+    <circle cx="50" cy="137.5" r="7" fill="#000"/>
+    
+    <!-- Start -> Welcome -->
+    <line x1="57" y1="137.5" x2="90" y2="137.5" marker-end="url(#arrow)"/>
+    
+    <!-- Welcome -> Login -->
+    <line x1="250" y1="137.5" x2="340" y2="137.5" marker-end="url(#arrow)"/>
+    
+    <!-- Login -> Login (Invalid Credentials Loop) -->
+    <path d="M 425 175 L 425 220 L 320 220 L 320 150 L 340 150" marker-end="url(#arrow)"/>
+    
+    <!-- Login -> Dashboard (Valid Credentials) -->
+    <path d="M 500 137.5 L 525 137.5 L 525 240 L 175 240 L 175 290" marker-end="url(#arrow)"/>
+
+    <!-- Dashboard -> Config Repo -->
+    <line x1="250" y1="337.5" x2="310" y2="337.5" marker-end="url(#arrow)"/>
+
+    <!-- Config Repo -> Commit Analysis -->
+    <line x1="470" y1="337.5" x2="530" y2="337.5" marker-end="url(#arrow)"/>
+
+    <!-- Commit Analysis -> Risk Prediction -->
+    <line x1="690" y1="337.5" x2="750" y2="337.5" marker-end="url(#arrow)"/>
+
+    <!-- Risk Prediction -> View Reports -->
+    <line x1="910" y1="337.5" x2="970" y2="337.5" marker-end="url(#arrow)"/>
+
+    <!-- View Reports -> Review Prioritization -->
+    <path d="M 1055 375 L 1055 487.5 L 920 487.5" marker-end="url(#arrow)"/>
+
+    <!-- Review Prioritization -> Monitor Activity -->
+    <line x1="760" y1="487.5" x2="700" y2="487.5" marker-end="url(#arrow)"/>
+
+    <!-- Monitor Activity -> Commit Analysis (Loop) -->
+    <line x1="615" y1="450" x2="615" y2="385" marker-end="url(#arrow)"/>
+
+    <!-- Monitor Activity -> Logged Out -->
+    <line x1="540" y1="487.5" x2="480" y2="487.5" marker-end="url(#arrow)"/>
+
+    <!-- Logged Out -> End State -->
+    <line x1="395" y1="525" x2="395" y2="585" marker-end="url(#arrow)"/>
+
+    <!-- End State Circle -->
+    <circle cx="395" cy="600" r="14"/>
+    <circle cx="395" cy="600" r="9" fill="#000"/>
+    
+  </g>
+
+  <!-- ================= TRANSITION LABELS ================= -->
+  <g font-size="11" text-anchor="middle" fill="#000" stroke="none">
+    
+    <text x="75" y="130">Start</text>
+    <text x="300" y="130">Click Login</text>
+    <text x="375" y="213">Invalid Credentials</text>
+    
+    <text x="350" y="234">Valid Credentials</text>
+    
+    <text x="285" y="330">Explore Repo</text>
+    <text x="505" y="330">Search Query</text>
+    <text x="725" y="330">Commits Fetched</text>
+    <text x="945" y="330">Predict Bugs</text>
+    
+    <text x="980" y="480">Save Analysis</text>
+    <text x="725" y="480">Search Saved</text>
+    <text x="675" y="420">Predict Action</text>
+    <text x="505" y="480">Logout Action</text>
+
+  </g>
+</svg>
