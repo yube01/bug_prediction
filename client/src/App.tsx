@@ -5,9 +5,9 @@ import SignUpPage from './pages/SignUpPage'
 import DashboardPage from './pages/DashboardPage'
 import PredictPage from './pages/PredictPage'
 import ModelPage from './pages/ModelPage'
+import SearchHistoryPage from './pages/SearchHistoryPage'
 import Navbar from './components/website/Navbar'
 import CommitExplorer from './pages/ExplorePage'
-
 
 /* ─── App Router ──────────────────────────────────────── */
 export default function App() {
@@ -22,6 +22,17 @@ export default function App() {
             <>
               <Navbar />
               <CommitExplorer />
+            </>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/history"
+        element={
+          <ProtectedRoute>
+            <>
+              <Navbar />
+              <SearchHistoryPage />
             </>
           </ProtectedRoute>
         }

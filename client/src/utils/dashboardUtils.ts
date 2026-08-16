@@ -85,9 +85,9 @@ export function calculateDashboardStats(uniqueRepos: SearchHistoryItem[]): Dashb
 export function getDonutData(stats: DashboardStats | null): DonutDatum[] {
   if (!stats) return []
   return [
-    { name: 'Low Risk', value: stats.totalLowRisk, color: '#00c97a' },
-    { name: 'Medium Risk', value: stats.totalMediumRisk, color: '#f5a800' },
-    { name: 'High Risk', value: stats.totalHighRisk, color: '#f03a4f' },
+    { name: 'Low Risk', value: stats.totalLowRisk, color: '#10b981' },
+    { name: 'Medium Risk', value: stats.totalMediumRisk, color: '#f59e0b' },
+    { name: 'High Risk', value: stats.totalHighRisk, color: '#ef4444' },
   ].filter(d => d.value > 0)
 }
 

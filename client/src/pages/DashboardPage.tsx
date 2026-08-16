@@ -22,13 +22,19 @@ export default function DashboardPage() {
   }
 
   if (loading) {
-    return <div className="p-5 text-sm text-fg2">Fetching analysis data...</div>
+    return (
+      <div className="flex justify-center items-center gap-3 py-20 text-primary font-mono text-sm">
+        <div className="w-5 h-5 rounded-full border-2 border-primary/30 border-t-primary animate-spin" />
+        Fetching analysis data...
+      </div>
+    )
   }
 
   if (error) {
     return (
-      <div className="p-5 text-sm text-[#f03a4f]">
-        ❌ {error} — Make sure the backend server is running.
+      <div className="max-w-3xl mx-auto mt-10 p-4 rounded-lg bg-error/10 text-error border border-error/20 flex items-center gap-2 shadow-sm">
+        <span className="text-lg">❌</span>
+        <span className="text-sm font-medium">{error} — Make sure the backend server is running.</span>
       </div>
     )
   }
@@ -38,23 +44,29 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="flex flex-col gap-4 p-5">
-      <div className="flex flex-col gap-1">
-        <h1 className="heading-1">Analytics Dashboard</h1>
-        <p className="text-sm text-fg2">
+    <div className="max-w-7xl mx-auto p-6 flex flex-col gap-8 animate-in fade-in duration-500">
+      <div className="flex flex-col gap-2">
+        <h1 className="heading-2 bg-clip-text text-transparent bg-gradient-to-r from-fg to-fg-secondary">
+          Analytics Dashboard
+        </h1>
+        <p className="text-sm text-fg-secondary max-w-3xl leading-relaxed">
           Aggregate analysis of all historical searches. Diffs, complexities, and developer
           metrics gathered from your public GitHub repository requests.
         </p>
       </div>
 
-      <DashboardStatsCards stats={stats} />
+      <div className="animate-in slide-in-from-bottom-4 duration-500">
+        <DashboardStatsCards stats={stats} />
+      </div>
 
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 animate-in slide-in-from-bottom-6 duration-700">
         <RiskDistributionChart data={donutData} />
         <RepoComparisonChart data={barData} />
       </div>
 
-      <RepositoryHistoryPanel repos={uniqueRepos} onExplore={handleExploreRepo} onDelete={deleteEntry} />
+      <div className="animate-in slide-in-from-bottom-8 duration-1000">
+        <RepositoryHistoryPanel repos={uniqueRepos} onExplore={handleExploreRepo} onDelete={deleteEntry} />
+      </div>
     </div>
   )
 }

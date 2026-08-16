@@ -2,7 +2,6 @@ import { predictBatch } from "@/api"
 import { saveSearch } from "@/api/auth"
 import { fetchAuthorBugCounts, fetchBranches, fetchCommitDetails, fetchCommits, parseRepo } from "@/api/github"
 import RateLimitBar from "@/components/website/explore/RateLimitBar"
-import SearchHistory from "@/components/website/explore/SearchHistory"
 import RepoInput from "@/components/website/explore/RepoInput"
 import BranchSelect from "@/components/website/explore/BranchSelect"
 import StatCards from "@/components/website/explore/StatCards"
@@ -13,6 +12,8 @@ import { GithubBranch, GithubCommit, RepoStats } from "@/types"
 import { buildCommitFeatures } from "@/utils/modelFeatures"
 import { useCallback, useEffect, useState } from "react"
 import { useSearchParams } from "react-router-dom"
+import { Card, CardContent } from "@/components/ui/card"
+import SearchHistory from "@/components/website/explore/SearchHistory"
 
 
 
@@ -171,9 +172,9 @@ const CommitExplorer = () => {
         await loadCommits(repo, branch)
     }, [repo, loadCommits])
 
-    const handleReSearch = useCallback((repoName: string) => {
-        handleLoad(repoName)
-    }, [handleLoad])
+    // const handleReSearch = useCallback((repoName: string) => {
+    //     handleLoad(repoName)
+    // }, [handleLoad])
 
     useEffect(() => {
         if (urlRepo && !initialSearchDone) {
@@ -204,86 +205,92 @@ const CommitExplorer = () => {
     const totalPages = Math.ceil(commits.length / PER_PAGE)
 
     return (
-        <div className="p-4 flex gap-6 flex-col">
+        <div className="max-w-7xl mx-auto p-6 flex flex-col gap-8 animate-in fade-in duration-500">
             {/* Header row */}
-            <div className="flex justify-between items-start">
-                <h1 className="heading-2" > Commit explore   </h1>
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <h1 className="heading-2 bg-clip-text text-transparent bg-gradient-to-r from-fg to-fg-secondary">Commit Explorer</h1>
+                    <p className="text-sm text-fg-secondary mt-1">Analyze repository commits for potential bug risks.</p>
+                </div>
                 <div>
                     <RateLimitBar />
                 </div>
             </div>
 
-            {/* Search History */}
-            <SearchHistory onReSearch={handleReSearch} />
-
             {/* Input card */}
-            <div className="flex gap-2  flex-col w-full">
-                <RepoInput onLoad={handleLoad} loading={loading} />
-                <BranchSelect
-                    branches={branches}
-                    currentBranch={currentBranch}
-                    onChange={handleBranchChange}
-                    loading={loading}
-                />
-            </div>
+            <Card className="shadow-sm border-border bg-fill1/50 backdrop-blur-sm">
+                <CardContent className="p-4 flex flex-col md:flex-row gap-4 items-end">
+                    <div className="flex-1 w-full">
+                        <RepoInput onLoad={handleLoad} loading={loading} />
+                    </div>
+                    <div className="flex-1 w-full md:max-w-xs">
+                        <BranchSelect
+                            branches={branches}
+                            currentBranch={currentBranch}
+                            onChange={handleBranchChange}
+                            loading={loading}
+                        />
+                    </div>
+                </CardContent>
+            </Card>
 
             {/* Error */}
             {error && (
-                <div className="px-4 py-3 rounded-sm bg-fill1 text-errror-text border border-soft mb-4">
-                    {error}
+                <div className="px-4 py-3 rounded-lg bg-error/10 text-error border border-error/20 flex items-center gap-2 shadow-sm">
+                    <span className="text-lg">❌</span>
+                    <span className="text-sm font-medium">{error}</span>
                 </div>
             )}
 
             {predictionError && !error && (
-                <div className="px-4 py-3 rounded-sm bg-fill1 text-warning-text border border-soft text-[13px] mb-4">
-                    Commits loaded, but model predictions failed: {predictionError}
+                <div className="px-4 py-3 rounded-lg bg-warning/10 text-warning border border-warning/20 text-sm flex items-center gap-2 shadow-sm">
+                    <span className="text-lg">⚠️</span>
+                    <span className="font-medium">Commits loaded, but model predictions failed: {predictionError}</span>
                 </div>
             )}
 
             {/* Loading */}
             {loading && (
-                <div className="flex justify-center items-center gap-2.5 p-10 text-text2 text-[13px]">
-                    <div className="w-5 h-5 rounded-full border-2 border-border2 border-t-accent animate-spin" />
+                <div className="flex justify-center items-center gap-3 py-12 text-primary font-mono text-sm">
+                    <div className="w-5 h-5 rounded-full border-2 border-primary/30 border-t-primary animate-spin" />
                     Fetching commits...
                 </div>
             )}
 
             {/* Stats */}
             {!loading && stats && (
-                <div style={{ marginBottom: '1rem' }}>
+                <div className="animate-in slide-in-from-bottom-4 duration-500">
                     <StatCards stats={stats} branch={currentBranch} repoName={repo.split('/')[1]} />
                 </div>
             )}
 
             {/* Commit list */}
             {!loading && commits.length > 0 && (
-                <div className="bg-elevation-level2 border border-soft rounded-sm p-1">
-                    <div className=" flex justify-between items-center p-1 border-b border-soft" >
-                        <span >
-                            Showing {(page - 1) * PER_PAGE + 1}–{Math.min(page * PER_PAGE, commits.length)} of {commits.length} commits
-                        </span>
+                <Card className="border-border shadow-lg overflow-hidden animate-in slide-in-from-bottom-8 duration-700">
+                    <div className="flex justify-between items-center px-5 py-3 bg-fill2 border-b border-border text-xs font-mono text-fg-secondary">
                         <span>
+                            Showing <strong className="text-fg font-medium">{(page - 1) * PER_PAGE + 1}–{Math.min(page * PER_PAGE, commits.length)}</strong> of <strong className="text-fg font-medium">{commits.length}</strong> commits
+                        </span>
+                        <span className="px-2.5 py-1 bg-fill3 rounded-md border border-soft shadow-inner">
                             Page {page} of {totalPages}
                         </span>
                     </div>
 
-                    {paginated.map(c => (
-                        <CommitRow key={c.sha} commit={c} repo={repo} />
-                    ))}
+                    <div className="divide-y divide-soft">
+                        {paginated.map(c => (
+                            <CommitRow key={c.sha} commit={c} repo={repo} />
+                        ))}
+                    </div>
 
-                    <div style={{ padding: '1rem 0' }}>
+                    <div className="p-4 bg-fill1/30">
                         <Pagination
                             currentPage={page}
                             totalPages={totalPages}
                             onPageChange={setPage}
                         />
                     </div>
-                </div>
+                </Card>
             )}
-
-            <style>{`
-        @keyframes spin { to { transform: rotate(360deg) } }
-      `}</style>
         </div>
     )
 }

@@ -3,6 +3,8 @@ import { predictCommit } from '../api'
 import type { CommitFeatures, PredictionResponse } from '../types'
 import RiskGauge from '../components/website/RiskGauge'
 import SliderField from '../components/website/SliderField'
+import { Card, CardHeader, CardTitle, CardContent } from '../components/ui/card'
+import { Button } from '../components/ui/button'
 
 const DEFAULTS: CommitFeatures = {
   lines_added: 50,  lines_deleted: 20, files_changed: 3,
@@ -43,21 +45,7 @@ const PRESETS: { label: string; emoji: string; data: Partial<CommitFeatures> }[]
 ]
 
 const colorFor = (pct: number) =>
-  pct >= 60 ? '#f03a4f' : pct >= 30 ? '#f5a800' : '#00c97a'
-
-const card: React.CSSProperties = {
-  background: 'var(--bg2)',
-  border: '1px solid var(--border)',
-  borderRadius: 'var(--r)', padding: 18,
-  display: 'flex', flexDirection: 'column', gap: 14,
-}
-
-const sectionTitle: React.CSSProperties = {
-  fontFamily: 'Syne, sans-serif', fontWeight: 700,
-  fontSize: 11, color: 'var(--accent2)',
-  textTransform: 'uppercase', letterSpacing: '0.12em',
-  paddingBottom: 10, borderBottom: '1px solid var(--border)',
-}
+  pct >= 60 ? 'var(--color-error)' : pct >= 30 ? 'var(--color-warning)' : 'var(--color-success)'
 
 export default function PredictPage() {
   const [form,    setForm]    = useState<CommitFeatures>(DEFAULTS)
@@ -95,15 +83,17 @@ export default function PredictPage() {
   const color = colorFor(Math.round(prob * 100))
 
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: '1fr 320px', gap: 20, alignItems: 'start' }}>
+    <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-6 items-start">
 
       {/* ── Form ─────────────────────────────────────────── */}
-      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-5">
 
         {/* Code Size */}
-        <section style={card}>
-          <h3 style={sectionTitle}>Code Size</h3>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+        <Card className="shadow-none">
+          <CardHeader className="pb-4 border-b border-border">
+            <CardTitle className="text-xs text-primary font-bold uppercase tracking-[0.12em]">Code Size</CardTitle>
+          </CardHeader>
+          <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
             <SliderField label="Lines Added"   name="lines_added"   value={form.lines_added}
               onChange={handleChange} min={0} max={2000} step={10} description="Lines of code added" />
             <SliderField label="Lines Deleted" name="lines_deleted" value={form.lines_deleted}
@@ -112,106 +102,113 @@ export default function PredictPage() {
               onChange={handleChange} min={1} max={100} description="Files touched" />
             <SliderField label="Methods Changed" name="num_methods" value={form.num_methods}
               onChange={handleChange} min={0} max={100} description="Functions modified" />
-          </div>
-        </section>
+          </CardContent>
+        </Card>
 
         {/* Complexity */}
-        <section style={card}>
-          <h3 style={sectionTitle}>Complexity</h3>
-          <SliderField label="Avg Complexity" name="avg_complexity" value={form.avg_complexity}
-            onChange={handleChange} min={0} max={50} step={0.5}
-            description="Cyclomatic complexity of changed methods" />
-        </section>
+        <Card className="shadow-none">
+          <CardHeader className="pb-4 border-b border-border">
+            <CardTitle className="text-xs text-primary font-bold uppercase tracking-[0.12em]">Complexity</CardTitle>
+          </CardHeader>
+          <CardContent className="pt-4">
+            <SliderField label="Avg Complexity" name="avg_complexity" value={form.avg_complexity}
+              onChange={handleChange} min={0} max={50} step={0.5}
+              description="Cyclomatic complexity of changed methods" />
+          </CardContent>
+        </Card>
 
         {/* Tests */}
-        <section style={card}>
-          <h3 style={sectionTitle}>Test Coverage</h3>
-          <SliderField label="Test Files Changed" name="test_files_changed" value={form.test_files_changed}
-            onChange={handleChange} min={0} max={50} description="Number of test files updated" />
-          {/* Auto test ratio bar */}
-          <div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
-              <span style={{ fontSize: 10, color: 'var(--text2)', textTransform: 'uppercase', letterSpacing: '0.09em' }}>
-                Test Ratio (auto)
-              </span>
-              <span style={{ fontFamily: 'Space Mono', fontSize: 11, color: 'var(--accent)' }}>
-                {(form.test_files_changed / Math.max(form.files_changed, 1)).toFixed(2)}
-              </span>
+        <Card className="shadow-none">
+          <CardHeader className="pb-4 border-b border-border">
+            <CardTitle className="text-xs text-primary font-bold uppercase tracking-[0.12em]">Test Coverage</CardTitle>
+          </CardHeader>
+          <CardContent className="pt-4 flex flex-col gap-4">
+            <SliderField label="Test Files Changed" name="test_files_changed" value={form.test_files_changed}
+              onChange={handleChange} min={0} max={50} description="Number of test files updated" />
+            {/* Auto test ratio bar */}
+            <div>
+              <div className="flex justify-between mb-1.5">
+                <span className="text-[10px] text-fg-secondary uppercase tracking-[0.09em]">
+                  Test Ratio (auto)
+                </span>
+                <span className="font-mono text-[11px] text-primary">
+                  {(form.test_files_changed / Math.max(form.files_changed, 1)).toFixed(2)}
+                </span>
+              </div>
+              <div className="h-1.5 bg-border rounded-full overflow-hidden">
+                <div 
+                  className="h-full rounded-full bg-gradient-to-r from-primary to-success transition-all duration-300"
+                  style={{ width: `${Math.min((form.test_files_changed / Math.max(form.files_changed, 1)) * 100, 100)}%` }} 
+                />
+              </div>
             </div>
-            <div style={{ height: 4, background: 'var(--border)', borderRadius: 2 }}>
-              <div style={{
-                height: '100%', borderRadius: 2,
-                background: 'linear-gradient(90deg, var(--accent), var(--green))',
-                width: `${Math.min((form.test_files_changed / Math.max(form.files_changed, 1)) * 100, 100)}%`,
-                transition: 'width 0.2s',
-              }} />
-            </div>
-          </div>
-        </section>
+          </CardContent>
+        </Card>
 
         {/* Developer */}
-        <section style={card}>
-          <h3 style={sectionTitle}>Developer History</h3>
-          <SliderField label="Prior Bugs (Author)" name="prior_bugs_author" value={form.prior_bugs_author}
-            onChange={handleChange} min={0} max={30}
-            description="Bugs this developer caused before — #1 predictor (39% importance)" />
-        </section>
+        <Card className="shadow-none">
+          <CardHeader className="pb-4 border-b border-border">
+            <CardTitle className="text-xs text-primary font-bold uppercase tracking-[0.12em]">Developer History</CardTitle>
+          </CardHeader>
+          <CardContent className="pt-4">
+            <SliderField label="Prior Bugs (Author)" name="prior_bugs_author" value={form.prior_bugs_author}
+              onChange={handleChange} min={0} max={30}
+              description="Bugs this developer caused before — #1 predictor (39% importance)" />
+          </CardContent>
+        </Card>
 
         {/* Timing */}
-        <section style={card}>
-          <h3 style={sectionTitle}>Timing</h3>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
-            <SliderField label="Commit Hour" name="commit_hour" value={form.commit_hour}
-              onChange={handleChange} min={0} max={23} description="0=midnight  23=11pm" />
-            <SliderField label="Day of Week" name="day_of_week" value={form.day_of_week}
-              onChange={handleChange} min={0} max={6} description="0=Mon  6=Sun" />
-          </div>
-          <div style={{ display: 'flex', gap: 10 }}>
-            {(['is_weekend', 'is_night_commit'] as const).map(key => {
-              const labels = { is_weekend: 'Weekend', is_night_commit: 'Night Commit' }
-              const descs  = { is_weekend: 'Sat / Sun', is_night_commit: 'After 10pm or before 5am' }
-              const on     = form[key] === 1
-              return (
-                <button key={key} type="button"
-                  onClick={() => setForm(f => ({ ...f, [key]: (f[key] ? 0 : 1) as 0 | 1 }))}
-                  style={{
-                    flex: 1, padding: '8px 12px', textAlign: 'left',
-                    border: `1px solid ${on ? 'var(--accent)' : 'var(--border)'}`,
-                    borderRadius: 'var(--r2)',
-                    background: on ? 'rgba(91,82,232,0.12)' : 'var(--bg)',
-                    color: on ? 'var(--accent2)' : 'var(--text2)',
-                    cursor: 'pointer', fontFamily: 'Space Mono', transition: 'all 0.2s',
-                  }}>
-                  <div style={{ fontSize: 11, fontWeight: 700 }}>{labels[key]}</div>
-                  <div style={{ fontSize: 9, opacity: 0.6, marginTop: 2 }}>{descs[key]}</div>
-                </button>
-              )
-            })}
-          </div>
-        </section>
+        <Card className="shadow-none">
+          <CardHeader className="pb-4 border-b border-border">
+            <CardTitle className="text-xs text-primary font-bold uppercase tracking-[0.12em]">Timing</CardTitle>
+          </CardHeader>
+          <CardContent className="pt-4 flex flex-col gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <SliderField label="Commit Hour" name="commit_hour" value={form.commit_hour}
+                onChange={handleChange} min={0} max={23} description="0=midnight  23=11pm" />
+              <SliderField label="Day of Week" name="day_of_week" value={form.day_of_week}
+                onChange={handleChange} min={0} max={6} description="0=Mon  6=Sun" />
+            </div>
+            <div className="flex gap-2">
+              {(['is_weekend', 'is_night_commit'] as const).map(key => {
+                const labels = { is_weekend: 'Weekend', is_night_commit: 'Night Commit' }
+                const descs  = { is_weekend: 'Sat / Sun', is_night_commit: 'After 10pm or before 5am' }
+                const on     = form[key] === 1
+                return (
+                  <button key={key} type="button"
+                    onClick={() => setForm(f => ({ ...f, [key]: (f[key] ? 0 : 1) as 0 | 1 }))}
+                    className={`flex-1 p-3 text-left border rounded-lg transition-all duration-200 ${
+                      on ? 'border-primary bg-primary/10 text-primary-text' : 'border-border bg-bg text-fg-secondary'
+                    }`}
+                  >
+                    <div className="text-[11px] font-bold font-mono">{labels[key]}</div>
+                    <div className="text-[9px] opacity-60 mt-0.5">{descs[key]}</div>
+                  </button>
+                )
+              })}
+            </div>
+          </CardContent>
+        </Card>
 
         {/* Context */}
-        <section style={card}>
-          <h3 style={sectionTitle}>Context</h3>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
+        <Card className="shadow-none">
+          <CardHeader className="pb-4 border-b border-border">
+            <CardTitle className="text-xs text-primary font-bold uppercase tracking-[0.12em]">Context</CardTitle>
+          </CardHeader>
+          <CardContent className="pt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Language */}
             <div>
-              <div style={{ fontSize: 10, color: 'var(--text2)', textTransform: 'uppercase', letterSpacing: '0.09em', marginBottom: 7 }}>
+              <div className="text-[10px] text-fg-secondary uppercase tracking-[0.09em] mb-2">
                 Language
               </div>
-              <div style={{ display: 'flex', gap: 6 }}>
+              <div className="flex gap-2">
                 {(['Python', 'TypeScript'] as const).map(lang => (
                   <button key={lang} type="button"
                     onClick={() => setForm(f => ({ ...f, language_group: lang }))}
-                    style={{
-                      flex: 1, padding: '7px 0',
-                      border: `1px solid ${form.language_group === lang ? 'var(--accent)' : 'var(--border)'}`,
-                      borderRadius: 'var(--r2)',
-                      background: form.language_group === lang ? 'rgba(91,82,232,0.12)' : 'var(--bg)',
-                      color: form.language_group === lang ? 'var(--accent2)' : 'var(--text2)',
-                      cursor: 'pointer', fontFamily: 'Space Mono', fontSize: 11,
-                      transition: 'all 0.2s',
-                    }}>
+                    className={`flex-1 py-2 border rounded-lg text-[11px] font-mono transition-all duration-200 ${
+                      form.language_group === lang ? 'border-primary bg-primary/10 text-primary-text' : 'border-border bg-bg text-fg-secondary'
+                    }`}
+                  >
                     {lang}
                   </button>
                 ))}
@@ -220,49 +217,33 @@ export default function PredictPage() {
 
             {/* Time period */}
             <div>
-              <div style={{ fontSize: 10, color: 'var(--text2)', textTransform: 'uppercase', letterSpacing: '0.09em', marginBottom: 7 }}>
+              <div className="text-[10px] text-fg-secondary uppercase tracking-[0.09em] mb-2">
                 Time Period
               </div>
               <select name="time_period" value={form.time_period} onChange={handleChange}
-                style={{
-                  width: '100%', padding: '7px 10px',
-                  background: 'var(--bg)', border: '1px solid var(--border)',
-                  borderRadius: 'var(--r2)', color: 'var(--text)',
-                  fontFamily: 'Space Mono', fontSize: 11, cursor: 'pointer',
-                }}>
+                className="w-full p-2 bg-bg border border-border rounded-lg text-fg font-mono text-[11px] focus:outline-none focus:ring-1 focus:ring-primary cursor-pointer"
+              >
                 <option value="2018-2020">2018 – 2020</option>
                 <option value="2021-2023">2021 – 2023</option>
                 <option value="2024-2026">2024 – 2026</option>
               </select>
             </div>
-          </div>
-        </section>
+          </CardContent>
+        </Card>
 
         {/* Submit */}
-        <button type="submit" disabled={loading} style={{
-          padding: '14px 28px',
-          background: loading
-            ? 'var(--border)'
-            : 'linear-gradient(135deg, var(--accent), var(--accent2))',
-          border: 'none', borderRadius: 'var(--r)',
-          color: loading ? 'var(--text2)' : '#fff',
-          fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 14,
-          cursor: loading ? 'not-allowed' : 'pointer',
-          letterSpacing: '0.06em', transition: 'all 0.2s',
-          boxShadow: loading ? 'none' : '0 4px 20px rgba(91,82,232,0.4)',
-        }}>
+        <Button 
+          type="submit" 
+          disabled={loading}
+          className="w-full py-6 bg-gradient-to-br from-primary to-primary-focus hover:to-primary-accent text-white font-heading font-bold text-sm tracking-[0.06em] shadow-lg shadow-primary/30 transition-all rounded-xl"
+        >
           {loading ? '[ ANALYZING... ]' : '[ PREDICT BUG RISK ]'}
-        </button>
+        </Button>
 
         {error && (
-          <div style={{
-            padding: 14, borderRadius: 'var(--r)',
-            background: 'rgba(240,58,79,0.08)',
-            border: '1px solid rgba(240,58,79,0.25)',
-            color: '#f03a4f', fontSize: 12,
-          }}>
+          <div className="p-4 rounded-xl bg-error/10 border border-error/25 text-error text-xs">
             ❌ {error}
-            <div style={{ fontSize: 10, marginTop: 4, opacity: 0.65 }}>
+            <div className="text-[10px] mt-1 opacity-65">
               Ensure FastAPI is running at localhost:8000
             </div>
           </div>
@@ -270,104 +251,73 @@ export default function PredictPage() {
       </form>
 
       {/* ── Result panel ─────────────────────────────────── */}
-      <div style={{ position: 'sticky', top: 72 }}>
-        <div style={{
-          background: 'var(--bg2)',
-          border: `1px solid ${result ? color + '44' : 'var(--border)'}`,
-          borderRadius: 'var(--r)', padding: 20,
-          transition: 'border-color 0.4s',
-          boxShadow: result ? `0 0 32px ${color}12` : 'none',
-        }}>
-          <div style={{
-            fontSize: 10, color: 'var(--text2)', textTransform: 'uppercase',
-            letterSpacing: '0.12em', marginBottom: 18, textAlign: 'center',
-            fontFamily: 'Space Mono',
-          }}>
+      <div className="sticky top-20">
+        <div 
+          className="bg-fill1 border rounded-xl p-5 transition-colors duration-400"
+          style={{ 
+            borderColor: result ? color : 'var(--color-border)',
+            boxShadow: result ? `0 0 32px ${color}12` : 'none'
+          }}
+        >
+          <div className="text-[10px] text-fg-secondary uppercase tracking-[0.12em] mb-4 text-center font-mono">
             Risk Analysis
           </div>
 
-          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 20 }}>
+          <div className="flex justify-center mb-5">
             <RiskGauge probability={prob} />
           </div>
 
           {result ? (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 14, animation: 'fadeUp 0.35s ease' }}>
+            <div className="flex flex-col gap-3 animate-in fade-in slide-in-from-bottom-2 duration-300">
               {/* Risk factors */}
               <div>
-                <div style={{ fontSize: 9, color: 'var(--text2)', textTransform: 'uppercase', letterSpacing: '0.09em', marginBottom: 7 }}>
+                <div className="text-[9px] text-fg-secondary uppercase tracking-[0.09em] mb-2">
                   Risk Factors
                 </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
+                <div className="flex flex-col gap-1.5">
                   {result.top_risk_factors.map((f, i) => (
-                    <div key={i} style={{
-                      display: 'flex', alignItems: 'center', gap: 8,
-                      padding: '7px 10px', borderRadius: 'var(--r2)',
-                      background: `${color}0e`, border: `1px solid ${color}20`,
-                      fontSize: 11,
-                    }}>
+                    <div key={i} className="flex items-center gap-2 p-2 rounded-lg text-[11px]"
+                         style={{ backgroundColor: `${color}0e`, border: `1px solid ${color}20` }}>
                       <span style={{ color, fontSize: 12 }}>▲</span>
-                      <span>{f}</span>
+                      <span className="text-fg">{f}</span>
                     </div>
                   ))}
                 </div>
               </div>
 
               {/* Recommendation */}
-              <div style={{
-                padding: 12, borderRadius: 'var(--r2)',
-                background: 'var(--bg3)', border: '1px solid var(--border)',
-                fontSize: 11, color: 'var(--text)', lineHeight: 1.65,
-              }}>
-                <div style={{ fontSize: 9, color: 'var(--text2)', textTransform: 'uppercase', letterSpacing: '0.09em', marginBottom: 5 }}>
+              <div className="p-3 rounded-lg bg-fill2 border border-border text-[11px] text-fg leading-relaxed">
+                <div className="text-[9px] text-fg-secondary uppercase tracking-[0.09em] mb-1.5">
                   Recommendation
                 </div>
                 {result.recommendation}
               </div>
 
               {/* Probability */}
-              <div style={{
-                display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-                padding: '8px 12px', borderRadius: 'var(--r2)',
-                background: 'var(--bg)', border: '1px solid var(--border)',
-                fontSize: 11,
-              }}>
-                <span style={{ color: 'var(--text2)' }}>Bug Probability</span>
-                <span style={{ fontWeight: 700, color, fontFamily: 'Space Mono' }}>
+              <div className="flex justify-between items-center p-2 px-3 rounded-lg bg-bg border border-border text-[11px]">
+                <span className="text-fg-secondary">Bug Probability</span>
+                <span className="font-bold font-mono" style={{ color }}>
                   {(prob * 100).toFixed(1)}%
                 </span>
               </div>
             </div>
           ) : (
-            <div style={{ textAlign: 'center', color: '#44446a', fontSize: 11, padding: '20px 0' }}>
+            <div className="text-center text-fg-disabled text-[11px] py-5">
               Fill in the form<br />and click Predict
             </div>
           )}
         </div>
 
         {/* Presets */}
-        <div style={{ marginTop: 14 }}>
-          <div style={{ fontSize: 9, color: 'var(--text2)', textTransform: 'uppercase', letterSpacing: '0.09em', marginBottom: 7 }}>
+        <div className="mt-4">
+          <div className="text-[9px] text-fg-secondary uppercase tracking-[0.09em] mb-2">
             Quick Presets
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+          <div className="flex flex-col gap-1.5">
             {PRESETS.map(({ label, emoji, data }) => (
               <button key={label} type="button"
                 onClick={() => setForm(f => ({ ...f, ...data }))}
-                style={{
-                  padding: '9px 12px', textAlign: 'left',
-                  background: 'var(--bg2)', border: '1px solid var(--border)',
-                  borderRadius: 'var(--r2)', color: 'var(--text2)',
-                  cursor: 'pointer', fontFamily: 'Space Mono', fontSize: 11,
-                  transition: 'all 0.2s',
-                }}
-                onMouseEnter={e => {
-                  (e.currentTarget as HTMLButtonElement).style.borderColor = 'var(--border2)'
-                  ;(e.currentTarget as HTMLButtonElement).style.color = 'var(--text)'
-                }}
-                onMouseLeave={e => {
-                  (e.currentTarget as HTMLButtonElement).style.borderColor = 'var(--border)'
-                  ;(e.currentTarget as HTMLButtonElement).style.color = 'var(--text2)'
-                }}
+                className="p-2.5 text-left bg-fill1 border border-border rounded-lg text-fg-secondary text-[11px] font-mono hover:border-border hover:text-fg transition-colors"
               >
                 {emoji} {label} Commit
               </button>

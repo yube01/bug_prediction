@@ -1,5 +1,6 @@
 import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip } from 'recharts'
 import type { DonutDatum } from '@/utils/dashboardUtils'
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 
 interface RiskDistributionChartProps {
     data: DonutDatum[]
@@ -7,44 +8,49 @@ interface RiskDistributionChartProps {
 
 export default function RiskDistributionChart({ data }: RiskDistributionChartProps) {
     return (
-        <div className="rounded-xl border border-border bg-fill1 p-4">
-            <h3 className="mb-3 font-bold">
-                Overall Risk Profile Breakdown
-            </h3>
+        <Card className="shadow-none h-full flex flex-col border-border bg-fill1/50 backdrop-blur-sm">
+            <CardHeader className="pb-2 border-b border-border/50">
+                <CardTitle className="text-xs text-primary font-bold uppercase tracking-[0.12em]">
+                    Overall Risk Profile Breakdown
+                </CardTitle>
+            </CardHeader>
 
-            <div className="flex h-55 flex-col items-center justify-center">
-                <div className="h-full w-full max-w-70">
+            <CardContent className="pt-6 flex-1 flex flex-col items-center justify-center min-h-[300px]">
+                <div className="h-[220px] w-full max-w-[280px]">
                     <ResponsiveContainer width="100%" height="100%">
                         <PieChart>
-                            <Pie data={data} cx="50%" cy="50%" innerRadius={55} outerRadius={75} paddingAngle={3} dataKey="value">
+                            <Pie data={data} cx="50%" cy="50%" innerRadius={75} outerRadius={95} paddingAngle={4} dataKey="value" stroke="none">
                                 {data.map((entry, index) => (
                                     <Cell key={`cell-${index}`} fill={entry.color} />
                                 ))}
                             </Pie>
-                            {/* Recharts styling props are JS objects consumed by the library, not DOM
-                  className targets, so these stay inline. */}
                             <Tooltip
+                                cursor={{ fill: 'var(--color-fill2)', opacity: 0.4 }}
                                 contentStyle={{
                                     background: 'var(--color-bg)',
                                     border: '1px solid var(--color-border)',
                                     borderRadius: '0.5rem',
                                     color: 'var(--color-fg)',
+                                    fontSize: '12px',
+                                    fontFamily: 'var(--font-mono)',
+                                    boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.5)'
                                 }}
+                                itemStyle={{ fontWeight: 'bold' }}
                             />
                         </PieChart>
                     </ResponsiveContainer>
                 </div>
 
-                <div className="mt-2 flex gap-4">
+                <div className="mt-6 flex flex-wrap justify-center gap-5 text-[13px] font-mono text-fg-secondary">
                     {data.map((d, i) => (
-                        <div key={i} className="flex items-center gap-1.5">
-                            <span className="h-2 w-2 rounded-full" style={{ background: d.color }} />
+                        <div key={i} className="flex items-center gap-2">
+                            <span className="h-2.5 w-2.5 rounded-full shadow-sm" style={{ background: d.color }} />
                             <span>{d.name}:</span>
-                            <span className="text-fg">{d.value}</span>
+                            <span className="text-fg font-bold">{d.value}</span>
                         </div>
                     ))}
                 </div>
-            </div>
-        </div>
+            </CardContent>
+        </Card>
     )
 }
