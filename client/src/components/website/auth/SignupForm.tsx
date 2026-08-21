@@ -126,7 +126,7 @@ export default function SignUpForm() {
                     <p className="text-fg-secondary text-sm">
                         Already have an account?{' '}
                         <Button variant="link" asChild color="primary">
-                            <Link to="/sign-in">Sign in</Link>
+                            <Link to="/signin">Sign in</Link>
                         </Button>
                     </p>
                 </div>

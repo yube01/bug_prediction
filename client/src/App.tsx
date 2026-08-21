@@ -8,6 +8,7 @@ import ModelPage from './pages/ModelPage'
 import SearchHistoryPage from './pages/SearchHistoryPage'
 import Navbar from './components/website/Navbar'
 import CommitExplorer from './pages/ExplorePage'
+import LandingPage from './pages/LandingPage'
 
 /* ─── App Router ──────────────────────────────────────── */
 export default function App() {
@@ -17,6 +18,10 @@ export default function App() {
       <Route path="/signup" element={<SignUpPage />} />
       <Route
         path="/"
+        element={<LandingPage />}
+      />
+      <Route
+        path="/explore"
         element={
           <ProtectedRoute>
             <>

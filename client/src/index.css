@@ -9,7 +9,7 @@
 	--heading-font: "Fira Code", monospace;
 	--body-font: "Fira Code", monospace;
 	--font-mono: "Fira Code", monospace;
-	
+
 	--color-success: oklch(0.6334 0.171 148.65);
 	--color-success-accent: oklch(0.271 0.0537 151.74);
 	--color-success-focus: oklch(0.3887 0.0924 150.55);
@@ -355,4 +355,13 @@
 	&::-webkit-scrollbar {
 		display: none;
 	}
+}
+
+/* Fix ugly browser autofill background (e.g., password suggestions) */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+	transition: background-color 5000s ease-in-out 0s;
+	-webkit-text-fill-color: var(--color-fg) !important;
 }

@@ -10,17 +10,8 @@ export default function ProtectedRoute({ children }: { children: React.ReactNode
 
   if (loading) {
     return (
-      <div style={{
-        display: 'flex', alignItems: 'center', justifyContent: 'center',
-        height: '100vh', background: 'var(--bg)',
-      }}>
-        <div style={{
-          width: 28, height: 28,
-          border: '3px solid var(--border2)',
-          borderTopColor: 'var(--accent)',
-          borderRadius: '50%',
-          animation: 'spin 0.7s linear infinite',
-        }} />
+      <div className="flex items-center justify-center h-screen bg-bg">
+        <div className="w-7 h-7 border-4 border-border border-t-primary rounded-full animate-spin" />
       </div>
     )
   }
