@@ -23,7 +23,7 @@ const Navbar = () => {
                     </Link>
 
                     {/* Desktop Navigation Links */}
-                    <div className="hidden md:flex gap-2">
+                    <div className="hidden lg:flex gap-2">
                         <Link to="/predict">
                             <Button variant={location.pathname === '/predict' ? 'soft' : 'ghost'} className="text-sm font-medium">
                                 Predict Risk
@@ -44,11 +44,16 @@ const Navbar = () => {
                                 Dashboard
                             </Button>
                         </Link>
+                        <Link to="/leaderboard">
+                            <Button variant={location.pathname === '/leaderboard' ? 'soft' : 'ghost'} className="text-sm font-medium">
+                                Leaderboard
+                            </Button>
+                        </Link>
                     </div>
                 </div>
 
                 {/* Desktop User Profile & Actions */}
-                <div className="hidden md:flex items-center gap-4">
+                <div className="hidden lg:flex items-center gap-4">
                     {user ? (
                         <>
                             <div className="flex items-center gap-3 px-3 py-1.5 rounded-full bg-fill2 border border-soft shadow-inner">
@@ -81,7 +86,7 @@ const Navbar = () => {
                 </div>
 
                 {/* Mobile Menu Toggle */}
-                <div className="md:hidden flex items-center">
+                <div className="lg:hidden flex items-center">
                     <IconButton variant="ghost" onClick={toggleMobileMenu} className="text-fg-secondary">
                         {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
                     </IconButton>
@@ -110,6 +115,11 @@ const Navbar = () => {
                         <Link to="/dashboard" onClick={closeMobileMenu}>
                             <Button variant={location.pathname === '/dashboard' ? 'soft' : 'ghost'} className="w-full justify-start text-sm font-medium">
                                 Dashboard
+                            </Button>
+                        </Link>
+                        <Link to="/leaderboard" onClick={closeMobileMenu}>
+                            <Button variant={location.pathname === '/leaderboard' ? 'soft' : 'ghost'} className="w-full justify-start text-sm font-medium">
+                                Leaderboard
                             </Button>
                         </Link>
                     </div>

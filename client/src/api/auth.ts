@@ -118,3 +118,26 @@ export async function deleteSearchEntry(
     headers: authHeaders(token),
   })
 }
+
+// ── Leaderboard endpoints ───────────────────────────────────
+export interface LeaderboardEntry {
+  rank: number
+  full_name: string
+  email: string
+  repos_checked: number
+  total_scans: number
+  total_commits_analyzed: number
+  bugs_found: number
+  joined_at: string
+}
+
+export interface LeaderboardResponse {
+  total_users: number
+  total_repos_scanned: number
+  total_bugs_detected: number
+  entries: LeaderboardEntry[]
+}
+
+export async function getLeaderboard(): Promise<LeaderboardResponse> {
+  return authRequest<LeaderboardResponse>(`${SERVER_URL}/leaderboard`)
+}

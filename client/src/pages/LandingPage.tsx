@@ -202,9 +202,9 @@ export default function LandingPage() {
                         <h2 className="heading-2 text-fg">Built for your workflow.</h2>
                         <ul className="space-y-6">
                             {[
-                                { title: '1. Connect a Repo', desc: 'Just paste a GitHub URL to get started. No complex setup.' },
-                                { title: '2. Analyze Commits', desc: 'We scan your recent branch history for complexity, churn, and risk patterns.' },
-                                { title: '3. Review Risks', desc: 'See which commits are High, Medium, or Low risk before you hit merge.' },
+                                { title: 'Connect a Repo', desc: 'Just paste a GitHub URL to get started. No complex setup.' },
+                                { title: 'Analyze Commits', desc: 'We scan your recent branch history for complexity, churn, and risk patterns.' },
+                                { title: 'Review Risks', desc: 'See which commits are High, Medium, or Low risk before you hit merge.' },
                             ].map((step, i) => (
                                 <li key={i} className="flex gap-4">
                                     <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold font-heading">

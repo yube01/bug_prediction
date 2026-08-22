@@ -6,6 +6,7 @@ import DashboardPage from './pages/DashboardPage'
 import PredictPage from './pages/PredictPage'
 import ModelPage from './pages/ModelPage'
 import SearchHistoryPage from './pages/SearchHistoryPage'
+import LeaderboardPage from './pages/LeaderboardPage'
 import Navbar from './components/website/Navbar'
 import CommitExplorer from './pages/ExplorePage'
 import LandingPage from './pages/LandingPage'
@@ -75,6 +76,17 @@ export default function App() {
               <div style={{ maxWidth: 1100, margin: '0 auto', padding: '2rem 1.5rem', fontFamily: 'var(--font-mono)' }}>
                 <ModelPage />
               </div>
+            </>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/leaderboard"
+        element={
+          <ProtectedRoute>
+            <>
+              <Navbar />
+              <LeaderboardPage />
             </>
           </ProtectedRoute>
         }
